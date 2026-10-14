@@ -56,7 +56,11 @@ $(function () {
     if (!forcar && window.innerWidth === larguraAnterior) return;
     larguraAnterior = window.innerWidth;
     const topo = hero.getBoundingClientRect().top + window.scrollY;
-    const altura = Math.max(420, Math.round(window.innerHeight - topo - faixa.offsetHeight));
+    const alturaTela = window.visualViewport?.height || window.innerHeight;
+    const alturaFaixa = faixa.getBoundingClientRect().height;
+    const margemFaixa = parseFloat(window.getComputedStyle(faixa).marginTop) || 0;
+    // A margem negativa sobrepõe a faixa; arredondar para cima evita expor o fundo branco abaixo dela.
+    const altura = Math.max(420, Math.ceil(alturaTela - topo - alturaFaixa - margemFaixa));
     hero.style.setProperty('--rs-hero-altura', `${altura}px`);
   }
   ajustarHero(true);
