@@ -1,4 +1,9 @@
 /*
+ * Transforma catálogo e dados de exemplo no objeto window.RS_DADOS do navegador.
+ * Os campos são adaptados ao mesmo modelo consumido pela API local.
+ * O arquivo gerado contém dados; as regras da demonstração estão em api-local.js.
+ */
+/*
  * Gera public/js/dados.js: o catálogo e os dados de exemplo usados quando o
  * site roda só no navegador (sem servidor e sem banco de dados).
  * A fonte é a mesma do banco: database/catalogo.js.
@@ -41,6 +46,9 @@ const dados = {
 };
 
 const saida = `/* Gerado por scripts/gerar-dados-front.js a partir de database/catalogo.js. Não edite à mão. */
+/* Dados gerados para a demonstração: IDs relacionam categorias, produtos e usuários.
+ * dias e promoDias são relativos à criação dos dados no navegador; não são datas fixas.
+ * Para regenerar este arquivo, edite as fontes em database/ e execute npm run dados. */
 window.RS_DADOS = ${JSON.stringify(dados, null, 1)};
 `;
 fs.writeFileSync(path.join(__dirname, '..', 'public', 'js', 'dados.js'), saida);

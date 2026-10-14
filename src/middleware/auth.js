@@ -1,3 +1,8 @@
+/*
+ * Middleware é uma função executada antes da ação da rota.
+ * A sessão identifica o usuário; 401 indica ausência de login e 403 falta de permissão.
+ * next() permite continuar somente depois da verificação exigida.
+ */
 // Middlewares de controle de acesso baseados na sessão.
 
 // Exige um usuário logado (cliente ou administrador).

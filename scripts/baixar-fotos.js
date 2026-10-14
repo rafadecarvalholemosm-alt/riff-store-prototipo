@@ -1,4 +1,9 @@
 /*
+ * Ferramenta de preparação dos arquivos visuais; não participa das requisições do site.
+ * Busca fontes externas, monta produtos com sharp e registra créditos das imagens.
+ * A pasta .cache guarda bases de trabalho, e public/img recebe os arquivos utilizados.
+ */
+/*
  * Baixa e monta as imagens reais do site (precisa do Node, de internet e do
  * pacote "sharp", instalado com npm install):
  *  1. Fotos de fundo e banners (public/js/fotos.js, Unsplash) -> public/img/fotos/<nome>.jpg

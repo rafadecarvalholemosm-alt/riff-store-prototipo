@@ -1,3 +1,8 @@
+/*
+ * Estado da vitrine: busca, filtros, ordenação e página atual ficam sincronizados com a URL.
+ * AJAX atualiza a grade sem recarregar o documento HTML inteiro.
+ * O identificador da requisição impede que uma resposta antiga substitua a busca mais recente.
+ */
 // Vitrine: busca, filtros, ordenação e paginação sem recarregar a página (AJAX com jQuery).
 $(function () {
   const { api, esc, moeda, cardProduto, registrarProdutos } = RS;
@@ -8,6 +13,7 @@ $(function () {
   let estado = lerEstadoDaUrl();
   let requisicaoAtual = 0;
 
+  // Recupera filtros de links compartilhados e da navegação voltar/avançar do navegador.
   function lerEstadoDaUrl() {
     const q = new URLSearchParams(location.search);
     return {
@@ -98,6 +104,7 @@ $(function () {
   });
 
   // ------------------------------------------------------------------ Carregamento
+  // Exibe carregamento, solicita a página filtrada e atualiza os cards quando a resposta chega.
   function carregar() {
     const id = ++requisicaoAtual;
     const $grade = $('#grade-produtos').attr('aria-busy', 'true');
@@ -129,6 +136,7 @@ $(function () {
     });
   }
 
+  // Os links trocam o estado da vitrine; o evento de clique evita navegar para outro documento.
   function paginacao(atual, total) {
     if (total <= 1) { $('#paginacao').empty(); return; }
     let html = `<li class="page-item ${atual === 1 ? 'disabled' : ''}"><a class="page-link" href="#" data-pagina="${atual - 1}" aria-label="Página anterior"><i class="bi bi-chevron-left"></i></a></li>`;

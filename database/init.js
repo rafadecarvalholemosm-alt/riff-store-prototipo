@@ -1,4 +1,9 @@
 /*
+ * Instalação inicial do banco: executa a estrutura e os dados produzidos pelo gerador.
+ * As configurações são carregadas do .env antes de abrir a conexão.
+ * Este comando recria tabelas; não deve ser usado para apenas iniciar o MySQL.
+ */
+/*
  * Cria o banco de dados da Riff Store e carrega os dados iniciais, executando
  * o mesmo SQL de database/riff_store.sql (gerado por scripts/gerar-sql.js).
  * Uso: npm run db:init   (ATENÇÃO: apaga e recria todas as tabelas)

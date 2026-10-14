@@ -1,4 +1,9 @@
 /*
+ * Montagens raster com sharp: redimensionamento, máscaras, composição e sombras.
+ * Cada categoria posiciona a capa do álbum sobre uma fotografia de base.
+ * Os resultados são arquivos de imagem estáticos utilizados pelas páginas.
+ */
+/*
  * Fotos de produto: aplicam a capa real do álbum sobre fotografias reais
  * (camiseta, disco de vinil, caixa de CD, parede de tijolos e tecido jeans)
  * e devolvem um JPG 900x900. Usado por scripts/baixar-fotos.js.
@@ -168,6 +173,7 @@ async function patch(produto, capa) {
 
 const TIPOS = { camiseta, vinil, cd, poster, patch };
 
+// Seleciona a montagem apropriada ao tipo de produto e devolve a imagem pronta.
 async function montar(produto, capa) {
   const fn = TIPOS[produto.real.tipo];
   if (!fn) throw new Error(`tipo de montagem desconhecido: ${produto.real.tipo}`);

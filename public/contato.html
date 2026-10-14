@@ -1,11 +1,14 @@
 <!DOCTYPE html>
+<!-- Contato: canais de atendimento, formulário e perguntas frequentes em accordion. contato.js valida os campos e usa as configurações da loja. -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <!-- O viewport faz os tamanhos responsivos acompanharem a largura real do dispositivo. -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Contato e perguntas frequentes | Riff Store</title>
   <meta name="description" content="Fale com a Riff Store e tire suas dúvidas sobre trocas, entregas, pagamento e tamanhos.">
   <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
+  <!-- A ordem das folhas preserva o Bootstrap como base e aplica style.css por último. -->
   <link rel="stylesheet" href="css/fontes.css">
   <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
@@ -13,8 +16,10 @@
 </head>
 <body data-pagina="contato">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <!-- app.js monta o cabeçalho comum, seus links e os indicadores de sessão/carrinho. -->
   <header id="topo"></header>
 
+  <!-- main identifica o conteúdo principal e é o destino do link acessível de pular navegação. -->
   <main id="conteudo">
     <section class="rs-pagina-topo" data-bg-foto="loja-discos-2">
       <div class="container">
@@ -33,6 +38,7 @@
       <div class="container">
         <div class="row g-4 g-xl-5">
           <div class="col-lg-7">
+  <!-- Labels associados aos IDs e feedbacks permitem identificar e corrigir cada campo. -->
             <form id="form-contato" class="rs-painel" novalidate>
               <h2>Envie sua mensagem</h2>
               <p class="text-secondary small mb-4">Respondemos em até 2 dias úteis. Os campos marcados com * são obrigatórios.</p>
@@ -151,8 +157,10 @@
     </section>
   </main>
 
+  <!-- O rodapé é compartilhado e recebe os contatos e redes sociais das configurações. -->
   <footer id="rodape"></footer>
 
+  <!-- Dependências primeiro, dados/API depois, app.js antes do controlador específico da página. -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="js/config.js"></script>

@@ -1,3 +1,8 @@
+/*
+ * Operações institucionais da loja: contato, newsletter, cupom e configurações.
+ * As validações do servidor complementam as mensagens exibidas pelo navegador.
+ * Consultas parametrizadas separam os valores recebidos da instrução SQL.
+ */
 // Rotas públicas institucionais: contato, newsletter, cupons e configurações da loja.
 const express = require('express');
 const db = require('../db');

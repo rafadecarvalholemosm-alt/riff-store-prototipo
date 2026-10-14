@@ -1,3 +1,8 @@
+/*
+ * Formulário de compra dividido em identificação, endereço, pagamento e revisão.
+ * As validações orientam o usuário antes de enviar o pedido à API.
+ * O pagamento é simulado, e o rascunho não guarda campos do cartão.
+ */
 // Finalização do pedido em etapas: identificação, endereço, pagamento e revisão.
 $(function () {
   const { carrinho, moeda, esc, calcularFrete, api, aviso, mostrarErros, limparErros, regex, exigirLogin, cupom } = RS;
@@ -56,6 +61,7 @@ $(function () {
   }
 
   // ------------------------------------------------------------------ Navegação entre etapas
+  // Mostra uma etapa por vez e atualiza o foco e aria-current para orientar a navegação.
   function irPara(n) {
     etapa = n;
     $('.rs-etapa').prop('hidden', true);
@@ -78,6 +84,7 @@ $(function () {
     return dados;
   }
 
+  // sessionStorage guarda o progresso durante a sessão; campos do cartão ficam excluídos.
   function salvarRascunho() {
     const { cartaoNumero, cartaoNome, cartaoValidade, cartaoCvv, ...seguro } = pedido; // nunca guarda dados do cartão
     sessionStorage.setItem(RASCUNHO, JSON.stringify(seguro));
@@ -118,6 +125,7 @@ $(function () {
   };
 
   // Algoritmo de Luhn: confere o dígito verificador do cartão
+  // Luhn verifica um dígito de controle; é uma validação demonstrativa, sem efetuar cobrança.
   function luhn(num) {
     let soma = 0;
     for (let i = 0; i < num.length; i++) {
@@ -178,6 +186,7 @@ $(function () {
   $('#cartao-nome').on('input', function () { this.value = this.value.toUpperCase(); });
 
   // ------------------------------------------------------------------ Revisão e confirmação
+  // A revisão apresenta os dados escolhidos antes de confirmar o pedido simulado.
   function revisao() {
     const itens = carrinho.itens();
     $('#revisao-itens').html(itens.map(i => `

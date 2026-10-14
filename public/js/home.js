@@ -1,3 +1,8 @@
+/*
+ * A página inicial solicita categorias, destaques, ofertas e lançamentos pela API.
+ * Os cards compartilham o mesmo componente HTML do catálogo.
+ * O carrossel é controlado pelo Bootstrap e a contagem segue a validade das promoções.
+ */
 // Página inicial: categorias, faixa de bandas, destaques, ofertas e vídeos.
 $(function () {
   const { api, esc, cardProduto, registrarProdutos, montarContagem } = RS;
@@ -11,6 +16,7 @@ $(function () {
     acessorios: ['palhetas-guitarra', 'img/fotos/produtos/kit-palhetas-riff.jpg', 'Palhetas, bonés e mais']
   };
 
+  // map transforma a lista em cards; join une os fragmentos antes de inseri-los no DOM.
   function grade($alvo, produtos, opcoes) {
     registrarProdutos(produtos);
     $alvo.html(produtos.map(p => `<div class="col">${cardProduto(p, opcoes)}</div>`).join(''));
@@ -41,6 +47,7 @@ $(function () {
 
   // Altura do banner: a primeira tela (sem rolar) termina exatamente no fim da faixa vermelha das bandas
   let larguraAnterior = 0;
+  // Ajusta a altura do primeiro banner conforme a área disponível da janela.
   function ajustarHero(forcar) {
     const hero = document.querySelector('.rs-hero');
     const faixa = document.querySelector('.rs-marquee');

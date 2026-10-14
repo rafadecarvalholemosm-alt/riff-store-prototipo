@@ -1,4 +1,9 @@
 /*
+ * Demonstração da API executada no navegador, com persistência em localStorage.
+ * Reproduz os formatos e regras das rotas para a apresentação sem MySQL.
+ * As verificações locais são demonstrativas; o controle real de acesso pertence ao servidor.
+ */
+/*
  * API local: responde às mesmas rotas da API do servidor (src/routes),
  * mas roda no próprio navegador e guarda os dados no localStorage.
  * É usada quando o site é aberto sem o servidor Node/MySQL
@@ -54,6 +59,7 @@
   // ------------------------------------------------------------------ "Banco" no localStorage
   let banco = null;
 
+  // Cria registros fictícios a partir de RS_DADOS, com datas relativas ao momento da demonstração.
   async function criarBanco() {
     const D = window.RS_DADOS;
     const b = {
@@ -109,6 +115,7 @@
     return b;
   }
 
+  // Reutiliza os dados persistidos; uma versão diferente do catálogo recria a demonstração.
   async function carregarBanco() {
     if (banco) return banco;
     try { banco = JSON.parse(localStorage.getItem(CHAVE_BANCO)); } catch (e) { banco = null; }
@@ -710,6 +717,7 @@
   });
 
   // ------------------------------------------------------------------ Roteador
+  // O roteador compara método e caminho com padrões, simulando as operações da API REST.
   async function requisicao(metodo, url, dados) {
     await carregarBanco();
     const [caminho, qs] = url.split('?');

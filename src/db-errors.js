@@ -1,3 +1,8 @@
+/*
+ * Traduz erros técnicos do MySQL em instruções de configuração em português.
+ * AggregateError pode reunir falhas de conexão com mais de um endereço.
+ * Erros não reconhecidos seguem o tratamento genérico do servidor.
+ */
 // Mensagens de configuração para erros do MySQL, inclusive AggregateError.
 function databaseErrorMessage(error) {
   const codes = [error.code, ...(error.errors || []).map(item => item.code)];

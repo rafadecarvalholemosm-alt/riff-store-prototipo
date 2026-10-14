@@ -1,4 +1,9 @@
 /*
+ * Gera um arquivo de instalação a partir do esquema, catálogo e dados fictícios.
+ * IDs e chaves estrangeiras ligam usuários, produtos, pedidos e avaliações.
+ * As datas são expressões SQL relativas à importação; as senhas usam bcrypt.
+ */
+/*
  * Gera database/riff_store.sql: estrutura do banco + dados iniciais, pronto
  * para importar no phpMyAdmin (XAMPP) ou rodar com "npm run db:init".
  * As datas são relativas ao momento da importação (NOW()), então as
@@ -13,6 +18,7 @@ const { categorias, produtos } = require('../database/catalogo');
 const { imagensDoProduto } = require('../database/imagens');
 const seed = require('../database/seed');
 
+// Formata literais dos dados de origem para o arquivo SQL, incluindo nulos e caracteres escapados.
 const sql = v => {
   if (v === null || v === undefined) return 'NULL';
   if (typeof v === 'number') return String(v);
@@ -23,6 +29,7 @@ const diasAtras = (n, hora = 14) => `TIMESTAMP(CURDATE() - INTERVAL ${n} DAY, '$
 const insert = (tabela, colunas, linhas) =>
   `INSERT INTO ${tabela} (${colunas.join(', ')}) VALUES\n${linhas.map(l => `  (${l.join(', ')})`).join(',\n')};\n`;
 
+// A função retorna o SQL como texto; a execução no MySQL é responsabilidade de database/init.js.
 function gerarSql(nomeBanco = 'riff_store') {
   const schema = fs.readFileSync(path.join(__dirname, '..', 'database', 'schema.sql'), 'utf8').replace(/riff_store/g, nomeBanco);
   const idProduto = slug => produtos.findIndex(p => p.slug === slug) + 1;

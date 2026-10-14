@@ -1,4 +1,9 @@
 /*
+ * Lista de fontes de fotografias usada no carregamento e no download dos arquivos.
+ * As páginas indicam uma chave em data-foto ou data-bg-foto, em vez de duplicar URLs.
+ * app.js tenta carregar a cópia local antes da fonte externa.
+ */
+/*
  * Fotos usadas no site (banco de imagens Unsplash, licença de uso livre).
  * Cada foto é procurada primeiro em img/fotos/<nome>.jpg (baixada pelo
  * script scripts/baixar-fotos.js); se o arquivo não existir, é carregada

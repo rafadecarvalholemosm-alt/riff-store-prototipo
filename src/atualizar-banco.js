@@ -1,3 +1,8 @@
+/*
+ * Migração de compatibilidade executada durante a inicialização do servidor.
+ * Consulta o esquema antes de adicionar colunas, preservando registros existentes.
+ * Imagens personalizadas no painel são preservadas pela condição da atualização.
+ */
 // Atualiza bancos importados com uma versão anterior do database/riff_store.sql,
 // sem apagar dados. Roda ao iniciar o servidor:
 //  - cria a tabela da newsletter e as colunas de cupom/desconto dos pedidos, se faltarem;

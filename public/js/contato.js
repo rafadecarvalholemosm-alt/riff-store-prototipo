@@ -1,3 +1,8 @@
+/*
+ * Página de contato: configurações da loja, perguntas frequentes e envio de mensagem.
+ * O evento submit permite validar e enviar o formulário sem recarregar a página.
+ * A API recebe os dados e devolve mensagens de sucesso ou erros por campo.
+ */
 // Contato: canais vindos das configurações da loja, formulário validado e FAQ.
 $(function () {
   const { api, esc, aviso, mostrarErros, limparErros, regex } = RS;
@@ -33,6 +38,7 @@ $(function () {
 
   $('#ct-mensagem').on('input', function () { $('#ct-contador').text(`${this.value.length} / 2000`); });
 
+  // preventDefault mantém a página aberta; os erros são associados aos campos do formulário.
   $('#form-contato').on('submit', function (e) {
     e.preventDefault();
     const $f = $(this);

@@ -1,4 +1,9 @@
 /*
+ * Fonte do catálogo de demonstração, compartilhada pelos geradores de SQL e JavaScript.
+ * Cada produto informa categoria, slug, preço, estoque, imagens e opções de apresentação.
+ * Os valores são exemplos acadêmicos, independentes de registros editados no MySQL.
+ */
+/*
  * Catálogo inicial da Riff Store.
  * Usado por database/init.js e scripts/gerar-sql.js (banco MySQL),
  * scripts/gerar-dados-front.js (modo sem servidor) e scripts/baixar-fotos.js

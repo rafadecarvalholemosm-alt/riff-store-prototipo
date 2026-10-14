@@ -1,3 +1,8 @@
+/*
+ * Regras compartilhadas evitam repetir validações e formatações nas rotas.
+ * O preço promocional depende da data de validade, e os selos são calculados.
+ * A resposta de produto é adaptada ao formato utilizado pelo front-end.
+ */
 // Funções auxiliares compartilhadas pelas rotas da API.
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -8,10 +13,12 @@ function texto(valor, max = 255) {
   return String(valor).trim().slice(0, max);
 }
 
+// Expressão regular confere o formato do endereço; não verifica se a caixa postal existe.
 function emailValido(email) {
   return EMAIL_RE.test(email);
 }
 
+// Remove a máscara visual antes de validar a quantidade de dígitos com DDD.
 function telefoneValido(tel) {
   const digitos = String(tel || '').replace(/\D/g, '');
   return digitos.length >= 10 && digitos.length <= 11;

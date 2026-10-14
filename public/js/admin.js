@@ -1,3 +1,8 @@
+/*
+ * Painel com seções selecionadas pelo fragmento # da URL.
+ * Cada carregador busca dados da API e monta tabelas, cards ou formulários.
+ * A interface confere o perfil, e as rotas do servidor também exigem administrador.
+ */
 // Painel administrativo: resumo, produtos, pedidos, usuários, avaliações, mensagens e configurações.
 $(function () {
   const { api, esc, moeda, data, dataHora, aviso, mostrarErros, limparErros, exigirLogin, estrelas } = RS;
@@ -28,6 +33,7 @@ $(function () {
     dashboard: carregarResumo, produtos: carregarProdutos, pedidos: carregarPedidos, usuarios: carregarUsuarios,
     avaliacoes: carregarAvaliacoes, mensagens: carregarMensagens, configuracoes: carregarConfig
   };
+  // O fragmento da URL seleciona a seção, permitindo acessar uma área por link direto.
   function abrirSecao() {
     const secao = location.hash.slice(1) in carregadores ? location.hash.slice(1) : 'dashboard';
     $('[data-painel]').prop('hidden', true);
@@ -95,6 +101,7 @@ $(function () {
     }).catch(err => $('#tabela-produtos').html(erroTabela(6)(err)));
   }
 
+  // Os filtros da tabela administrativa operam sobre a lista carregada para o painel.
   function desenharProdutos() {
     const busca = $('#busca-produtos').val().toLowerCase().trim();
     const cat = $('#filtro-cat-admin').val();
@@ -151,6 +158,7 @@ $(function () {
     return x.toISOString().slice(0, 16);
   }
 
+  // O mesmo formulário do modal atende cadastro e edição, dependendo do produto recebido.
   function abrirProduto(p) {
     editando = p ? p.id : null;
     const $f = $('#form-produto');

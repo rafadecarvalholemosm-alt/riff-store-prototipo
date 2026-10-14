@@ -1,11 +1,14 @@
 <!DOCTYPE html>
+<!-- Autenticação: abas de login e cadastro com labels, campos e mensagens de validação. login.js envia os dados e define o destino após autenticar. -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <!-- O viewport faz os tamanhos responsivos acompanharem a largura real do dispositivo. -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Entrar ou cadastrar | Riff Store</title>
   <meta name="description" content="Acesse sua conta ou cadastre-se na Riff Store.">
   <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
+  <!-- A ordem das folhas preserva o Bootstrap como base e aplica style.css por último. -->
   <link rel="stylesheet" href="css/fontes.css">
   <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
@@ -13,8 +16,10 @@
 </head>
 <body data-pagina="login">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <!-- app.js monta o cabeçalho comum, seus links e os indicadores de sessão/carrinho. -->
   <header id="topo"></header>
 
+  <!-- main identifica o conteúdo principal e é o destino do link acessível de pular navegação. -->
   <main id="conteudo" class="rs-auth">
     <div class="rs-auth-arte" data-bg-foto="guitarrista-palco-2">
       <div>
@@ -40,6 +45,7 @@
           <div class="tab-pane fade show active" id="painel-login" role="tabpanel" aria-labelledby="aba-login" tabindex="0">
             <h1 class="h2 mb-1">Bem-vindo de volta</h1>
             <p class="text-secondary small mb-4">Entre com seu e-mail e senha.</p>
+  <!-- Labels associados aos IDs e feedbacks permitem identificar e corrigir cada campo. -->
             <form id="form-login" novalidate>
               <div class="mb-3">
                 <label for="login-email" class="form-label">E-mail</label>
@@ -104,8 +110,10 @@
     </div>
   </main>
 
+  <!-- O rodapé é compartilhado e recebe os contatos e redes sociais das configurações. -->
   <footer id="rodape"></footer>
 
+  <!-- Dependências primeiro, dados/API depois, app.js antes do controlador específico da página. -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="js/config.js"></script>

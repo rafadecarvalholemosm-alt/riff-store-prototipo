@@ -1,3 +1,8 @@
+/*
+ * A vitrine combina filtros em SQL e devolve somente a página solicitada.
+ * JOIN relaciona o produto à categoria; subconsultas resumem as avaliações visíveis.
+ * O navegador recebe produtos formatados, com preço atual, galeria e selos.
+ */
 // Rotas públicas do catálogo: vitrine, busca, filtros, detalhes e avaliações.
 const express = require('express');
 const db = require('../db');
@@ -18,6 +23,7 @@ const SELECT_PRODUTO = `
 const PRECO_ATUAL = `(CASE WHEN p.preco_promocional IS NOT NULL AND p.promocao_fim > NOW()
                           THEN p.preco_promocional ELSE p.preco END)`;
 
+// ORDER BY utiliza opções fixas: o nome recebido na URL não é inserido diretamente no SQL.
 const ORDENACOES = {
   relevancia: `p.destaque DESC, (p.estoque > 0) DESC, total_avaliacoes DESC, p.id`,
   menor: `${PRECO_ATUAL} ASC, p.id`,
@@ -49,6 +55,7 @@ router.get('/bandas', async (req, res) => {
 
 // GET /api/produtos?ids=&busca=&categoria=&bandas=a,b&precoMin=&precoMax=&estoque=1&promocao=1&ordem=&pagina=&limite=
 router.get('/produtos', async (req, res) => {
+  // Condições e valores são montados separadamente para combinar filtros com parâmetros seguros.
   const condicoes = ['p.ativo = 1'];
   const params = [];
 
@@ -89,6 +96,7 @@ router.get('/produtos', async (req, res) => {
 
   const where = `WHERE ${condicoes.join(' AND ')}`;
   const ordem = ORDENACOES[req.query.ordem] || ORDENACOES.relevancia;
+  // LIMIT define quantos itens retornam, e OFFSET pula os itens das páginas anteriores.
   const limite = Math.min(Math.max(parseInt(req.query.limite, 10) || 12, 1), 48);
   const pagina = Math.max(parseInt(req.query.pagina, 10) || 1, 1);
 

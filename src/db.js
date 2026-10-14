@@ -1,3 +1,8 @@
+/*
+ * A API compartilha um pool: conexões podem ser reutilizadas entre requisições.
+ * As credenciais vêm do .env, enquanto os parâmetros das consultas ficam nas rotas.
+ * Uma transação de pedido usa uma conexão exclusiva obtida desse pool.
+ */
 // Conexão com o MySQL usando um pool de conexões (mysql2/promise).
 // Todas as consultas usam parâmetros (?) para evitar injeção de SQL.
 const mysql = require('mysql2/promise');

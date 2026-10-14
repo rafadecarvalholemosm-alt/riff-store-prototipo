@@ -1,4 +1,7 @@
 /* Gerado por scripts/gerar-dados-front.js a partir de database/catalogo.js. Não edite à mão. */
+/* Dados gerados para a demonstração: IDs relacionam categorias, produtos e usuários.
+ * dias e promoDias são relativos à criação dos dados no navegador; não são datas fixas.
+ * Para regenerar este arquivo, edite as fontes em database/ e execute npm run dados. */
 window.RS_DADOS = {
  "versao": 5,
  "categorias": [

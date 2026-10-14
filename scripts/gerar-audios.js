@@ -1,4 +1,9 @@
 /*
+ * Síntese de prévias próprias: notas viram ondas, distorção e instrumentos de bateria.
+ * As amostras são combinadas e exportadas em WAV para o elemento audio do HTML.
+ * O script prepara os arquivos; o navegador apenas reproduz a prévia escolhida.
+ */
+/*
  * Gera as prévias de áudio (public/audio/previa-N.wav): riffs curtos de
  * guitarra distorcida com bateria, sintetizados por código. Assim o site
  * não depende de faixas de terceiros.
@@ -72,6 +77,7 @@ function gerarRnd(semente) {
 }
 
 // riff: lista de [nota MIDI, duração em colcheias, abafado?]
+// BPM define o intervalo das batidas; o riff distribui as notas no vetor de amostras.
 function compor(nome, bpm, riff, repeticoes) {
   const colcheia = 60 / bpm / 2;
   const totalColcheias = riff.reduce((s, r) => s + r[1], 0) * repeticoes;

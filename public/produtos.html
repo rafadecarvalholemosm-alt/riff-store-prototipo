@@ -1,11 +1,14 @@
 <!DOCTYPE html>
+<!-- Vitrine: filtros em aside, grade de produtos e paginação atualizadas por produtos.js. As colunas Bootstrap se adaptam à largura da tela. -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <!-- O viewport faz os tamanhos responsivos acompanharem a largura real do dispositivo. -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Produtos | Riff Store</title>
   <meta name="description" content="Catálogo da Riff Store: camisetas de bandas, discos de vinil, CDs, pôsteres e acessórios de rock.">
   <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
+  <!-- A ordem das folhas preserva o Bootstrap como base e aplica style.css por último. -->
   <link rel="stylesheet" href="css/fontes.css">
   <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
@@ -13,8 +16,10 @@
 </head>
 <body data-pagina="produtos">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <!-- app.js monta o cabeçalho comum, seus links e os indicadores de sessão/carrinho. -->
   <header id="topo"></header>
 
+  <!-- main identifica o conteúdo principal e é o destino do link acessível de pular navegação. -->
   <main id="conteudo">
     <section class="rs-pagina-topo" data-bg-foto="show-holofote">
       <div class="container">
@@ -40,6 +45,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#painel-filtros" aria-label="Fechar filtros"></button>
             </div>
             <div class="offcanvas-body d-block">
+  <!-- Labels associados aos IDs e feedbacks permitem identificar e corrigir cada campo. -->
               <form id="form-filtros" class="rs-filtros w-100" aria-label="Filtrar produtos">
                 <div class="rs-filtro-bloco">
                   <h2>CATEGORIAS</h2>
@@ -120,8 +126,10 @@
     </div>
   </main>
 
+  <!-- O rodapé é compartilhado e recebe os contatos e redes sociais das configurações. -->
   <footer id="rodape"></footer>
 
+  <!-- Dependências primeiro, dados/API depois, app.js antes do controlador específico da página. -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="js/config.js"></script>

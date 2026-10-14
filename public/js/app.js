@@ -1,4 +1,9 @@
 /*
+ * Módulo compartilhado pelas páginas: navegação, formatação, API, carrinho e avisos.
+ * window.RS expõe as funções usadas pelos scripts de cada página.
+ * Promessas organizam requisições assíncronas, e eventos atualizam a interface.
+ */
+/*
  * Riff Store: script comum a todas as páginas.
  * - Monta o cabeçalho e o rodapé
  * - Guarda o carrinho no localStorage
@@ -49,6 +54,7 @@
     });
   }
 
+  // A Promise padroniza sucesso e falha do AJAX para os scripts de todas as páginas.
   function requisicaoServidor(metodo, url, dados) {
     return new Promise((resolve, reject) => {
       $.ajax({
@@ -143,6 +149,7 @@
   }
 
   // ------------------------------------------------------------------ Carrinho (localStorage)
+  // Quantidade e tamanho identificam a escolha do cliente; localStorage persiste o carrinho.
   const carrinho = {
     itens() {
       try { return JSON.parse(localStorage.getItem(CHAVE_CARRINHO)) || []; } catch (e) { return []; }
@@ -241,6 +248,7 @@
   }
 
   // Card de produto usado na vitrine, destaques e ofertas
+  // Um único modelo de card mantém a identidade visual entre home, vitrine e relacionados.
   function cardProduto(p, opcoes = {}) {
     const esgotado = p.estoque <= 0;
     const link = `produto.html?slug=${encodeURIComponent(p.slug)}`;
@@ -384,6 +392,7 @@
       <span><span class="rs-logo-nome">Riff Store</span><span class="rs-logo-sub">Merch &amp; Vinis de Rock</span></span>
     </a>`;
 
+  // Montagem compartilhada evita repetir o menu completo em cada arquivo HTML.
   function montarCabecalho() {
     const pagina = $('body').data('pagina');
     const ativo = nome => (pagina === nome ? ' active" aria-current="page' : '');

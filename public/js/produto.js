@@ -1,3 +1,8 @@
+/*
+ * O slug da URL seleciona os detalhes do produto na API.
+ * A página coordena galeria, zoom, tamanhos, quantidade, áudio e avaliações.
+ * O estoque disponível considera também o que o usuário já colocou no carrinho.
+ */
 // Detalhes do produto: galeria, tamanhos, quantidade, carrinho, prévia de áudio e avaliações.
 $(function () {
   const { api, esc, moeda, data, parametro, estrelas, parcelas, carrinho, montarContagem, cardProduto, registrarProdutos, aviso } = RS;
@@ -21,6 +26,7 @@ $(function () {
   }
 
   // ------------------------------------------------------------------ Produto
+  // Usa o resultado da API para preencher textos, preços, imagens e controles de compra.
   function montarProduto(p) {
     document.title = `${p.nome} | Riff Store`;
     $('meta[name="description"]').attr('content', p.descricao.slice(0, 155));
@@ -157,6 +163,7 @@ $(function () {
   $('#audio-previa').on('play', () => $('#player').addClass('tocando')).on('pause ended', () => $('#player').removeClass('tocando'));
 
   // ------------------------------------------------------------------ Avaliações
+  // Calcula a distribuição das notas e monta comentários e formulário quando permitido.
   function montarAvaliacoes(r) {
     const lista = r.avaliacoes;
     $('#qtd-avaliacoes').text(lista.length);

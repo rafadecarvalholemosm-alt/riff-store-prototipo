@@ -1,3 +1,7 @@
+-- Modelo relacional: IDs identificam registros, e chaves estrangeiras preservam relacionamentos.
+-- Produtos pertencem a categorias; pedidos pertencem a usuários e contêm itens de produtos.
+-- DECIMAL representa valores monetários, e CHECK restringe preços, estoque, quantidade e notas.
+-- Os DROP TABLE abaixo fazem parte da instalação/restauração e apagam tabelas existentes.
 -- =============================================================
 -- Riff Store: Merch & Vinis de Rock
 -- Banco de dados completo (estrutura + dados iniciais)
@@ -119,6 +123,7 @@ CREATE TABLE pedidos (
 );
 
 -- Itens do pedido: guarda o preço no momento da compra ----------
+-- Cada item preserva o nome e o preço da compra, mesmo se o catálogo for editado depois.
 CREATE TABLE itens_pedido (
   id              INT AUTO_INCREMENT PRIMARY KEY,
   pedido_id       INT NOT NULL,
@@ -165,6 +170,7 @@ CREATE TABLE newsletter (
 );
 
 -- Configurações da loja (contato e redes sociais) --------------
+-- Pares chave/valor permitem editar contatos e redes sociais pelo painel administrativo.
 CREATE TABLE configuracoes (
   chave  VARCHAR(40) PRIMARY KEY,
   valor  VARCHAR(255) NOT NULL

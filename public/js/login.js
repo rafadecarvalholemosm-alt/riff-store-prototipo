@@ -1,3 +1,8 @@
+/*
+ * Login e cadastro usam abas, validação de campos e requisições à API.
+ * O redirecionamento depende do perfil e aceita somente destinos internos.
+ * A indicação de força da senha é uma orientação visual para o cadastro.
+ */
 // Login e cadastro na mesma tela, alternando por abas.
 $(function () {
   const { api, aviso, mostrarErros, limparErros, regex, parametro } = RS;
@@ -14,6 +19,7 @@ $(function () {
 
   if (location.hash === '#cadastro') bootstrap.Tab.getOrCreateInstance('#aba-cadastro').show();
 
+  // Desabilitar o botão durante o envio evita solicitações repetidas pelo mesmo clique.
   function carregando($btn, sim, texto) {
     $btn.prop('disabled', sim).html(sim ? '<span class="spinner-border spinner-border-sm me-2"></span>Aguarde...' : texto);
   }

@@ -1,11 +1,14 @@
 <!DOCTYPE html>
+<!-- Carrinho: tabela de itens, controles de quantidade e resumo de valores. carrinho.js mantém a interface sincronizada com o armazenamento local. -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <!-- O viewport faz os tamanhos responsivos acompanharem a largura real do dispositivo. -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Meu carrinho | Riff Store</title>
   <meta name="description" content="Itens escolhidos na Riff Store.">
   <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
+  <!-- A ordem das folhas preserva o Bootstrap como base e aplica style.css por último. -->
   <link rel="stylesheet" href="css/fontes.css">
   <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
@@ -13,8 +16,10 @@
 </head>
 <body data-pagina="carrinho">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <!-- app.js monta o cabeçalho comum, seus links e os indicadores de sessão/carrinho. -->
   <header id="topo"></header>
 
+  <!-- main identifica o conteúdo principal e é o destino do link acessível de pular navegação. -->
   <main id="conteudo" class="container py-4 py-lg-5">
     <nav aria-label="Trilha de navegação">
       <ol class="breadcrumb mb-3">
@@ -57,6 +62,7 @@
           <div class="rs-resumo-linha"><span>Subtotal (<span id="qtd-itens">0</span> itens)</span><strong id="subtotal">R$ 0,00</strong></div>
           <div class="rs-resumo-linha rs-resumo-desconto" id="linha-desconto" hidden><span>Desconto (<span id="desconto-cupom"></span>)</span><strong id="desconto"></strong></div>
           <div class="rs-resumo-linha"><span>Frete</span><strong id="frete">–</strong></div>
+  <!-- Labels associados aos IDs e feedbacks permitem identificar e corrigir cada campo. -->
           <form class="rs-cupom" id="form-cupom" novalidate>
             <label for="cupom-codigo" class="form-label small fw-semibold mb-1">Cupom de desconto</label>
             <div class="input-group">
@@ -86,8 +92,10 @@
     </div>
   </main>
 
+  <!-- O rodapé é compartilhado e recebe os contatos e redes sociais das configurações. -->
   <footer id="rodape"></footer>
 
+  <!-- Dependências primeiro, dados/API depois, app.js antes do controlador específico da página. -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="js/config.js"></script>

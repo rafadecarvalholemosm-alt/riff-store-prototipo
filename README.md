@@ -141,6 +141,8 @@ Para restaurar os dados do **modo estático**, entre como administrador e abra *
 
 O workflow [pages.yml](.github/workflows/pages.yml) está preparado para publicar a pasta `public/` em pushes na `main` ou por execução manual. Para habilitar, acesse **Settings → Pages → Source: GitHub Actions**.
 
+O Pages precisa estar habilitado no repositório antes da execução do workflow. Se a etapa de configuração mostrar `Get Pages site failed` com `Not Found`, confira essa configuração e a disponibilidade do recurso no plano da conta. Após habilitar, abra **Actions → Publicar site no GitHub Pages → Run workflow** e selecione `main` para tentar novamente.
+
 O GitHub Pages hospeda a **demonstração estática**; o servidor Express e o MySQL precisam de uma hospedagem própria para funcionar online. A disponibilidade do Pages em repositórios privados depende do plano da conta, conforme a [documentação do GitHub](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages).
 
 ## Comandos disponíveis

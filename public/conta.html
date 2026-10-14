@@ -1,11 +1,14 @@
 <!DOCTYPE html>
+<!-- Conta: informações do usuário autenticado, histórico de pedidos e edição de dados. conta.js preenche o conteúdo após consultar a sessão. -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <!-- O viewport faz os tamanhos responsivos acompanharem a largura real do dispositivo. -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Minha conta | Riff Store</title>
   <meta name="description" content="Seus dados e histórico de pedidos na Riff Store.">
   <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
+  <!-- A ordem das folhas preserva o Bootstrap como base e aplica style.css por último. -->
   <link rel="stylesheet" href="css/fontes.css">
   <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
@@ -13,8 +16,10 @@
 </head>
 <body data-pagina="conta">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <!-- app.js monta o cabeçalho comum, seus links e os indicadores de sessão/carrinho. -->
   <header id="topo"></header>
 
+  <!-- main identifica o conteúdo principal e é o destino do link acessível de pular navegação. -->
   <main id="conteudo">
     <section class="rs-pagina-topo" data-bg-foto="show-festa">
       <div class="container">
@@ -43,6 +48,7 @@
 
           <section class="tab-pane fade" id="painel-dados" role="tabpanel" aria-labelledby="aba-dados" tabindex="0">
             <h2 class="mb-4">Meus dados</h2>
+  <!-- Labels associados aos IDs e feedbacks permitem identificar e corrigir cada campo. -->
             <form id="form-dados" class="rs-painel" novalidate>
               <div class="row g-3">
                 <div class="col-md-6">
@@ -83,8 +89,10 @@
     </div>
   </main>
 
+  <!-- O rodapé é compartilhado e recebe os contatos e redes sociais das configurações. -->
   <footer id="rodape"></footer>
 
+  <!-- Dependências primeiro, dados/API depois, app.js antes do controlador específico da página. -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="js/config.js"></script>

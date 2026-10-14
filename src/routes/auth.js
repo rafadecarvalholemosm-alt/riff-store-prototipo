@@ -1,3 +1,8 @@
+/*
+ * Rotas de autenticação recebem JSON e respondem JSON para as páginas.
+ * Senhas são comparadas por bcrypt; a sessão recebe apenas dados de identificação.
+ * A recuperação exibe um link simulado, sem enviar e-mail ou revelar o hash.
+ */
 // Cadastro, login, logout, dados da conta e recuperação de senha.
 const express = require('express');
 const crypto = require('crypto');
@@ -46,6 +51,7 @@ router.post('/cadastro', async (req, res) => {
   const [[existe]] = await db.query('SELECT id FROM usuarios WHERE email = ?', [email]);
   if (existe) return res.status(409).json({ erro: 'Este e-mail já está cadastrado.', campos: { email: 'E-mail já cadastrado.' } });
 
+  // Hash é uma transformação de mão única; a senha original não é gravada no banco.
   const hash = await bcrypt.hash(senha, 10);
   const [r] = await db.query(
     'INSERT INTO usuarios (nome, email, senha_hash, telefone) VALUES (?, ?, ?, ?)',
@@ -63,6 +69,7 @@ router.post('/login', async (req, res) => {
   if (!email || !senha) return res.status(400).json({ erro: 'Informe e-mail e senha.' });
 
   const [[usuario]] = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
+  // compare confere a senha informada com o hash, sem descriptografá-lo.
   const senhaOk = usuario && await bcrypt.compare(senha, usuario.senha_hash);
   if (!senhaOk) return res.status(401).json({ erro: 'E-mail ou senha incorretos.' });
   if (usuario.bloqueado) return res.status(403).json({ erro: 'Esta conta está bloqueada. Fale com a loja pelo formulário de contato.' });

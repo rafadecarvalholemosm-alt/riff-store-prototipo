@@ -1,3 +1,8 @@
+/*
+ * Um pedido precisa manter itens, valores e estoque consistentes.
+ * A transação agrupa as gravações; FOR UPDATE impede alterações concorrentes no estoque.
+ * Os preços e descontos são recalculados no servidor, usando os dados do banco.
+ */
 // Finalização de pedidos e histórico do cliente.
 const express = require('express');
 const db = require('../db');
@@ -80,6 +85,7 @@ router.post('/', exigirLogin, async (req, res) => {
 
   const conn = await db.getConnection();
   try {
+    // A transação permite desfazer todas as gravações caso uma validação ou consulta falhe.
     await conn.beginTransaction();
 
     const [[usuario]] = await conn.query('SELECT bloqueado FROM usuarios WHERE id = ?', [req.session.usuario.id]);
@@ -127,6 +133,7 @@ router.post('/', exigirLogin, async (req, res) => {
       const preco = promocaoAtiva(p) ? Number(p.preco_promocional) : Number(p.preco);
       itens.push({ produto: p, tamanho: p.tem_tamanhos ? it.tamanho : null, quantidade: it.quantidade, preco });
     }
+    // Quantidades de tamanhos diferentes também consomem o estoque do mesmo produto.
     for (const [id, qtd] of pedidoPorProduto) {
       const p = porId.get(id);
       if (p.estoque < qtd) {
@@ -176,12 +183,14 @@ router.post('/', exigirLogin, async (req, res) => {
       await conn.query('UPDATE produtos SET estoque = estoque - ? WHERE id = ?', [qtd, id]);
     }
 
+    // Confirma conjuntamente o pedido, seus itens e a baixa do estoque.
     await conn.commit();
     res.status(201).json({ mensagem: 'Pedido registrado com sucesso!', pedido: { id: r.insertId, subtotal, frete, desconto, total } });
   } catch (err) {
     await conn.rollback();
     throw err;
   } finally {
+    // Devolve a conexão ao pool mesmo quando houve erro, evitando esgotar as conexões.
     conn.release();
   }
 });

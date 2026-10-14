@@ -1,3 +1,5 @@
+# Publicação estática da pasta public/ quando o GitHub Pages estiver habilitado.
+# O job não executa o servidor Express nem disponibiliza um serviço MySQL.
 # Publica a pasta public/ no GitHub Pages a cada push na main.
 # Para ativar: Settings → Pages → Source: "GitHub Actions".
 name: Publicar site no GitHub Pages
@@ -23,10 +25,14 @@ jobs:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - name: Baixar os arquivos do projeto
+        uses: actions/checkout@v7
+      - name: Configurar a publicação no Pages
+        uses: actions/configure-pages@v6
+      - name: Preparar os arquivos do site
+        uses: actions/upload-pages-artifact@v5
         with:
           path: public
-      - id: deploy
-        uses: actions/deploy-pages@v4
+      - name: Publicar o site
+        id: deploy
+        uses: actions/deploy-pages@v5

@@ -1,4 +1,9 @@
 /*
+ * Entrada da aplicação Node.js. A ordem dos middlewares define o fluxo:
+ * JSON e sessão → rotas da API → arquivos públicos → tratamento de erros.
+ * O servidor só aceita requisições depois de conectar e atualizar o MySQL.
+ */
+/*
  * Riff Store: Merch & Vinis de Rock
  * Servidor Express: entrega as páginas (pasta public) e a API REST (/api).
  * Para o site usar esta API e o MySQL, defina usarServidor: true em public/js/config.js.
@@ -14,6 +19,7 @@ const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 
 app.disable('x-powered-by');
+// Converte o corpo JSON em req.body e limita o tamanho aceito da requisição.
 app.use(express.json({ limit: '100kb' }));
 
 // Sessão guardada no servidor; o navegador recebe só um cookie assinado e HttpOnly
@@ -35,6 +41,7 @@ app.use('/api', require('./src/routes/site'));
 app.use('/api', (req, res) => res.status(404).json({ erro: 'Rota não encontrada.' }));
 
 // Páginas -----------------------------------------------------------
+// Caminhos sem /api são atendidos pelos HTML, CSS, JavaScript e imagens de public/.
 app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'] }));
 app.use((req, res) => res.status(404).sendFile(path.join(__dirname, 'public', '404.html')));
 
@@ -48,6 +55,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ erro: 'Ocorreu um erro no servidor. Tente novamente.' });
 });
 
+// async/await mantém a inicialização em ordem: banco pronto antes de abrir a porta HTTP.
 async function start() {
   try {
     // Só disponibiliza a API depois de conectar e atualizar o banco existente.

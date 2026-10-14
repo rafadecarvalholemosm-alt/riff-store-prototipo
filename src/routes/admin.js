@@ -1,3 +1,8 @@
+/*
+ * O painel utiliza rotas próprias, protegidas por perfil de administrador.
+ * As operações consultam, cadastram, atualizam ou desativam registros do MySQL.
+ * Produtos vendidos mantêm seu histórico quando deixam de aparecer na vitrine.
+ */
 // Rotas do painel administrativo. Todas exigem um usuário com perfil "admin".
 const express = require('express');
 const db = require('../db');
@@ -60,6 +65,7 @@ router.get('/produtos', async (req, res) => {
 });
 
 // Lê e valida os campos do formulário de produto
+// O formulário é validado antes de produzir os valores enviados ao INSERT ou UPDATE.
 async function lerProduto(body) {
   const p = {
     nome: texto(body.nome, 140),

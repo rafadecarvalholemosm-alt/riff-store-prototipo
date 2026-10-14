@@ -1,4 +1,9 @@
 /*
+ * Configuração da origem dos dados, lida pelo módulo comum app.js.
+ * O modo auto detecta a API Express; true força o servidor e false força a demonstração.
+ * A escolha permite reutilizar as mesmas páginas nos dois modos.
+ */
+/*
  * Configuração do site.
  * usarServidor: 'auto' -> detecta sozinho (padrão):
  *                         - aberto pelo servidor Node (npm start, http://localhost:3000):

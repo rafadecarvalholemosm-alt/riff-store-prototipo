@@ -1,3 +1,8 @@
+/*
+ * O desconto é uma regra da aplicação, validada novamente pelo servidor.
+ * ROCK10 exige inscrição na newsletter e pode ser usado uma vez por conta.
+ * O cálculo arredonda o desconto para centavos e não desconta o frete.
+ */
 // Cupons de desconto. ROCK10: 10% sobre os produtos, liberado para quem cadastrou o
 // e-mail na newsletter e válido uma vez por conta. O frete é calculado sobre o subtotal
 // sem desconto (a regra do frete grátis não muda).
@@ -21,6 +26,7 @@ async function verificarCupom(conn, codigoInformado, emails, usuarioId) {
       : [[]];
     if (!linhas.length) throw new ErroCupom(`Cadastre seu e-mail na newsletter (no rodapé do site) para liberar o cupom ${codigo}.`);
   }
+  // O histórico de pedidos registra o uso: limpar o carrinho não libera outro desconto.
   if (cupom.usoUnico && usuarioId) {
     const [[uso]] = await conn.query('SELECT COUNT(*) AS total FROM pedidos WHERE usuario_id = ? AND cupom = ?', [usuarioId, codigo]);
     if (uso.total) throw new ErroCupom(`Você já usou o cupom ${codigo} em outra compra.`);

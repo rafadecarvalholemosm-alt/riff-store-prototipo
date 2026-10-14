@@ -1,3 +1,8 @@
+/*
+ * Área do usuário autenticado: pedidos, linha do tempo e formulário de dados pessoais.
+ * A sessão preenche os campos, enquanto a API entrega o histórico do usuário.
+ * Valores recebidos são formatados e textos são escapados ao compor o HTML.
+ */
 // Minha conta: histórico de pedidos com status e edição dos dados do cliente.
 $(function () {
   const { api, esc, moeda, dataHora, exigirLogin, aviso, mostrarErros, limparErros, regex } = RS;
@@ -16,11 +21,13 @@ $(function () {
     carregarPedidos();
   });
 
+  // A posição do status define quais etapas visuais do pedido aparecem concluídas.
   function linhaDoTempo(status) {
     const atual = ETAPAS.findIndex(([s]) => s === status);
     return `<div class="rs-linha-tempo" aria-label="Situação: ${NOME_STATUS[status]}">${ETAPAS.map(([, nome], i) => `<div class="${i <= atual ? 'ok' : ''}">${nome}</div>`).join('')}</div>`;
   }
 
+  // A API filtra o histórico pelo usuário da sessão, sem aceitar o ID de outra conta.
   function carregarPedidos() {
     api('GET', '/api/pedidos').then(pedidos => {
       const total = pedidos.reduce((s, p) => s + p.total, 0);

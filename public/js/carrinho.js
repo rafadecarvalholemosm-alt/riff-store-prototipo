@@ -1,7 +1,13 @@
+/*
+ * O carrinho usa localStorage para continuar disponível ao navegar entre páginas.
+ * Os totais são recalculados ao mudar quantidade, remover item ou aplicar cupom.
+ * A sincronização consulta preços e estoque atuais antes de continuar a compra.
+ */
 // Carrinho: lista os itens do localStorage, altera quantidades e recalcula os totais na hora.
 $(function () {
   const { carrinho, moeda, esc, calcularFrete, FRETE, parcelas, aviso, api, cupom } = RS;
 
+  // Converte os itens persistidos em linhas da tabela, incluindo o estado de carrinho vazio.
   function desenhar() {
     const itens = carrinho.itens();
     const qtd = carrinho.quantidade();
@@ -39,6 +45,7 @@ $(function () {
     totais();
   }
 
+  // Subtotal menos desconto mais frete; a barra informa quanto falta para obter frete grátis.
   function totais() {
     const subtotal = carrinho.subtotal();
     const frete = calcularFrete(subtotal);

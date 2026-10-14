@@ -1,3 +1,8 @@
+/*
+ * Identidade visual complementar ao Bootstrap: cores, tipografia, espaçamentos e componentes.
+ * As classes rs- pertencem à loja e agrupam estilos por área da interface.
+ * Media queries reorganizam o layout, enquanto estados de foco apoiam navegação por teclado.
+ */
 /* ==========================================================================
    Riff Store: Merch & Vinis de Rock
    Folha de estilos principal (complementa o Bootstrap 5)
@@ -5,6 +10,7 @@
    (conteúdo) e vermelho (ações principais e selos).
    ========================================================================== */
 
+/* Variáveis CSS concentram as escolhas visuais; var() reaproveita os valores nas regras. */
 :root {
   --rs-preto: #0d0d0d;
   --rs-preto-2: #161616;
@@ -84,6 +90,7 @@ a { text-decoration: none; transition: color var(--rs-transicao); }
 img { max-width: 100%; }
 ::selection { background: var(--rs-vermelho); color: #fff; }
 
+/* O foco visível indica qual controle receberá a próxima ação de teclado. */
 :focus-visible {
   outline: 3px solid var(--rs-vermelho-vivo);
   outline-offset: 2px;
@@ -423,6 +430,7 @@ img { max-width: 100%; }
   animation: girar 6s linear infinite;
 }
 @keyframes girar { to { transform: rotate(360deg); } }
+/* Respeita a preferência do dispositivo por movimentos reduzidos nas animações. */
 @media (prefers-reduced-motion: reduce) {
   .rs-vinil-giro .disco, .rs-marquee-trilho { animation: none !important; }
 }
@@ -1226,6 +1234,7 @@ img.rs-foto.carregada { opacity: 1; }
 }
 
 /* ------------------------------------------------------------------ Categorias em mosaico */
+/* CSS Grid distribui as categorias em mosaico; os breakpoints abaixo reduzem as colunas. */
 .rs-mosaico {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

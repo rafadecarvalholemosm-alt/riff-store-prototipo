@@ -1,4 +1,9 @@
 /*
+ * Dados fictícios para apresentar usuários, pedidos, avaliações e configurações.
+ * Referências por usuário e slug permitem montar os relacionamentos do catálogo.
+ * As senhas de demonstração são convertidas em hash ao gerar os respectivos bancos.
+ */
+/*
  * Dados de exemplo da Riff Store (usuários, pedidos, avaliações, mensagens e
  * configurações). Usados pelo banco MySQL (scripts/gerar-sql.js) e pelo modo
  * sem servidor (scripts/gerar-dados-front.js).
