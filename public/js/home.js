@@ -47,24 +47,41 @@ $(function () {
 
   // Altura do banner: a primeira tela (sem rolar) termina exatamente no fim da faixa vermelha das bandas
   let larguraAnterior = 0;
+  let alturaAnterior = 0;
+  let quadroHero;
   // Ajusta a altura do primeiro banner conforme a área disponível da janela.
   function ajustarHero(forcar) {
     const hero = document.querySelector('.rs-hero');
     const faixa = document.querySelector('.rs-marquee');
     if (!hero || !faixa) return;
-    // no celular a barra de endereço muda a altura da janela ao rolar: só recalcula se a largura mudar
-    if (!forcar && window.innerWidth === larguraAnterior) return;
+    const viewport = window.visualViewport;
+    const alturaTela = viewport?.height || window.innerHeight;
+    const mudouLargura = window.innerWidth !== larguraAnterior;
+    // Zoom e teclado não devem encolher o banner enquanto o visitante interage com a página.
+    if (viewport && viewport.scale > 1.05) return;
+    const campoAtivo = document.activeElement;
+    if (campoAtivo?.matches('input, textarea, [contenteditable="true"]') && campoAtivo.getClientRects().length) return;
+    // Atualiza com a barra do navegador no topo; durante a rolagem, preserva a posição do conteúdo.
+    if (!forcar && !mudouLargura && (Math.abs(alturaTela - alturaAnterior) < 1 || window.scrollY > 1)) return;
     larguraAnterior = window.innerWidth;
+    alturaAnterior = alturaTela;
     const topo = hero.getBoundingClientRect().top + window.scrollY;
-    const alturaTela = window.visualViewport?.height || window.innerHeight;
     const alturaFaixa = faixa.getBoundingClientRect().height;
     const margemFaixa = parseFloat(window.getComputedStyle(faixa).marginTop) || 0;
     // A margem negativa sobrepõe a faixa; arredondar para cima evita expor o fundo branco abaixo dela.
-    const altura = Math.max(420, Math.ceil(alturaTela - topo - alturaFaixa - margemFaixa));
+    const alturaMinima = window.innerWidth < 768 ? 0 : 420;
+    const altura = Math.max(alturaMinima, Math.ceil(alturaTela - topo - alturaFaixa - margemFaixa));
     hero.style.setProperty('--rs-hero-altura', `${altura}px`);
   }
+  // Agrupa eventos da janela e da área visível em uma atualização por quadro.
+  function agendarHero(forcar = false) {
+    cancelAnimationFrame(quadroHero);
+    quadroHero = requestAnimationFrame(() => ajustarHero(forcar));
+  }
   ajustarHero(true);
-  $(window).on('load', () => ajustarHero(true)).on('resize', () => ajustarHero(false));
+  $(window).on('load', () => agendarHero(true)).on('resize', () => agendarHero());
+  window.visualViewport?.addEventListener('resize', () => agendarHero());
+  window.addEventListener('scroll', () => { if (window.scrollY <= 1) agendarHero(); }, { passive: true });
   if (document.fonts) document.fonts.ready.then(() => ajustarHero(true));
 
   // Faixa rolante com as bandas (conteúdo duplicado para o laço contínuo).

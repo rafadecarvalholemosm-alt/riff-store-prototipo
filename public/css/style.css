@@ -1233,6 +1233,36 @@ img.rs-foto.carregada { opacity: 1; }
   .rs-hero .carousel-indicators { margin-bottom: 6.5rem; }
 }
 
+/* No celular, o conteúdo mantém espaço para os indicadores e para a faixa de bandas. */
+@media (max-width: 575.98px) {
+  .rs-slide { align-items: center; padding: 1.5rem 0 3rem; }
+  .rs-hero .row { --bs-gutter-y: 0; }
+  .rs-hero-titulo { font-size: clamp(1.9rem, 8.5vw, 2.4rem); margin: .75rem 0 .85rem; }
+  .rs-hero p.lead { font-size: 1rem; line-height: 1.5; margin-bottom: 1rem; }
+  .rs-hero .btn-lg { padding: .65rem 1.2rem; font-size: 1rem; }
+  .rs-hero-selo { margin-top: 1.25rem; font-size: .78rem; }
+  .rs-hero .carousel-indicators { margin-bottom: 1rem; }
+  .rs-aviso { padding-inline: .5rem; }
+  .rs-aviso .container { padding-inline: 0; }
+}
+/* Reduz os espaços em telas baixas sem cortar textos, botões ou indicadores. */
+@media (max-width: 575.98px) and (max-height: 650px) {
+  .rs-slide { padding: 1rem 0 2.25rem; }
+  .rs-hero .rs-kicker { font-size: .7rem; letter-spacing: .12em; }
+  .rs-hero-titulo { margin: .5rem 0 .65rem; }
+  .rs-hero p.lead { font-size: .95rem; line-height: 1.4; }
+  .rs-hero .d-flex.mt-4 { margin-top: 1rem !important; }
+  .rs-hero-selo { margin-top: .8rem; }
+}
+/* Evita que os atalhos do cabeçalho quebrem de linha em celulares estreitos. */
+@media (max-width: 359.98px) {
+  .rs-logo { gap: .4rem; margin-right: 0; }
+  .rs-logo-nome { font-size: 1.4rem; }
+  .rs-logo img { height: 32px; }
+  .rs-acoes { gap: .1rem; }
+  .rs-acoes .btn-icone { width: 44px; height: 44px; }
+}
+
 /* ------------------------------------------------------------------ Categorias em mosaico */
 /* CSS Grid distribui as categorias em mosaico; os breakpoints abaixo reduzem as colunas. */
 .rs-mosaico {
