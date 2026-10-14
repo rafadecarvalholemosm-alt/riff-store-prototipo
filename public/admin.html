@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel administrativo | Riff Store</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/fontes.css">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-pagina="admin">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header id="topo"></header>
+
+  <div class="rs-admin" id="admin" hidden>
+    <aside class="rs-admin-menu" aria-label="Menu do painel">
+      <p class="titulo">Gestão da loja</p>
+      <nav class="nav flex-column gap-1">
+        <a class="nav-link" href="#dashboard" data-secao="dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a>
+        <a class="nav-link" href="#produtos" data-secao="produtos"><i class="bi bi-box-seam"></i> Produtos</a>
+        <a class="nav-link" href="#pedidos" data-secao="pedidos"><i class="bi bi-receipt"></i> Pedidos <span class="badge rounded-pill" id="badge-pedidos" hidden></span></a>
+        <a class="nav-link" href="#usuarios" data-secao="usuarios"><i class="bi bi-people"></i> Usuários</a>
+        <a class="nav-link" href="#avaliacoes" data-secao="avaliacoes"><i class="bi bi-star"></i> Avaliações</a>
+        <a class="nav-link" href="#mensagens" data-secao="mensagens"><i class="bi bi-envelope"></i> Mensagens <span class="badge rounded-pill" id="badge-mensagens" hidden></span></a>
+        <a class="nav-link" href="#configuracoes" data-secao="configuracoes"><i class="bi bi-gear"></i> Configurações</a>
+        <hr class="border-secondary my-2 d-none d-lg-block">
+        <a class="nav-link" href="index.html"><i class="bi bi-shop"></i> Ver loja</a>
+        <button class="nav-link text-start border-0 bg-transparent" type="button" data-sair><i class="bi bi-box-arrow-left"></i> Sair</button>
+      </nav>
+    </aside>
+
+    <main class="rs-admin-conteudo" id="conteudo">
+      <!-- Dashboard -->
+      <section data-painel="dashboard">
+        <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-4">
+          <div><span class="rs-kicker">Visão geral</span><h1>Dashboard</h1></div>
+          <span class="small text-secondary" id="data-hoje"></span>
+        </div>
+        <div class="row g-3 mb-4" id="indicadores"></div>
+        <div class="row g-3">
+          <div class="col-xl-7">
+            <div class="rs-cartao h-100">
+              <div class="d-flex justify-content-between align-items-center mb-3"><h2 class="mb-0">Pedidos recentes</h2><a href="#pedidos" class="small">Ver todos</a></div>
+              <div class="table-responsive">
+                <table class="table rs-tabela">
+                  <thead><tr><th scope="col">#</th><th scope="col">Cliente</th><th scope="col">Data</th><th scope="col">Total</th><th scope="col">Status</th></tr></thead>
+                  <tbody id="tabela-recentes"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-5">
+            <div class="rs-cartao h-100">
+              <h2>Vendas nos últimos 7 dias</h2>
+              <div class="rs-grafico" id="grafico-vendas" role="img" aria-label="Gráfico de barras com o total vendido por dia"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Produtos -->
+      <section data-painel="produtos" hidden>
+        <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-4">
+          <div><span class="rs-kicker">Catálogo</span><h1>Produtos</h1></div>
+          <button class="btn btn-rs" type="button" id="novo-produto"><i class="bi bi-plus-lg me-1"></i> Novo produto</button>
+        </div>
+        <div class="rs-cartao">
+          <div class="row g-2 mb-3">
+            <div class="col-md-6"><label for="busca-produtos" class="visually-hidden">Buscar produto</label><input type="search" class="form-control" id="busca-produtos" placeholder="Buscar por nome ou banda..."></div>
+            <div class="col-md-3"><label for="filtro-cat-admin" class="visually-hidden">Categoria</label><select class="form-select" id="filtro-cat-admin"><option value="">Todas as categorias</option></select></div>
+            <div class="col-md-3"><label for="filtro-situacao" class="visually-hidden">Situação</label>
+              <select class="form-select" id="filtro-situacao"><option value="">Todas as situações</option><option value="esgotado">Esgotados</option><option value="baixo">Estoque baixo (≤ 5)</option><option value="promocao">Em promoção</option><option value="inativo">Inativos</option></select></div>
+          </div>
+          <div class="table-responsive">
+            <table class="table rs-tabela align-middle">
+              <thead><tr><th scope="col">Produto</th><th scope="col">Categoria</th><th scope="col">Preço</th><th scope="col">Estoque</th><th scope="col">Selos</th><th scope="col" class="text-end">Ações</th></tr></thead>
+              <tbody id="tabela-produtos"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pedidos -->
+      <section data-painel="pedidos" hidden>
+        <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-4">
+          <div><span class="rs-kicker">Vendas</span><h1>Pedidos</h1></div>
+          <div><label for="filtro-status" class="visually-hidden">Filtrar por status</label>
+            <select class="form-select" id="filtro-status"><option value="">Todos os status</option><option value="recebido">Recebido</option><option value="em_separacao">Em separação</option><option value="enviado">Enviado</option><option value="entregue">Entregue</option></select></div>
+        </div>
+        <div class="rs-cartao">
+          <div class="table-responsive">
+            <table class="table rs-tabela align-middle">
+              <thead><tr><th scope="col">#</th><th scope="col">Cliente</th><th scope="col">Data</th><th scope="col">Itens</th><th scope="col">Total</th><th scope="col">Status</th><th scope="col"></th></tr></thead>
+              <tbody id="tabela-pedidos"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Usuários -->
+      <section data-painel="usuarios" hidden>
+        <div class="mb-4"><span class="rs-kicker">Clientes</span><h1>Usuários</h1></div>
+        <div class="rs-cartao">
+          <div class="table-responsive">
+            <table class="table rs-tabela align-middle">
+              <thead><tr><th scope="col">Nome</th><th scope="col">E-mail</th><th scope="col">Cadastro</th><th scope="col">Pedidos</th><th scope="col">Total gasto</th><th scope="col">Situação</th><th scope="col" class="text-end">Ações</th></tr></thead>
+              <tbody id="tabela-usuarios"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Avaliações -->
+      <section data-painel="avaliacoes" hidden>
+        <div class="mb-4"><span class="rs-kicker">Moderação</span><h1>Avaliações</h1></div>
+        <div class="rs-cartao">
+          <div class="table-responsive">
+            <table class="table rs-tabela align-middle">
+              <thead><tr><th scope="col">Produto</th><th scope="col">Cliente</th><th scope="col">Nota</th><th scope="col">Comentário</th><th scope="col">Data</th><th scope="col" class="text-end">Visível</th></tr></thead>
+              <tbody id="tabela-avaliacoes"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mensagens -->
+      <section data-painel="mensagens" hidden>
+        <div class="mb-4"><span class="rs-kicker">Fale conosco</span><h1>Mensagens</h1></div>
+        <div id="lista-mensagens" class="d-grid gap-3"></div>
+      </section>
+
+      <!-- Configurações -->
+      <section data-painel="configuracoes" hidden>
+        <div class="mb-4"><span class="rs-kicker">Loja</span><h1>Configurações</h1></div>
+        <form class="rs-cartao" id="form-config" novalidate style="max-width:820px">
+          <h2>Contato e redes sociais</h2>
+          <p class="small text-secondary">Esses dados aparecem no rodapé e na página de contato.</p>
+          <div class="row g-3">
+            <div class="col-md-6"><label class="form-label" for="cfg-email">E-mail</label><input class="form-control" type="email" id="cfg-email" name="email"></div>
+            <div class="col-md-6"><label class="form-label" for="cfg-telefone">Telefone</label><input class="form-control" type="text" id="cfg-telefone" name="telefone"></div>
+            <div class="col-md-6"><label class="form-label" for="cfg-whatsapp">WhatsApp</label><input class="form-control" type="text" id="cfg-whatsapp" name="whatsapp"></div>
+            <div class="col-md-6"><label class="form-label" for="cfg-endereco">Localização</label><input class="form-control" type="text" id="cfg-endereco" name="endereco"></div>
+            <div class="col-12"><label class="form-label" for="cfg-horario">Horário de atendimento</label><input class="form-control" type="text" id="cfg-horario" name="horario"></div>
+            <div class="col-md-4"><label class="form-label" for="cfg-instagram"><i class="bi bi-instagram"></i> Instagram</label><input class="form-control" type="url" id="cfg-instagram" name="instagram"></div>
+            <div class="col-md-4"><label class="form-label" for="cfg-facebook"><i class="bi bi-facebook"></i> Facebook</label><input class="form-control" type="url" id="cfg-facebook" name="facebook"></div>
+            <div class="col-md-4"><label class="form-label" for="cfg-youtube"><i class="bi bi-youtube"></i> YouTube</label><input class="form-control" type="url" id="cfg-youtube" name="youtube"></div>
+          </div>
+          <button type="submit" class="btn btn-rs mt-4">Salvar configurações</button>
+        </form>
+        <div class="rs-cartao mt-4" id="cartao-restaurar" style="max-width:820px">
+          <h2>Dados de demonstração</h2>
+          <p class="small text-secondary">Volta produtos, pedidos, clientes, avaliações e mensagens ao estado inicial. Útil antes de uma apresentação.</p>
+          <button type="button" class="btn btn-outline-danger" id="restaurar-dados"><i class="bi bi-arrow-counterclockwise me-1"></i> Restaurar dados de demonstração</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal de cadastro/edição de produto -->
+  <div class="modal fade" id="modal-produto" tabindex="-1" aria-labelledby="titulo-modal-produto" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <form class="modal-content" id="form-produto" novalidate>
+        <div class="modal-header">
+          <h2 class="modal-title h3" id="titulo-modal-produto">Novo produto</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="row g-3">
+                <div class="col-md-8"><label class="form-label" for="p-nome">Nome *</label><input class="form-control" id="p-nome" name="nome" required maxlength="140"><div class="invalid-feedback"></div></div>
+                <div class="col-md-4"><label class="form-label" for="p-banda">Banda *</label><input class="form-control" id="p-banda" name="banda" required maxlength="80" list="lista-bandas-admin"><datalist id="lista-bandas-admin"></datalist><div class="invalid-feedback"></div></div>
+                <div class="col-md-4"><label class="form-label" for="p-categoria">Categoria *</label><select class="form-select" id="p-categoria" name="categoriaId" required></select><div class="invalid-feedback"></div></div>
+                <div class="col-6 col-md-4"><label class="form-label" for="p-preco">Preço (R$) *</label><input class="form-control" id="p-preco" name="preco" type="number" min="0.01" step="0.01" required><div class="invalid-feedback"></div></div>
+                <div class="col-6 col-md-4"><label class="form-label" for="p-estoque">Estoque *</label><input class="form-control" id="p-estoque" name="estoque" type="number" min="0" step="1" required><div class="invalid-feedback"></div></div>
+                <div class="col-12"><label class="form-label" for="p-descricao">Descrição *</label><textarea class="form-control" id="p-descricao" name="descricao" rows="3" required></textarea><div class="invalid-feedback"></div></div>
+                <div class="col-md-6"><label class="form-label" for="p-detalhes">Detalhes <span class="fw-normal text-secondary">(um por linha)</span></label><textarea class="form-control" id="p-detalhes" name="detalhes" rows="4"></textarea></div>
+                <div class="col-md-6"><label class="form-label" for="p-faixas">Faixas <span class="fw-normal text-secondary">(discos, uma por linha)</span></label><textarea class="form-control" id="p-faixas" name="faixas" rows="4"></textarea></div>
+                <div class="col-md-3"><label class="form-label" for="p-ano">Ano</label><input class="form-control" id="p-ano" name="ano" type="number" min="1900" max="2100"><div class="invalid-feedback"></div></div>
+                <div class="col-md-9"><label class="form-label" for="p-audio">Prévia de áudio <span class="fw-normal text-secondary">(caminho)</span></label><input class="form-control" id="p-audio" name="audio" placeholder="audio/previa-1.wav"></div>
+              </div>
+              <fieldset class="border rounded-4 p-3 mt-4">
+                <legend class="float-none w-auto px-2 fs-6 fw-bold mb-0">Promoção</legend>
+                <div class="row g-3">
+                  <div class="col-md-6"><label class="form-label" for="p-preco-promo">Preço promocional (R$)</label><input class="form-control" id="p-preco-promo" name="precoPromocional" type="number" min="0.01" step="0.01"><div class="invalid-feedback"></div></div>
+                  <div class="col-md-6"><label class="form-label" for="p-promo-fim">Válida até</label><input class="form-control" id="p-promo-fim" name="promocaoFim" type="datetime-local"><div class="invalid-feedback"></div></div>
+                </div>
+                <p class="form-text mb-0">Deixe em branco para não ter promoção. Ao expirar, a oferta sai do ar automaticamente.</p>
+              </fieldset>
+            </div>
+            <div class="col-lg-4">
+              <label class="form-label" for="p-imagem">Imagem principal *</label>
+              <input class="form-control" id="p-imagem" name="imagem" required placeholder="img/fotos/produtos/arquivo.jpg" list="lista-imagens"><datalist id="lista-imagens"></datalist>
+              <div class="invalid-feedback"></div>
+              <div class="ratio ratio-1x1 rounded-4 overflow-hidden bg-rs-cinza mt-2"><img id="p-previa" src="img/site/sem-imagem.svg" alt="Prévia da imagem" style="object-fit:cover"></div>
+              <label class="form-label mt-3" for="p-galeria">Imagens extras <span class="fw-normal text-secondary">(separadas por vírgula)</span></label>
+              <input class="form-control" id="p-galeria" name="galeria">
+              <div class="d-grid gap-2 mt-3">
+                <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="p-tamanhos" name="temTamanhos"><label class="form-check-label" for="p-tamanhos">Vestuário (P, M, G, GG)</label></div>
+                <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="p-destaque" name="destaque"><label class="form-check-label" for="p-destaque">Mostrar nos destaques</label></div>
+                <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="p-ativo" name="ativo" checked><label class="form-check-label" for="p-ativo">Ativo (visível na loja)</label></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-rs-sec" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-rs">Salvar produto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de detalhes do pedido -->
+  <div class="modal fade" id="modal-pedido" tabindex="-1" aria-labelledby="titulo-modal-pedido" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header"><h2 class="modal-title h3" id="titulo-modal-pedido">Pedido</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+        <div class="modal-body" id="corpo-modal-pedido"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/fotos.js"></script>
+  <script src="js/dados.js"></script>
+  <script src="js/api-local.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

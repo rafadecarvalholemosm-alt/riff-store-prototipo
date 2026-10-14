@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finalizar pedido | Riff Store</title>
+  <meta name="description" content="Finalização do pedido na Riff Store.">
+  <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/fontes.css">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-pagina="checkout">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header id="topo"></header>
+
+  <main id="conteudo" class="container py-4 py-lg-5">
+    <h1 class="text-center mb-4">Finalizar pedido</h1>
+
+    <ol class="rs-etapas" id="etapas" aria-label="Etapas da compra">
+      <li class="atual" aria-current="step">Identificação</li>
+      <li>Endereço</li>
+      <li>Pagamento</li>
+      <li>Revisão</li>
+    </ol>
+
+    <div id="checkout-vazio" class="rs-vazio rs-painel" hidden>
+      <i class="bi bi-bag-x" aria-hidden="true"></i>
+      <h2 class="h3 mt-3">Seu carrinho está vazio</h2>
+      <p class="text-secondary">Adicione produtos ao carrinho para finalizar um pedido.</p>
+      <a href="produtos.html" class="btn btn-rs">Ver produtos</a>
+    </div>
+
+    <div class="row g-4 g-xl-5" id="checkout" hidden>
+      <div class="col-lg-7 col-xl-8">
+        <!-- Etapa 1: identificação -->
+        <form class="rs-painel rs-etapa" data-etapa="1" novalidate>
+          <h2>Dados do cliente</h2>
+          <p class="text-secondary small mb-4">Preenchidos com os dados da sua conta. Confira antes de continuar.</p>
+          <div class="mb-3">
+            <label for="nome" class="form-label">Nome completo</label>
+            <input type="text" class="form-control" id="nome" name="nome" autocomplete="name" required maxlength="120">
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-7">
+              <label for="email" class="form-label">E-mail</label>
+              <input type="email" class="form-control" id="email" name="email" autocomplete="email" required maxlength="160">
+              <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-md-5">
+              <label for="telefone" class="form-label">Telefone</label>
+              <input type="tel" class="form-control" id="telefone" name="telefone" autocomplete="tel" placeholder="(34) 99999-9999" data-mascara="telefone" required>
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between">
+            <a href="carrinho.html" class="btn btn-rs-sec"><i class="bi bi-arrow-left me-1"></i> Carrinho</a>
+            <button type="submit" class="btn btn-rs px-5">Continuar</button>
+          </div>
+        </form>
+
+        <!-- Etapa 2: endereço -->
+        <form class="rs-painel rs-etapa" data-etapa="2" novalidate hidden>
+          <h2>Endereço de entrega</h2>
+          <p class="text-secondary small mb-4">Digite o CEP para preencher o endereço automaticamente.</p>
+          <div class="row g-3">
+            <div class="col-sm-5 col-md-4">
+              <label for="cep" class="form-label">CEP</label>
+              <input type="text" class="form-control" id="cep" name="cep" inputmode="numeric" autocomplete="postal-code" placeholder="00000-000" data-mascara="cep" required>
+              <div class="invalid-feedback"></div>
+              <div class="form-text" id="cep-status"></div>
+            </div>
+            <div class="col-12 col-md-8">
+              <label for="endereco" class="form-label">Endereço</label>
+              <input type="text" class="form-control" id="endereco" name="endereco" autocomplete="address-line1" placeholder="Rua, avenida..." required maxlength="160">
+              <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-5 col-md-3">
+              <label for="numero" class="form-label">Número</label>
+              <input type="text" class="form-control" id="numero" name="numero" required maxlength="10">
+              <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-7 col-md-4">
+              <label for="complemento" class="form-label">Complemento <span class="text-secondary fw-normal">(opcional)</span></label>
+              <input type="text" class="form-control" id="complemento" name="complemento" autocomplete="address-line2" maxlength="80">
+            </div>
+            <div class="col-md-5">
+              <label for="bairro" class="form-label">Bairro</label>
+              <input type="text" class="form-control" id="bairro" name="bairro" required maxlength="80">
+              <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-8 col-md-8">
+              <label for="cidade" class="form-label">Cidade</label>
+              <input type="text" class="form-control" id="cidade" name="cidade" autocomplete="address-level2" required maxlength="80">
+              <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-4 col-md-4">
+              <label for="uf" class="form-label">Estado</label>
+              <select class="form-select" id="uf" name="uf" autocomplete="address-level1" required>
+                <option value="">UF</option>
+              </select>
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-rs-sec" data-voltar><i class="bi bi-arrow-left me-1"></i> Voltar</button>
+            <button type="submit" class="btn btn-rs px-5">Continuar</button>
+          </div>
+        </form>
+
+        <!-- Etapa 3: pagamento -->
+        <form class="rs-painel rs-etapa" data-etapa="3" novalidate hidden>
+          <h2>Pagamento</h2>
+          <p class="small text-secondary d-flex gap-2 align-items-center"><i class="bi bi-shield-lock-fill text-success"></i> Ambiente de demonstração: nenhum valor é cobrado e os dados do cartão não são enviados.</p>
+          <fieldset class="rs-pagamento d-grid gap-2 mb-3">
+            <legend class="form-label">Forma de pagamento</legend>
+            <input type="radio" class="btn-check" name="pagamento" id="pg-pix" value="pix" checked>
+            <label for="pg-pix"><i class="bi bi-qr-code"></i><span><strong>Pix</strong><small>Aprovação imediata</small></span><span class="logos"><img src="img/pagamentos/pix.svg" alt="Pix"></span></label>
+            <input type="radio" class="btn-check" name="pagamento" id="pg-cartao" value="cartao">
+            <label for="pg-cartao"><i class="bi bi-credit-card-2-front"></i><span><strong>Cartão de crédito</strong><small>Em até 6x sem juros</small></span><span class="logos"><img src="img/pagamentos/visa.svg" alt="Visa"><img src="img/pagamentos/mastercard.svg" alt="Mastercard"><img src="img/pagamentos/amex.svg" alt="American Express"></span></label>
+            <input type="radio" class="btn-check" name="pagamento" id="pg-boleto" value="boleto">
+            <label for="pg-boleto"><i class="bi bi-upc-scan"></i><span><strong>Boleto bancário</strong><small>Vence em 3 dias úteis</small></span><span class="logos"><img src="img/pagamentos/boleto.svg" alt="Boleto"></span></label>
+          </fieldset>
+          <div id="dados-cartao" class="row g-3" hidden>
+            <div class="col-12">
+              <label for="cartao-numero" class="form-label">Número do cartão</label>
+              <div class="position-relative">
+                <input type="text" class="form-control pe-5" id="cartao-numero" name="cartaoNumero" inputmode="numeric" autocomplete="off" placeholder="0000 0000 0000 0000" maxlength="23">
+                <img id="bandeira-cartao" src="img/pagamentos/visa.svg" alt="" hidden style="position:absolute;right:.6rem;top:50%;transform:translateY(-50%);height:24px">
+              </div>
+              <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-12">
+              <label for="cartao-nome" class="form-label">Nome impresso no cartão</label>
+              <input type="text" class="form-control" id="cartao-nome" name="cartaoNome" autocomplete="off">
+              <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-6">
+              <label for="cartao-validade" class="form-label">Validade</label>
+              <input type="text" class="form-control" id="cartao-validade" name="cartaoValidade" placeholder="MM/AA" inputmode="numeric" autocomplete="off" maxlength="5">
+              <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-6">
+              <label for="cartao-cvv" class="form-label">CVV</label>
+              <input type="text" class="form-control" id="cartao-cvv" name="cartaoCvv" inputmode="numeric" autocomplete="off" maxlength="4">
+              <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-12">
+              <label for="parcelas" class="form-label">Parcelas</label>
+              <select class="form-select" id="parcelas" name="parcelas"></select>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-rs-sec" data-voltar><i class="bi bi-arrow-left me-1"></i> Voltar</button>
+            <button type="submit" class="btn btn-rs px-5">Revisar pedido</button>
+          </div>
+        </form>
+
+        <!-- Etapa 4: revisão -->
+        <section class="rs-painel rs-etapa" data-etapa="4" hidden aria-labelledby="titulo-revisao">
+          <h2 id="titulo-revisao">Revise seu pedido</h2>
+          <p class="text-secondary small">Confira os itens, o endereço e a forma de pagamento antes de confirmar.</p>
+          <ul class="list-unstyled mb-4" id="revisao-itens"></ul>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <div class="bg-rs-cinza rounded-4 p-3 h-100">
+                <div class="d-flex justify-content-between"><strong class="small text-uppercase" style="letter-spacing:.1em">Entrega</strong><button type="button" class="btn btn-link btn-sm p-0" data-ir="2">Alterar</button></div>
+                <p class="small mb-0 mt-2" id="revisao-endereco"></p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="bg-rs-cinza rounded-4 p-3 h-100">
+                <div class="d-flex justify-content-between"><strong class="small text-uppercase" style="letter-spacing:.1em">Pagamento</strong><button type="button" class="btn btn-link btn-sm p-0" data-ir="3">Alterar</button></div>
+                <p class="small mb-0 mt-2" id="revisao-pagamento"></p>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <button type="button" class="btn btn-rs-sec" data-voltar><i class="bi bi-arrow-left me-1"></i> Voltar</button>
+            <button type="button" class="btn btn-rs btn-lg px-5" id="confirmar"><i class="bi bi-lock-fill me-2"></i>Confirmar pedido</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-lg-5 col-xl-4">
+        <aside class="rs-resumo" aria-labelledby="titulo-resumo">
+          <h2 id="titulo-resumo">Seu pedido</h2>
+          <ul class="list-unstyled mb-3" id="resumo-itens"></ul>
+          <div class="rs-resumo-linha"><span>Subtotal</span><strong id="subtotal"></strong></div>
+          <div class="rs-resumo-linha rs-resumo-desconto" id="linha-desconto" hidden><span>Desconto (<span id="desconto-cupom"></span>)</span><strong id="desconto"></strong></div>
+          <div class="rs-resumo-linha"><span>Frete</span><strong id="frete"></strong></div>
+          <div class="rs-resumo-linha rs-resumo-total"><span>Total</span><span id="total"></span></div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Pedido confirmado -->
+    <section class="rs-painel text-center py-5 mx-auto" style="max-width:640px" id="sucesso" hidden aria-live="polite">
+      <div class="rs-sucesso-icone"><i class="bi bi-check-lg"></i></div>
+      <h2 class="display-5">Pedido confirmado!</h2>
+      <p class="lead">Seu pedido <strong id="sucesso-numero"></strong> foi registrado com sucesso.</p>
+      <p class="text-secondary" id="sucesso-pagamento"></p>
+      <div class="d-flex justify-content-center gap-2 flex-wrap mt-4">
+        <a href="conta.html" class="btn btn-rs">Acompanhar meus pedidos</a>
+        <a href="produtos.html" class="btn btn-rs-sec">Continuar comprando</a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="rodape"></footer>
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/fotos.js"></script>
+  <script src="js/dados.js"></script>
+  <script src="js/api-local.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minha conta | Riff Store</title>
+  <meta name="description" content="Seus dados e histórico de pedidos na Riff Store.">
+  <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/fontes.css">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-pagina="conta">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header id="topo"></header>
+
+  <main id="conteudo">
+    <section class="rs-pagina-topo" data-bg-foto="show-festa">
+      <div class="container">
+        <span class="rs-kicker claro">Minha conta</span>
+        <h1 id="saudacao">Olá!</h1>
+        <p id="resumo-conta">Acompanhe seus pedidos e mantenha seus dados atualizados.</p>
+      </div>
+    </section>
+
+    <div class="container py-5">
+      <div class="row g-4 g-xl-5">
+        <div class="col-lg-3">
+          <nav class="nav flex-column rs-conta-menu" role="tablist" aria-label="Seções da conta">
+            <button class="nav-link active" id="aba-pedidos" data-bs-toggle="tab" data-bs-target="#painel-pedidos" type="button" role="tab" aria-controls="painel-pedidos" aria-selected="true"><i class="bi bi-box-seam"></i> Meus pedidos</button>
+            <button class="nav-link" id="aba-dados" data-bs-toggle="tab" data-bs-target="#painel-dados" type="button" role="tab" aria-controls="painel-dados" aria-selected="false"><i class="bi bi-person-gear"></i> Meus dados</button>
+            <a class="nav-link" href="admin.html" id="link-admin" hidden><i class="bi bi-speedometer2"></i> Painel administrativo</a>
+            <button class="nav-link text-danger" type="button" data-sair><i class="bi bi-box-arrow-right"></i> Sair</button>
+          </nav>
+        </div>
+
+        <div class="col-lg-9 tab-content">
+          <section class="tab-pane fade show active" id="painel-pedidos" role="tabpanel" aria-labelledby="aba-pedidos" tabindex="0">
+            <h2 class="mb-4">Histórico de pedidos</h2>
+            <div id="lista-pedidos"><div class="rs-esqueleto" style="height:160px"></div></div>
+          </section>
+
+          <section class="tab-pane fade" id="painel-dados" role="tabpanel" aria-labelledby="aba-dados" tabindex="0">
+            <h2 class="mb-4">Meus dados</h2>
+            <form id="form-dados" class="rs-painel" novalidate>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="conta-nome" class="form-label">Nome completo</label>
+                  <input type="text" class="form-control" id="conta-nome" name="nome" autocomplete="name" required maxlength="120">
+                  <div class="invalid-feedback"></div>
+                </div>
+                <div class="col-md-6">
+                  <label for="conta-email" class="form-label">E-mail</label>
+                  <input type="email" class="form-control" id="conta-email" readonly aria-describedby="ajuda-email">
+                  <div class="form-text" id="ajuda-email">O e-mail é usado no login e não pode ser alterado.</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="conta-telefone" class="form-label">Telefone</label>
+                  <input type="tel" class="form-control" id="conta-telefone" name="telefone" data-mascara="telefone" autocomplete="tel">
+                  <div class="invalid-feedback"></div>
+                </div>
+              </div>
+              <hr class="my-4">
+              <h3 class="h4">Alterar senha <span class="text-secondary fs-6 text-capitalize" style="font-family:var(--rs-fonte-texto)">(opcional)</span></h3>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="senha-atual" class="form-label">Senha atual</label>
+                  <input type="password" class="form-control" id="senha-atual" name="senhaAtual" autocomplete="current-password">
+                  <div class="invalid-feedback"></div>
+                </div>
+                <div class="col-md-6">
+                  <label for="nova-senha" class="form-label">Nova senha</label>
+                  <input type="password" class="form-control" id="nova-senha" name="novaSenha" autocomplete="new-password" minlength="6">
+                  <div class="invalid-feedback"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-rs mt-4">Salvar alterações</button>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="rodape"></footer>
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/fotos.js"></script>
+  <script src="js/dados.js"></script>
+  <script src="js/api-local.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/conta.js"></script>
+</body>
+</html>

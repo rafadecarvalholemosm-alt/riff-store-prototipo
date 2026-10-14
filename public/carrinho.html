@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meu carrinho | Riff Store</title>
+  <meta name="description" content="Itens escolhidos na Riff Store.">
+  <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/fontes.css">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-pagina="carrinho">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header id="topo"></header>
+
+  <main id="conteudo" class="container py-4 py-lg-5">
+    <nav aria-label="Trilha de navegação">
+      <ol class="breadcrumb mb-3">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Carrinho</li>
+      </ol>
+    </nav>
+    <h1 class="mb-4">Meu carrinho <span class="text-secondary fs-4" id="qtd-titulo"></span></h1>
+
+    <div id="carrinho-vazio" class="rs-vazio rs-painel" hidden>
+      <i class="bi bi-bag-x" aria-hidden="true"></i>
+      <h2 class="h3 mt-3">Seu carrinho está vazio</h2>
+      <p class="text-secondary">Que tal começar pelos destaques da semana?</p>
+      <a href="produtos.html" class="btn btn-rs btn-lg">Ver produtos</a>
+    </div>
+
+    <div class="row g-4 g-xl-5" id="carrinho-cheio" hidden>
+      <div class="col-lg-8">
+        <table class="table rs-tabela-carrinho">
+          <caption class="visually-hidden">Itens do carrinho com preço, quantidade e total</caption>
+          <thead>
+            <tr>
+              <th scope="col">Produto</th>
+              <th scope="col" class="col-preco">Preço</th>
+              <th scope="col">Quantidade</th>
+              <th scope="col" class="text-end">Total</th>
+            </tr>
+          </thead>
+          <tbody id="itens-carrinho"></tbody>
+        </table>
+        <div class="d-flex justify-content-between flex-wrap gap-2">
+          <a href="produtos.html" class="btn btn-link text-secondary px-0"><i class="bi bi-arrow-left me-1"></i> Continuar comprando</a>
+          <button type="button" class="btn btn-link text-secondary px-0" id="esvaziar"><i class="bi bi-trash3 me-1"></i> Esvaziar carrinho</button>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <aside class="rs-resumo" aria-labelledby="titulo-resumo">
+          <h2 id="titulo-resumo">Resumo do pedido</h2>
+          <div class="rs-resumo-linha"><span>Subtotal (<span id="qtd-itens">0</span> itens)</span><strong id="subtotal">R$ 0,00</strong></div>
+          <div class="rs-resumo-linha rs-resumo-desconto" id="linha-desconto" hidden><span>Desconto (<span id="desconto-cupom"></span>)</span><strong id="desconto"></strong></div>
+          <div class="rs-resumo-linha"><span>Frete</span><strong id="frete">–</strong></div>
+          <form class="rs-cupom" id="form-cupom" novalidate>
+            <label for="cupom-codigo" class="form-label small fw-semibold mb-1">Cupom de desconto</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="cupom-codigo" placeholder="Ex.: ROCK10" maxlength="20" autocomplete="off" aria-describedby="cupom-msg">
+              <button class="btn btn-rs-sec" type="submit">Aplicar</button>
+            </div>
+            <div class="invalid-feedback d-block small" id="cupom-erro" hidden></div>
+          </form>
+          <div class="rs-cupom-aplicado" id="cupom-aplicado" hidden>
+            <span><i class="bi bi-ticket-perforated me-1"></i>Cupom <strong id="cupom-aplicado-codigo"></strong> aplicado</span>
+            <button type="button" class="btn btn-link btn-sm p-0" id="cupom-remover">Remover</button>
+          </div>
+          <p class="small text-secondary mt-1 mb-0" id="cupom-msg">Cadastre seu e-mail na newsletter, no rodapé, para ganhar o cupom ROCK10 (10% off).</p>
+          <div class="my-3">
+            <p class="small mb-2" id="frete-msg"></p>
+            <div class="rs-frete-barra" role="progressbar" aria-label="Progresso para o frete grátis" aria-valuemin="0" aria-valuemax="100" id="frete-progresso"><div></div></div>
+          </div>
+          <div class="rs-resumo-linha rs-resumo-total"><span>Total</span><span id="total">R$ 0,00</span></div>
+          <p class="small text-secondary text-end mb-4" id="parcelas"></p>
+          <div class="d-grid gap-2">
+            <a href="checkout.html" class="btn btn-rs btn-lg">Finalizar pedido <i class="bi bi-arrow-right ms-1"></i></a>
+            <a href="produtos.html" class="btn btn-rs-sec">Continuar comprando</a>
+          </div>
+          <p class="small text-secondary mt-3 mb-0"><i class="bi bi-shield-lock me-1"></i> Compra 100% segura e dados protegidos.</p>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer id="rodape"></footer>
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/fotos.js"></script>
+  <script src="js/dados.js"></script>
+  <script src="js/api-local.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/carrinho.js"></script>
+</body>
+</html>

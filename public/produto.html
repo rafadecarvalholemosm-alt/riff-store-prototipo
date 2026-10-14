@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Produto | Riff Store</title>
+  <meta name="description" content="Detalhes do produto na Riff Store.">
+  <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/fontes.css">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-pagina="produto">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header id="topo"></header>
+
+  <main id="conteudo" class="container py-4 py-lg-5">
+    <nav aria-label="Trilha de navegação">
+      <ol class="breadcrumb mb-4" id="trilha">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item"><a href="produtos.html">Produtos</a></li>
+      </ol>
+    </nav>
+
+    <div id="produto-carregando" class="row g-5">
+      <div class="col-lg-6"><div class="rs-esqueleto" style="aspect-ratio:1"></div></div>
+      <div class="col-lg-6"><div class="rs-esqueleto mb-3" style="height:60px"></div><div class="rs-esqueleto mb-3" style="height:40px;width:60%"></div><div class="rs-esqueleto" style="height:200px"></div></div>
+    </div>
+
+    <div id="produto-erro" class="rs-vazio" hidden>
+      <i class="bi bi-emoji-frown" aria-hidden="true"></i>
+      <h1 class="h2 mt-3">Produto não encontrado</h1>
+      <p class="text-secondary">Ele pode ter saído do catálogo. Que tal dar uma olhada nos outros?</p>
+      <a href="produtos.html" class="btn btn-rs">Ver produtos</a>
+    </div>
+
+    <article id="produto" hidden>
+      <div class="row g-4 g-lg-5">
+        <!-- Galeria -->
+        <div class="col-lg-6">
+          <div class="rs-galeria-principal" id="galeria-principal" title="Clique para ampliar">
+            <div class="rs-selos" id="produto-selos"></div>
+            <img id="imagem-principal" src="img/site/sem-imagem.svg" alt="">
+          </div>
+          <div class="rs-miniaturas" id="miniaturas" aria-label="Outras imagens do produto"></div>
+        </div>
+
+        <!-- Informações e compra -->
+        <div class="col-lg-6" id="comprar">
+          <a class="rs-kicker" id="produto-banda" href="#"></a>
+          <h1 class="rs-produto-nome" id="produto-nome"></h1>
+          <a href="#avaliacoes" class="d-inline-flex align-items-center gap-2 text-reset mb-3" id="produto-nota"></a>
+
+          <div class="d-flex align-items-baseline gap-3 flex-wrap mb-1">
+            <p class="rs-produto-preco mb-0" id="produto-preco"></p>
+            <span class="rs-produto-preco-antigo" id="produto-preco-antigo"></span>
+            <span class="rs-desconto" id="produto-desconto" hidden></span>
+          </div>
+          <p class="text-secondary small mb-3" id="produto-parcelas"></p>
+
+          <div class="rs-oferta-box mb-4" id="produto-oferta" hidden>
+            <div><strong class="d-block text-rs"><i class="bi bi-alarm"></i> Oferta por tempo limitado</strong><span class="small text-secondary">Depois disso o preço volta ao normal.</span></div>
+            <div id="produto-contagem" class="ms-auto"></div>
+          </div>
+
+          <form id="form-compra" novalidate>
+            <fieldset class="mb-4" id="bloco-tamanhos" hidden>
+              <legend class="rs-rotulo d-flex justify-content-between w-100">Tamanho <a href="contato.html#faq-tamanhos" class="fw-normal text-decoration-underline small text-secondary" style="letter-spacing:0;text-transform:none">Tabela de medidas</a></legend>
+              <div class="rs-tamanhos" role="radiogroup" id="tamanhos">
+                <input type="radio" class="btn-check" name="tamanho" id="tam-p" value="P"><label for="tam-p">P</label>
+                <input type="radio" class="btn-check" name="tamanho" id="tam-m" value="M"><label for="tam-m">M</label>
+                <input type="radio" class="btn-check" name="tamanho" id="tam-g" value="G"><label for="tam-g">G</label>
+                <input type="radio" class="btn-check" name="tamanho" id="tam-gg" value="GG"><label for="tam-gg">GG</label>
+              </div>
+              <div class="invalid-feedback" id="erro-tamanho">Escolha um tamanho para continuar.</div>
+            </fieldset>
+
+            <div class="d-flex flex-wrap align-items-end gap-3 mb-3">
+              <div>
+                <label class="rs-rotulo" for="quantidade">Quantidade</label>
+                <div class="rs-qtd">
+                  <button type="button" data-qtd="-1" aria-label="Diminuir quantidade"><i class="bi bi-dash"></i></button>
+                  <input type="number" id="quantidade" name="quantidade" value="1" min="1" max="10" inputmode="numeric">
+                  <button type="button" data-qtd="1" aria-label="Aumentar quantidade"><i class="bi bi-plus"></i></button>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-rs btn-lg flex-grow-1" id="btn-adicionar" style="height:48px;padding-block:0">
+                <i class="bi bi-bag-plus me-2"></i>Adicionar ao carrinho
+              </button>
+            </div>
+          </form>
+          <p class="small mb-4" id="produto-estoque"></p>
+
+          <ul class="rs-info-lista border-top pt-4">
+            <li><i class="bi bi-truck"></i>Frete grátis em compras acima de R$ 299</li>
+            <li><i class="bi bi-arrow-repeat"></i>Primeira troca grátis em até 30 dias</li>
+            <li><i class="bi bi-shield-check"></i>Compra 100% segura</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Abas: descrição, detalhes, faixas e avaliações -->
+      <section class="mt-5 pt-lg-3" aria-label="Mais informações sobre o produto">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item" role="presentation"><button class="nav-link active" id="aba-descricao" data-bs-toggle="tab" data-bs-target="#painel-descricao" type="button" role="tab" aria-controls="painel-descricao" aria-selected="true">Descrição</button></li>
+          <li class="nav-item" role="presentation" id="item-aba-faixas" hidden><button class="nav-link" id="aba-faixas" data-bs-toggle="tab" data-bs-target="#painel-faixas" type="button" role="tab" aria-controls="painel-faixas" aria-selected="false">Faixas</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link" id="aba-avaliacoes" data-bs-toggle="tab" data-bs-target="#painel-avaliacoes" type="button" role="tab" aria-controls="painel-avaliacoes" aria-selected="false">Avaliações <span id="qtd-avaliacoes" class="badge rounded-pill text-bg-dark ms-1">0</span></button></li>
+        </ul>
+        <div class="tab-content pt-4">
+          <div class="tab-pane fade show active" id="painel-descricao" role="tabpanel" aria-labelledby="aba-descricao" tabindex="0">
+            <div class="row g-4">
+              <div class="col-lg-7"><p class="lead fs-6" id="produto-descricao" style="line-height:1.8"></p></div>
+              <div class="col-lg-5">
+                <div class="bg-rs-cinza rounded-4 p-4">
+                  <h2 class="h5 fw-bold font-sans" style="font-family:var(--rs-fonte-texto);text-transform:none;letter-spacing:0">Detalhes</h2>
+                  <ul class="mb-0 ps-3" id="produto-detalhes"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="painel-faixas" role="tabpanel" aria-labelledby="aba-faixas" tabindex="0">
+            <div class="row g-4">
+              <div class="col-lg-7"><ol class="rs-faixas" id="produto-faixas"></ol></div>
+              <div class="col-lg-5" id="bloco-previa" hidden>
+                <div class="rs-player" id="player">
+                  <div class="disco-mini" aria-hidden="true"></div>
+                  <div class="flex-grow-1">
+                    <strong class="d-block small mb-1">Ouça uma prévia</strong>
+                    <audio controls preload="none" id="audio-previa">
+                      <source type="audio/wav">
+                      Seu navegador não suporta a reprodução de áudio.
+                    </audio>
+                  </div>
+                </div>
+                <p class="small text-secondary mt-2">Ouça um trecho antes de levar o disco para casa.</p>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="painel-avaliacoes" role="tabpanel" aria-labelledby="aba-avaliacoes" tabindex="0">
+            <div class="row g-5" id="avaliacoes">
+              <div class="col-lg-4">
+                <div class="rs-painel text-center">
+                  <div class="rs-nota-grande" id="nota-media">–</div>
+                  <div id="nota-estrelas" class="fs-5"></div>
+                  <p class="small text-secondary mt-1 mb-3" id="nota-total"></p>
+                  <div id="nota-barras" class="text-start small"></div>
+                </div>
+                <div class="mt-4" id="area-avaliar"></div>
+              </div>
+              <div class="col-lg-8" id="lista-avaliacoes"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </article>
+
+    <!-- Relacionados -->
+    <section class="mt-5 pt-4" id="secao-relacionados" hidden aria-labelledby="titulo-relacionados">
+      <div class="rs-secao-titulo"><div><span class="rs-kicker">Combina com</span><h2 id="titulo-relacionados">Você também pode gostar</h2></div></div>
+      <div class="row g-3 g-lg-4 row-cols-2 row-cols-lg-4" id="relacionados"></div>
+    </section>
+  </main>
+
+  <footer id="rodape"></footer>
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/fotos.js"></script>
+  <script src="js/dados.js"></script>
+  <script src="js/api-local.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/produto.js"></script>
+</body>
+</html>

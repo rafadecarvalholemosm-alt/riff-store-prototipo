@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Produtos | Riff Store</title>
+  <meta name="description" content="Catálogo da Riff Store: camisetas de bandas, discos de vinil, CDs, pôsteres e acessórios de rock.">
+  <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/fontes.css">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-pagina="produtos">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header id="topo"></header>
+
+  <main id="conteudo">
+    <section class="rs-pagina-topo" data-bg-foto="show-holofote">
+      <div class="container">
+        <nav aria-label="Trilha de navegação">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="produtos.html">Produtos</a></li>
+            <li class="breadcrumb-item active" aria-current="page" id="trilha-atual">Todos</li>
+          </ol>
+        </nav>
+        <h1 id="titulo-lista">Todos os produtos</h1>
+        <p id="subtitulo-lista">Camisetas, vinis, CDs, pôsteres e acessórios para quem vive o rock.</p>
+      </div>
+    </section>
+
+    <div class="container py-5">
+      <div class="row g-4 g-xl-5">
+        <!-- Filtros: coluna lateral no computador, painel deslizante no celular -->
+        <aside class="col-lg-3">
+          <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="painel-filtros" aria-labelledby="titulo-filtros">
+            <div class="offcanvas-header border-bottom">
+              <h2 class="offcanvas-title h3 mb-0" id="titulo-filtros">Filtros</h2>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#painel-filtros" aria-label="Fechar filtros"></button>
+            </div>
+            <div class="offcanvas-body d-block">
+              <form id="form-filtros" class="rs-filtros w-100" aria-label="Filtrar produtos">
+                <div class="rs-filtro-bloco">
+                  <h2>CATEGORIAS</h2>
+                  <ul class="rs-lista-cat" id="lista-categorias">
+                    <li><a href="produtos.html" data-categoria="">Todas <span id="total-geral">–</span></a></li>
+                  </ul>
+                </div>
+
+                <div class="rs-filtro-bloco">
+                  <h2>FAIXA DE PREÇO</h2>
+                  <label for="preco-max" class="form-label small fw-normal text-secondary mb-1">Preço máximo</label>
+                  <input type="range" class="form-range" id="preco-max" min="0" max="300" step="5" value="300">
+                  <div class="rs-faixa-valores"><span id="preco-min-rotulo">R$ 0</span><span id="preco-max-rotulo">R$ 300</span></div>
+                  <div class="d-flex gap-2 mt-3">
+                    <div class="flex-fill">
+                      <label for="preco-min-num" class="form-label small fw-normal text-secondary mb-1">Mín.</label>
+                      <input type="number" class="form-control form-control-sm" id="preco-min-num" min="0" step="1" placeholder="0" inputmode="decimal">
+                    </div>
+                    <div class="flex-fill">
+                      <label for="preco-max-num" class="form-label small fw-normal text-secondary mb-1">Máx.</label>
+                      <input type="number" class="form-control form-control-sm" id="preco-max-num" min="0" step="1" placeholder="300" inputmode="decimal">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="rs-filtro-bloco">
+                  <h2>BANDA</h2>
+                  <div class="rs-bandas-lista" id="lista-bandas"><div class="rs-esqueleto" style="height:120px"></div></div>
+                </div>
+
+                <div class="rs-filtro-bloco">
+                  <h2>DISPONIBILIDADE</h2>
+                  <div class="form-check form-switch mb-2">
+                    <input class="form-check-input" type="checkbox" role="switch" id="filtro-estoque">
+                    <label class="form-check-label" for="filtro-estoque">Somente em estoque</label>
+                  </div>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="filtro-promocao">
+                    <label class="form-check-label" for="filtro-promocao">Somente promoções</label>
+                  </div>
+                </div>
+
+                <button type="button" class="btn btn-rs-sec w-100 mt-4" id="limpar-filtros"><i class="bi bi-arrow-counterclockwise me-1"></i> Limpar filtros</button>
+              </form>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Resultados -->
+        <section class="col-lg-9" aria-labelledby="titulo-lista">
+          <div class="rs-barra-lista">
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+              <button class="btn btn-rs-sec d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#painel-filtros" aria-controls="painel-filtros">
+                <i class="bi bi-sliders me-1"></i> Filtros
+              </button>
+              <p class="mb-0 text-secondary small" id="contagem-resultados" aria-live="polite">Carregando...</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <label for="ordenar" class="small text-secondary text-nowrap">Ordenar por</label>
+              <select id="ordenar" class="form-select form-select-sm" style="min-width: 180px">
+                <option value="relevancia">Mais relevantes</option>
+                <option value="menor">Menor preço</option>
+                <option value="maior">Maior preço</option>
+                <option value="novos">Lançamentos</option>
+                <option value="nome">Nome (A–Z)</option>
+              </select>
+            </div>
+          </div>
+          <div class="rs-filtros-ativos mb-3" id="filtros-ativos"></div>
+
+          <div class="row g-3 g-xl-4 row-cols-2 row-cols-md-3" id="grade-produtos"></div>
+
+          <nav class="mt-5" aria-label="Paginação dos produtos">
+            <ul class="pagination justify-content-center flex-wrap" id="paginacao"></ul>
+          </nav>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer id="rodape"></footer>
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/fotos.js"></script>
+  <script src="js/dados.js"></script>
+  <script src="js/api-local.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/produtos.js"></script>
+</body>
+</html>

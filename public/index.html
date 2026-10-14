@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Riff Store | Merch &amp; Vinis de Rock</title>
+  <meta name="description" content="Riff Store: camisetas de bandas, discos de vinil, CDs, pôsteres e acessórios de rock. Uma loja virtual para quem vive o rock.">
+  <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/fontes.css">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-pagina="home">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header id="topo"></header>
+
+  <main id="conteudo">
+    <!-- Banner em carrossel -->
+    <section class="rs-hero" aria-label="Destaques da loja">
+      <div id="rs-carrossel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="7000">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#rs-carrossel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1: Mais que produtos"></button>
+          <button type="button" data-bs-target="#rs-carrossel" data-bs-slide-to="1" aria-label="Slide 2: Vinis"></button>
+          <button type="button" data-bs-target="#rs-carrossel" data-bs-slide-to="2" aria-label="Slide 3: Ofertas"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="rs-slide rs-slide-show">
+              <div class="rs-slide-bg" data-bg-foto="show-luzes-vermelhas" role="img" aria-label="Público em um show de rock sob luzes vermelhas"></div>
+              <div class="container">
+                <div class="col-lg-8 col-xl-7">
+                  <span class="rs-kicker claro rs-anima">Nova coleção 2026</span>
+                  <h1 class="rs-hero-titulo rs-anima">Mais que produtos, <span>é rock</span> na sua vida.</h1>
+                  <p class="lead rs-anima">Camisetas, vinis, CDs, pôsteres e acessórios das bandas que fizeram (e fazem) história.</p>
+                  <div class="d-flex flex-wrap gap-2 mt-4 rs-anima">
+                    <a href="produtos.html" class="btn btn-rs btn-lg">Ver produtos <i class="bi bi-arrow-right ms-1"></i></a>
+                    <a href="produtos.html?promocao=1" class="btn btn-outline-light btn-rs-claro btn-lg">Ofertas da semana</a>
+                  </div>
+                  <div class="rs-hero-selo rs-anima">
+                    <div class="avatares" aria-hidden="true">
+                      <span style="background:#b01116">JS</span><span style="background:#333">MS</span><span style="background:#8c0d11">CL</span><span style="background:#555">AP</span>
+                    </div>
+                    <span><span class="rs-estrelas"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></span><br>+2.000 fãs de rock já compraram aqui</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="rs-slide rs-slide-vinil">
+              <div class="rs-slide-bg" data-bg-foto="toca-discos" role="img" aria-label="Toca-discos tocando um vinil"></div>
+              <div class="container">
+                <div class="row align-items-center g-5">
+                  <div class="col-lg-6">
+                    <span class="rs-kicker claro rs-anima">Vinis 180 gramas</span>
+                    <h2 class="rs-hero-titulo rs-anima">O som que <span>gira</span> de verdade.</h2>
+                    <p class="lead rs-anima">Clássicos remasterizados com capa gatefold e prévia das faixas direto na página do disco.</p>
+                    <div class="d-flex flex-wrap gap-2 mt-4 rs-anima">
+                      <a href="produtos.html?categoria=vinil" class="btn btn-rs btn-lg">Ver discos de vinil</a>
+                      <a href="produtos.html?categoria=cds" class="btn btn-outline-light btn-rs-claro btn-lg">CDs</a>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 d-none d-lg-block">
+                    <div class="rs-vinil-giro" aria-hidden="true">
+                      <img class="disco" src="img/fotos/disco-banner.webp" alt="" width="820" height="820">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="rs-slide rs-slide-oferta">
+              <div class="rs-slide-bg" data-bg-foto="guitarrista-pb" role="img" aria-label="Guitarrista tocando no palco"></div>
+              <div class="container">
+                <div class="row align-items-center g-5">
+                  <div class="col-lg-6">
+                    <span class="rs-kicker claro rs-anima">Ofertas por tempo limitado</span>
+                    <h2 class="rs-hero-titulo rs-anima">Até <span id="rs-hero-desconto">30%</span> off no merch.</h2>
+                    <p class="lead rs-anima">Quando o cronômetro zerar, a oferta sai do ar. Corre!</p>
+                    <div class="rs-anima mb-4" id="rs-hero-contagem"></div>
+                    <a href="produtos.html?promocao=1" class="btn btn-rs btn-lg rs-anima">Aproveitar ofertas</a>
+                  </div>
+                  <div class="col-lg-6 d-none d-lg-block">
+                    <img src="img/fotos/produtos/camiseta-rolling-stones-tattoo-you.jpg" class="rs-oferta-hero-img" alt="Produto em promoção" id="rs-hero-oferta-img">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#rs-carrossel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Slide anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#rs-carrossel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Próximo slide</span>
+        </button>
+      </div>
+      <a class="rs-rolar d-none d-md-flex" href="#categorias" aria-label="Rolar para as categorias">Role</a>
+    </section>
+
+    <!-- Faixa rolante de bandas -->
+    <div class="rs-marquee" aria-label="Bandas do catálogo">
+      <div class="rs-marquee-trilho" id="rs-marquee"></div>
+    </div>
+
+    <!-- Benefícios -->
+    <section class="rs-beneficios" aria-label="Vantagens da loja">
+      <div class="container">
+        <div class="row row-cols-2 row-cols-lg-4">
+          <div class="col"><div class="rs-beneficio"><i class="bi bi-truck" aria-hidden="true"></i><div><strong>Frete grátis</strong><span>acima de R$ 299</span></div></div></div>
+          <div class="col"><div class="rs-beneficio"><i class="bi bi-arrow-repeat" aria-hidden="true"></i><div><strong>Troca fácil</strong><span>em até 30 dias</span></div></div></div>
+          <div class="col"><div class="rs-beneficio"><i class="bi bi-vinyl" aria-hidden="true"></i><div><strong>Vinil protegido</strong><span>embalagem reforçada</span></div></div></div>
+          <div class="col"><div class="rs-beneficio"><i class="bi bi-credit-card" aria-hidden="true"></i><div><strong>Até 6x sem juros</strong><span>ou desconto no Pix</span></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categorias -->
+    <section class="rs-secao" id="categorias" aria-labelledby="titulo-categorias">
+      <div class="container">
+        <div class="rs-secao-titulo">
+          <div><span class="rs-kicker">Explore</span><h2 id="titulo-categorias">Compre por categoria</h2></div>
+          <a href="produtos.html" class="rs-link-seta">Ver tudo <i class="bi bi-arrow-right"></i></a>
+        </div>
+        <div class="rs-mosaico" id="rs-categorias">
+          <div class="rs-esqueleto rs-cat"></div><div class="rs-esqueleto rs-cat"></div><div class="rs-esqueleto rs-cat"></div><div class="rs-esqueleto rs-cat"></div><div class="rs-esqueleto rs-cat"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Destaques -->
+    <section class="rs-secao pt-0" aria-labelledby="titulo-destaques">
+      <div class="container">
+        <div class="rs-secao-titulo">
+          <div><span class="rs-kicker">Os mais pedidos</span><h2 id="titulo-destaques">Destaques</h2></div>
+          <a href="produtos.html" class="rs-link-seta">Ver catálogo completo <i class="bi bi-arrow-right"></i></a>
+        </div>
+        <div class="row g-3 g-lg-4 row-cols-2 row-cols-lg-4" id="rs-destaques"></div>
+      </div>
+    </section>
+
+    <!-- Editorial: vinil -->
+    <section class="rs-editorial" aria-labelledby="titulo-editorial">
+      <div class="rs-editorial-foto" data-bg-foto="toca-discos-agulha" role="img" aria-label="Agulha de um toca-discos sobre um vinil">
+        <div class="etiqueta"><i class="bi bi-vinyl-fill fs-2 text-danger" aria-hidden="true"></i><div><strong>180 gramas</strong>prensagens remasterizadas</div></div>
+      </div>
+      <div class="rs-editorial-texto">
+        <span class="rs-kicker claro">Vinil é ritual</span>
+        <h2 id="titulo-editorial" class="display-4 mt-2 mb-3">Tire o disco da capa. Baixe a agulha. Aumente o volume.</h2>
+        <p>Escolhemos cada vinil a dedo, das prensagens clássicas às reedições com encarte e pôster. Na página do disco você vê a lista de faixas e ouve uma prévia antes de levar para casa.</p>
+        <ul class="rs-lista-check">
+          <li><i class="bi bi-check2-circle"></i> Embalagem reforçada com cantoneiras: o disco chega sem empenar</li>
+          <li><i class="bi bi-check2-circle"></i> Informações de edição, ano e faixas para colecionadores</li>
+          <li><i class="bi bi-check2-circle"></i> Prévias de áudio direto na página do produto</li>
+        </ul>
+        <div><a href="produtos.html?categoria=vinil" class="btn btn-rs btn-lg">Explorar os vinis <i class="bi bi-arrow-right ms-1"></i></a></div>
+      </div>
+    </section>
+
+    <!-- Ofertas com contagem regressiva -->
+    <section class="rs-ofertas rs-secao" aria-labelledby="titulo-ofertas" id="ofertas" data-bg-foto="show-palco-vermelho">
+      <div class="container position-relative">
+        <div class="row align-items-end g-4 mb-4">
+          <div class="col-lg-6">
+            <span class="rs-kicker claro">Queima de estoque</span>
+            <h2 id="titulo-ofertas" class="mt-2 mb-2">Ofertas da semana</h2>
+            <p class="text-white-50 mb-0">Preços especiais por tempo limitado. Cada oferta sai do ar quando o cronômetro zerar.</p>
+          </div>
+          <div class="col-lg-6 text-lg-end">
+            <p class="small text-white-50 mb-2">A próxima oferta termina em:</p>
+            <div id="rs-contagem-ofertas"></div>
+          </div>
+        </div>
+        <div class="row g-3 g-lg-4 row-cols-2 row-cols-lg-4" id="rs-ofertas"></div>
+      </div>
+    </section>
+
+    <!-- Lançamentos -->
+    <section class="rs-secao" aria-labelledby="titulo-novos">
+      <div class="container">
+        <div class="rs-secao-titulo">
+          <div><span class="rs-kicker">Acabou de chegar</span><h2 id="titulo-novos">Lançamentos</h2></div>
+          <a href="produtos.html?ordem=novos" class="rs-link-seta">Ver novidades <i class="bi bi-arrow-right"></i></a>
+        </div>
+        <div class="row g-3 g-lg-4 row-cols-2 row-cols-lg-4" id="rs-novos"></div>
+      </div>
+    </section>
+
+    <!-- Galeria -->
+    <section class="rs-secao pt-0" aria-labelledby="titulo-galeria">
+      <div class="container">
+        <div class="rs-secao-titulo">
+          <div><span class="rs-kicker">#VistaORock</span><h2 id="titulo-galeria">Quem compra, usa no show</h2></div>
+          <a href="#" class="rs-link-seta" id="link-instagram" target="_blank" rel="noopener"><i class="bi bi-instagram"></i> @riffstore</a>
+        </div>
+        <div class="rs-galeria">
+          <a href="produtos.html?bandas=Nirvana" data-bg-foto="camiseta-nirvana" aria-label="Fã usando camiseta do Nirvana"><span>Camisetas Nirvana</span></a>
+          <a href="produtos.html?categoria=vinil" data-bg-foto="loja-discos-2" aria-label="Vinis expostos em uma loja de discos"><span>Discos de vinil</span></a>
+          <a href="produtos.html?bandas=Metallica" data-bg-foto="camiseta-metallica" aria-label="Camiseta do Metallica"><span>Metallica</span></a>
+          <a href="produtos.html" data-bg-foto="fa-metallica-show" aria-label="Fã com camiseta de banda em um show"><span>Merch para o show</span></a>
+          <a href="produtos.html?categoria=acessorios" data-bg-foto="palheta-close" aria-label="Palheta sobre as cordas de uma guitarra"><span>Acessórios</span></a>
+          <a href="produtos.html?categoria=posteres" data-bg-foto="posteres-parede-2" aria-label="Parede coberta de pôsteres"><span>Pôsteres</span></a>
+          <a href="produtos.html?categoria=cds" data-bg-foto="cds-caixa" aria-label="Caixa com CDs"><span>CDs</span></a>
+          <a href="produtos.html?promocao=1" data-bg-foto="publico-show" aria-label="Público com as mãos para o alto em um show"><span>Ofertas</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Depoimentos -->
+    <section class="rs-secao bg-rs-cinza" aria-labelledby="titulo-depoimentos">
+      <div class="container">
+        <div class="row align-items-end g-4 mb-4">
+          <div class="col-lg-7"><span class="rs-kicker">Avaliações</span><h2 id="titulo-depoimentos" class="mt-2 mb-0">Quem comprou, aprovou</h2></div>
+          <div class="col-lg-5">
+            <div class="rs-nota-loja justify-content-lg-end">
+              <span class="valor">4,9</span>
+              <div><span class="rs-estrelas fs-5"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></span><br><small class="text-secondary">média de 1.248 avaliações de clientes</small></div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <article class="rs-depoimento">
+              <span class="rs-estrelas"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></span>
+              <p>O vinil do Pink Floyd chegou impecável, com cantoneira e plástico protetor. Dá pra ver que quem embala também coleciona.</p>
+              <div class="autor"><span class="rs-avatar">J</span><div><strong>João S.</strong><small>Monte Carmelo – MG</small></div></div>
+            </article>
+          </div>
+          <div class="col-md-4">
+            <article class="rs-depoimento">
+              <span class="rs-estrelas"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></span>
+              <p>Comprei a camiseta do Queen para ir ao show e recebi em três dias. A malha é ótima e a estampa não saiu na lavagem.</p>
+              <div class="autor"><span class="rs-avatar" style="background:#333">M</span><div><strong>Maria S.</strong><small>Uberlândia – MG</small></div></div>
+            </article>
+          </div>
+          <div class="col-md-4">
+            <article class="rs-depoimento">
+              <span class="rs-estrelas"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i></span>
+              <p>Precisei trocar o tamanho e foi tudo pelo site, sem dor de cabeça. Atendimento rápido e de quem entende de rock.</p>
+              <div class="autor"><span class="rs-avatar" style="background:#8c0d11">C</span><div><strong>Carlos L.</strong><small>Belo Horizonte – MG</small></div></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vídeos -->
+    <section class="rs-secao" aria-labelledby="titulo-videos">
+      <div class="container">
+        <div class="rs-secao-titulo">
+          <div><span class="rs-kicker">Aperte o play</span><h2 id="titulo-videos">Clipes que marcaram época</h2></div>
+        </div>
+        <div class="row g-3 g-lg-4">
+          <div class="col-md-4">
+            <button type="button" class="rs-video" data-video="hTWKbfoikeg" data-bg-foto="publico-maos" aria-label="Assistir: Nirvana – Smells Like Teen Spirit">
+              <span class="play" aria-hidden="true"><i class="bi bi-play-fill"></i></span>
+              <span class="legenda"><strong>Smells Like Teen Spirit</strong><span>Nirvana · 1991</span></span>
+            </button>
+          </div>
+          <div class="col-md-4">
+            <button type="button" class="rs-video" data-video="fJ9rUzIMcZQ" data-bg-foto="show-festa" aria-label="Assistir: Queen – Bohemian Rhapsody">
+              <span class="play" aria-hidden="true"><i class="bi bi-play-fill"></i></span>
+              <span class="legenda"><strong>Bohemian Rhapsody</strong><span>Queen · 1975</span></span>
+            </button>
+          </div>
+          <div class="col-md-4">
+            <button type="button" class="rs-video" data-video="v2AC41dglnM" data-bg-foto="guitarrista-pb" aria-label="Assistir: AC/DC – Thunderstruck">
+              <span class="play" aria-hidden="true"><i class="bi bi-play-fill"></i></span>
+              <span class="legenda"><strong>Thunderstruck</strong><span>AC/DC · 1990</span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="rodape"></footer>
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/fotos.js"></script>
+  <script src="js/dados.js"></script>
+  <script src="js/api-local.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recuperar senha | Riff Store</title>
+  <meta name="description" content="Redefina a senha da sua conta na Riff Store.">
+  <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/fontes.css">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-pagina="recuperar">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header id="topo"></header>
+
+  <main id="conteudo" class="bg-rs-cinza py-5">
+    <div class="container" style="max-width:520px">
+      <!-- Pedir o link -->
+      <section class="rs-painel" id="etapa-pedir">
+        <div class="text-center mb-4">
+          <span class="rs-sucesso-icone" style="width:72px;height:72px;font-size:2rem;animation:none"><i class="bi bi-key"></i></span>
+          <h1 class="h2">Esqueceu sua senha?</h1>
+          <p class="text-secondary small mb-0">Informe o e-mail da sua conta e enviaremos um link para criar uma nova senha.</p>
+        </div>
+        <form id="form-pedir" novalidate>
+          <div class="mb-3">
+            <label for="rec-email" class="form-label">E-mail cadastrado</label>
+            <input type="email" class="form-control" id="rec-email" name="email" autocomplete="email" required>
+            <div class="invalid-feedback"></div>
+          </div>
+          <button type="submit" class="btn btn-rs w-100 btn-lg">Enviar link</button>
+        </form>
+        <div id="email-simulado" class="mt-4" hidden>
+          <div class="alert alert-success small mb-3" id="msg-enviado"></div>
+          <div class="border rounded-4 p-3 bg-white small" id="caixa-email" hidden>
+            <div class="text-secondary mb-2"><i class="bi bi-envelope-open me-1"></i> <strong>E-mail enviado</strong> · confira também a caixa de spam</div>
+            <p class="mb-2">Olá! Recebemos um pedido para redefinir a sua senha na Riff Store. O link vale por 1 hora:</p>
+            <a class="btn btn-rs btn-sm" id="link-simulado" href="#">Criar nova senha</a>
+          </div>
+        </div>
+        <p class="text-center small mt-4 mb-0"><a href="login.html"><i class="bi bi-arrow-left"></i> Voltar para o login</a></p>
+      </section>
+
+      <!-- Nova senha (abre pelo link com ?token=) -->
+      <section class="rs-painel" id="etapa-redefinir" hidden>
+        <h1 class="h2">Crie uma nova senha</h1>
+        <p class="text-secondary small">Escolha uma senha com pelo menos 6 caracteres.</p>
+        <form id="form-redefinir" novalidate>
+          <div class="mb-3">
+            <label for="nova-senha" class="form-label">Nova senha</label>
+            <div class="rs-senha">
+              <input type="password" class="form-control" id="nova-senha" name="senha" autocomplete="new-password" required minlength="6">
+              <button type="button" aria-label="Mostrar senha"><i class="bi bi-eye"></i></button>
+            </div>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="mb-4">
+            <label for="nova-senha2" class="form-label">Confirme a nova senha</label>
+            <input type="password" class="form-control" id="nova-senha2" name="senha2" autocomplete="new-password" required>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="alert small py-2" id="msg-redefinir" role="alert" hidden></div>
+          <button type="submit" class="btn btn-rs w-100 btn-lg">Salvar nova senha</button>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <footer id="rodape"></footer>
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/fotos.js"></script>
+  <script src="js/dados.js"></script>
+  <script src="js/api-local.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Recuperação de senha: pede o link (etapa 1) ou grava a nova senha (etapa 2, com ?token=)
+    $(function () {
+      const token = RS.parametro('token');
+      if (token) {
+        $('#etapa-pedir').prop('hidden', true);
+        $('#etapa-redefinir').prop('hidden', false);
+      }
+
+      $('#form-pedir').on('submit', function (e) {
+        e.preventDefault();
+        const $f = $(this);
+        RS.limparErros($f);
+        const email = $('#rec-email').val().trim();
+        if (!RS.regex.email.test(email)) return RS.mostrarErros($f, { email: 'Informe um e-mail válido.' });
+        const $btn = $f.find('button').prop('disabled', true);
+        RS.api('POST', '/api/auth/recuperar', { email })
+          .then(r => {
+            $('#email-simulado').prop('hidden', false);
+            $('#msg-enviado').text(r.mensagem);
+            if (r.linkSimulado) {
+              $('#link-simulado').attr('href', r.linkSimulado);
+              $('#caixa-email').prop('hidden', false);
+            }
+          })
+          .catch(err => RS.aviso(err.erro, 'erro'))
+          .finally(() => $btn.prop('disabled', false));
+      });
+
+      $('#form-redefinir').on('submit', function (e) {
+        e.preventDefault();
+        const $f = $(this);
+        RS.limparErros($f);
+        const senha = $('#nova-senha').val();
+        const erros = {};
+        if (senha.length < 6) erros.senha = 'A senha deve ter pelo menos 6 caracteres.';
+        if ($('#nova-senha2').val() !== senha) erros.senha2 = 'As senhas não conferem.';
+        if (Object.keys(erros).length) return RS.mostrarErros($f, erros);
+        RS.api('POST', '/api/auth/redefinir', { token, senha })
+          .then(r => {
+            $('#msg-redefinir').attr('class', 'alert alert-success small py-2').html(`${RS.esc(r.mensagem)} <a href="login.html">Ir para o login</a>`).prop('hidden', false);
+            $f.find('button[type="submit"]').prop('disabled', true);
+          })
+          .catch(err => $('#msg-redefinir').attr('class', 'alert alert-danger small py-2').text(err.erro).prop('hidden', false));
+      });
+    });
+  </script>
+</body>
+</html>
