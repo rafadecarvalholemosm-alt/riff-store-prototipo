@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<!-- Carrinho: tabela de itens, controles de quantidade e resumo de valores. carrinho.js mantém a interface sincronizada com o armazenamento local. -->
+<!-- Protótipo HTML5 & CSS3 - Carrinho de Compras | Riff Store (Programação para Web I) -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <!-- O viewport faz os tamanhos responsivos acompanharem a largura real do dispositivo. -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Meu carrinho | Riff Store</title>
-  <meta name="description" content="Itens escolhidos na Riff Store.">
+  <title>Meu Carrinho (2 itens) | Riff Store</title>
+  <meta name="description" content="Carrinho de compras da Riff Store.">
   <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
-  <!-- A ordem das folhas preserva o Bootstrap como base e aplica style.css por último. -->
   <link rel="stylesheet" href="css/fontes.css">
   <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
@@ -16,93 +14,239 @@
 </head>
 <body data-pagina="carrinho">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-  <!-- app.js monta o cabeçalho comum, seus links e os indicadores de sessão/carrinho. -->
-  <header id="topo"></header>
 
-  <!-- main identifica o conteúdo principal e é o destino do link acessível de pular navegação. -->
+  <!-- Barra de avisos no topo -->
+  <div class="rs-aviso" aria-live="polite">
+    <div class="container text-center">
+      <span class="rs-aviso-texto">
+        <i class="bi bi-truck text-danger"></i> <strong>Frete grátis</strong> acima de R$ 299 &nbsp;|&nbsp; 
+        <i class="bi bi-tag-fill text-warning"></i> Cupom ativo: <strong>ROCK10</strong> (-10% no pedido)
+      </span>
+    </div>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header id="topo" class="rs-header">
+    <nav class="navbar navbar-expand-lg navbar-dark rs-navbar" aria-label="Navegação principal">
+      <div class="container">
+        <a class="rs-logo navbar-brand me-lg-4" href="index.html" aria-label="Riff Store – página inicial">
+          <img src="img/site/mao-chifrada.svg" alt="" width="35" height="46">
+          <span>
+            <span class="rs-logo-nome">Riff Store</span>
+            <span class="rs-logo-sub">Merch &amp; Vinis de Rock</span>
+          </span>
+        </a>
+
+        <div class="rs-acoes order-lg-3 ms-auto">
+          <a class="btn-icone" href="produtos.html" title="Buscar produtos"><i class="bi bi-search"></i></a>
+          <a class="btn-icone" href="login.html" title="Minha Conta"><i class="bi bi-person"></i></a>
+          <a class="btn-icone active" id="btn-carrinho" href="carrinho.html" title="Ver carrinho">
+            <i class="bi bi-bag"></i>
+            <span class="rs-badge-carrinho">2</span>
+          </a>
+          <button class="navbar-toggler ms-1 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#rs-menu" aria-controls="rs-menu" aria-expanded="false" aria-label="Abrir menu">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+
+        <div class="collapse navbar-collapse order-lg-2" id="rs-menu">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.html">Catálogo Completo</a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.html?categoria=camisetas">Camisetas</a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.html?categoria=vinil">Vinis</a></li>
+            <li class="nav-item"><a class="nav-link text-warning" href="produtos.html?promocao=1">Promoções</a></li>
+            <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+            <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Conteúdo Principal -->
   <main id="conteudo" class="container py-4 py-lg-5">
     <nav aria-label="Trilha de navegação">
       <ol class="breadcrumb mb-3">
         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Carrinho</li>
+        <li class="breadcrumb-item active" aria-current="page">Meu Carrinho</li>
       </ol>
     </nav>
-    <h1 class="mb-4">Meu carrinho <span class="text-secondary fs-4" id="qtd-titulo"></span></h1>
 
-    <div id="carrinho-vazio" class="rs-vazio rs-painel" hidden>
-      <i class="bi bi-bag-x" aria-hidden="true"></i>
-      <h2 class="h3 mt-3">Seu carrinho está vazio</h2>
-      <p class="text-secondary">Que tal começar pelos destaques da semana?</p>
-      <a href="produtos.html" class="btn btn-rs btn-lg">Ver produtos</a>
+    <div class="d-flex justify-content-between align-items-baseline mb-4">
+      <h1 class="h2 mb-0">Meu Carrinho <span class="text-secondary fs-4">(2 produtos)</span></h1>
+      <a href="produtos.html" class="btn btn-sm btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Continuar comprando</a>
     </div>
 
-    <div class="row g-4 g-xl-5" id="carrinho-cheio" hidden>
+    <!-- Layout do Carrinho Estático -->
+    <div class="row g-4 g-xl-5">
+      <!-- Coluna da Tabela de Itens -->
       <div class="col-lg-8">
-        <table class="table rs-tabela-carrinho">
-          <caption class="visually-hidden">Itens do carrinho com preço, quantidade e total</caption>
-          <thead>
-            <tr>
-              <th scope="col">Produto</th>
-              <th scope="col" class="col-preco">Preço</th>
-              <th scope="col">Quantidade</th>
-              <th scope="col" class="text-end">Total</th>
-            </tr>
-          </thead>
-          <tbody id="itens-carrinho"></tbody>
-        </table>
-        <div class="d-flex justify-content-between flex-wrap gap-2">
-          <a href="produtos.html" class="btn btn-link text-secondary px-0"><i class="bi bi-arrow-left me-1"></i> Continuar comprando</a>
-          <button type="button" class="btn btn-link text-secondary px-0" id="esvaziar"><i class="bi bi-trash3 me-1"></i> Esvaziar carrinho</button>
+        <div class="table-responsive border rounded bg-white shadow-sm p-3">
+          <table class="table align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th scope="col" style="width: 45%;">Produto</th>
+                <th scope="col" class="text-center">Preço Unitário</th>
+                <th scope="col" class="text-center" style="width: 120px;">Qtd</th>
+                <th scope="col" class="text-end">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Item 1 -->
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center gap-3">
+                    <img src="img/fotos/produtos/vinil-acdc-back-in-black.jpg" alt="Vinil AC/DC Back in Black" class="rounded border" width="70" height="70" style="object-fit: cover;">
+                    <div>
+                      <span class="badge bg-dark mb-1">Vinil 180g</span>
+                      <h2 class="h6 mb-1"><a href="produto.html" class="text-dark fw-bold text-decoration-none">Vinil AC/DC – Back in Black (1980)</a></h2>
+                      <span class="small text-secondary">Edição Comemorativa Prensada</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-center fw-semibold">R$ 189,90</td>
+                <td class="text-center">
+                  <div class="input-group input-group-sm">
+                    <button class="btn btn-outline-secondary" type="button">-</button>
+                    <input type="text" class="form-control text-center" value="1" readonly>
+                    <button class="btn btn-outline-secondary" type="button">+</button>
+                  </div>
+                </td>
+                <td class="text-end fw-bold text-danger">R$ 189,90</td>
+              </tr>
+
+              <!-- Item 2 -->
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center gap-3">
+                    <img src="img/fotos/produtos/camiseta-nirvana-bleach.jpg" alt="Camiseta Nirvana Bleach" class="rounded border" width="70" height="70" style="object-fit: cover;">
+                    <div>
+                      <span class="badge bg-secondary mb-1">Tamanho: M</span>
+                      <h2 class="h6 mb-1"><a href="produto.html" class="text-dark fw-bold text-decoration-none">Camiseta Nirvana Bleach (Algodão 100%)</a></h2>
+                      <span class="small text-secondary">Estampa Silk-screen Oficial</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-center fw-semibold">R$ 89,90</td>
+                <td class="text-center">
+                  <div class="input-group input-group-sm">
+                    <button class="btn btn-outline-secondary" type="button">-</button>
+                    <input type="text" class="form-control text-center" value="1" readonly>
+                    <button class="btn btn-outline-secondary" type="button">+</button>
+                  </div>
+                </td>
+                <td class="text-end fw-bold text-danger">R$ 89,90</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <span class="small text-secondary"><i class="bi bi-shield-check text-success me-1"></i> Ambiente seguro de compra</span>
+          <button type="button" class="btn btn-link text-danger text-decoration-none small"><i class="bi bi-trash3 me-1"></i> Esvaziar carrinho</button>
         </div>
       </div>
 
+      <!-- Coluna de Resumo do Pedido -->
       <div class="col-lg-4">
-        <aside class="rs-resumo" aria-labelledby="titulo-resumo">
-          <h2 id="titulo-resumo">Resumo do pedido</h2>
-          <div class="rs-resumo-linha"><span>Subtotal (<span id="qtd-itens">0</span> itens)</span><strong id="subtotal">R$ 0,00</strong></div>
-          <div class="rs-resumo-linha rs-resumo-desconto" id="linha-desconto" hidden><span>Desconto (<span id="desconto-cupom"></span>)</span><strong id="desconto"></strong></div>
-          <div class="rs-resumo-linha"><span>Frete</span><strong id="frete">–</strong></div>
-  <!-- Labels associados aos IDs e feedbacks permitem identificar e corrigir cada campo. -->
-          <form class="rs-cupom" id="form-cupom" novalidate>
-            <label for="cupom-codigo" class="form-label small fw-semibold mb-1">Cupom de desconto</label>
+        <aside class="rs-resumo border rounded p-4 bg-white shadow-sm" aria-labelledby="titulo-resumo">
+          <h2 id="titulo-resumo" class="h4 mb-3 border-bottom pb-2">Resumo do Pedido</h2>
+          
+          <div class="d-flex justify-content-between mb-2">
+            <span>Subtotal (2 itens)</span>
+            <strong>R$ 279,80</strong>
+          </div>
+
+          <div class="d-flex justify-content-between mb-2 text-success">
+            <span>Cupom <strong class="badge bg-success-subtle text-success">ROCK10</strong></span>
+            <strong>- R$ 27,98</strong>
+          </div>
+
+          <div class="d-flex justify-content-between mb-3">
+            <span>Frete (Correios)</span>
+            <strong>R$ 19,90</strong>
+          </div>
+
+          <div class="alert alert-info py-2 small mb-3">
+            <i class="bi bi-info-circle me-1"></i> Adicione mais <strong>R$ 19,20</strong> em produtos para ganhar <strong>Frete Grátis</strong>!
+          </div>
+
+          <hr>
+
+          <div class="d-flex justify-content-between align-items-baseline mb-3">
+            <span class="fs-5 fw-bold">Total a pagar:</span>
+            <span class="fs-3 fw-bold text-danger">R$ 271,72</span>
+          </div>
+          <p class="small text-secondary text-end mb-4">em até <strong>6x de R$ 45,28</strong> sem juros</p>
+
+          <!-- Cupom -->
+          <div class="mb-4">
+            <label for="cupom-codigo" class="form-label small fw-semibold">Aplicar Cupom:</label>
             <div class="input-group">
-              <input type="text" class="form-control" id="cupom-codigo" placeholder="Ex.: ROCK10" maxlength="20" autocomplete="off" aria-describedby="cupom-msg">
-              <button class="btn btn-rs-sec" type="submit">Aplicar</button>
+              <input type="text" class="form-control" id="cupom-codigo" value="ROCK10">
+              <button class="btn btn-outline-dark" type="button">Aplicado</button>
             </div>
-            <div class="invalid-feedback d-block small" id="cupom-erro" hidden></div>
-          </form>
-          <div class="rs-cupom-aplicado" id="cupom-aplicado" hidden>
-            <span><i class="bi bi-ticket-perforated me-1"></i>Cupom <strong id="cupom-aplicado-codigo"></strong> aplicado</span>
-            <button type="button" class="btn btn-link btn-sm p-0" id="cupom-remover">Remover</button>
+            <small class="text-success mt-1 d-block"><i class="bi bi-check-lg"></i> Cupom de 10% aplicado com sucesso!</small>
           </div>
-          <p class="small text-secondary mt-1 mb-0" id="cupom-msg">Cadastre seu e-mail na newsletter, no rodapé, para ganhar o cupom ROCK10 (10% off).</p>
-          <div class="my-3">
-            <p class="small mb-2" id="frete-msg"></p>
-            <div class="rs-frete-barra" role="progressbar" aria-label="Progresso para o frete grátis" aria-valuemin="0" aria-valuemax="100" id="frete-progresso"><div></div></div>
-          </div>
-          <div class="rs-resumo-linha rs-resumo-total"><span>Total</span><span id="total">R$ 0,00</span></div>
-          <p class="small text-secondary text-end mb-4" id="parcelas"></p>
-          <div class="d-grid gap-2">
-            <a href="checkout.html" class="btn btn-rs btn-lg">Finalizar pedido <i class="bi bi-arrow-right ms-1"></i></a>
-            <a href="produtos.html" class="btn btn-rs-sec">Continuar comprando</a>
-          </div>
-          <p class="small text-secondary mt-3 mb-0"><i class="bi bi-shield-lock me-1"></i> Compra 100% segura e dados protegidos.</p>
+
+          <!-- Botão de Checkout -->
+          <a href="checkout.html" class="btn btn-rs btn-lg w-100 py-3 fs-5 text-center d-block">
+            Fechar Pedido <i class="bi bi-arrow-right ms-2"></i>
+          </a>
         </aside>
       </div>
     </div>
   </main>
 
-  <!-- O rodapé é compartilhado e recebe os contatos e redes sociais das configurações. -->
-  <footer id="rodape"></footer>
+  <!-- Rodapé Estático -->
+  <footer id="rodape" class="rs-footer">
+    <div class="container rs-footer-principal py-5">
+      <div class="row g-4 g-lg-5">
+        <div class="col-lg-3">
+          <a class="rs-logo mb-3" href="index.html">
+            <img src="img/site/mao-chifrada.svg" alt="" width="35" height="46">
+            <span><span class="rs-logo-nome">Riff Store</span><span class="rs-logo-sub">Merch &amp; Vinis de Rock</span></span>
+          </a>
+          <p class="mt-3 mb-4 small rs-footer-sobre">Camisetas de bandas, discos de vinil, CDs, pôsteres e acessórios para quem vive o rock.</p>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <h2>Loja</h2>
+          <ul class="list-unstyled">
+            <li><a href="produtos.html">Camisetas</a></li>
+            <li><a href="produtos.html">Discos de vinil</a></li>
+            <li><a href="produtos.html">CDs</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <h2>Ajuda</h2>
+          <ul class="list-unstyled">
+            <li><a href="login.html">Minha conta</a></li>
+            <li><a href="carrinho.html">Meu carrinho</a></li>
+            <li><a href="contato.html">Dúvidas Frequentes</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <h2>Institucional</h2>
+          <ul class="list-unstyled">
+            <li><a href="sobre.html">Sobre nós</a></li>
+            <li><a href="contato.html">Fale conosco</a></li>
+          </ul>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <h2>Atendimento</h2>
+          <ul class="list-unstyled text-secondary small">
+            <li class="mb-2"><i class="bi bi-envelope me-2 text-danger"></i> contato@riffstore.com</li>
+            <li class="mb-2"><i class="bi bi-geo-alt me-2 text-danger"></i> Monte Carmelo – MG (UFU)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="rs-footer-selos border-top border-dark py-3 text-center text-secondary small">
+      &copy; 2026 Riff Store. Protótipo para Programação para Web I — FACOM/UFU.
+    </div>
+  </footer>
 
-  <!-- Dependências primeiro, dados/API depois, app.js antes do controlador específico da página. -->
-  <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="js/compartilhado/config.js"></script>
-  <script src="js/compartilhado/fotos.js"></script>
-  <script src="js/demo/dados.js"></script>
-  <script src="js/demo/api-local.js"></script>
-  <script src="js/compartilhado/app.js"></script>
-  <script src="js/paginas/carrinho.js"></script>
 </body>
 </html>

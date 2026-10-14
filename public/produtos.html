@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<!-- Vitrine: filtros em aside, grade de produtos e paginação atualizadas por produtos.js. As colunas Bootstrap se adaptam à largura da tela. -->
+<!-- Protótipo HTML5 & CSS3 - Catálogo de Produtos | Riff Store (Programação para Web I) -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <!-- O viewport faz os tamanhos responsivos acompanharem a largura real do dispositivo. -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Produtos | Riff Store</title>
+  <title>Catálogo de Produtos | Riff Store</title>
   <meta name="description" content="Catálogo da Riff Store: camisetas de bandas, discos de vinil, CDs, pôsteres e acessórios de rock.">
   <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
-  <!-- A ordem das folhas preserva o Bootstrap como base e aplica style.css por último. -->
   <link rel="stylesheet" href="css/fontes.css">
   <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
@@ -16,127 +14,351 @@
 </head>
 <body data-pagina="produtos">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-  <!-- app.js monta o cabeçalho comum, seus links e os indicadores de sessão/carrinho. -->
-  <header id="topo"></header>
 
-  <!-- main identifica o conteúdo principal e é o destino do link acessível de pular navegação. -->
+  <!-- Barra de avisos no topo -->
+  <div class="rs-aviso" aria-live="polite">
+    <div class="container text-center">
+      <span class="rs-aviso-texto">
+        <i class="bi bi-truck text-danger"></i> <strong>Frete grátis</strong> acima de R$ 299 &nbsp;|&nbsp; 
+        <i class="bi bi-credit-card text-danger"></i> Até <strong>6x sem juros</strong> &nbsp;|&nbsp; 
+        <i class="bi bi-tag-fill text-warning"></i> Cupom de 10% OFF: <strong>ROCK10</strong>
+      </span>
+    </div>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header id="topo" class="rs-header">
+    <nav class="navbar navbar-expand-lg navbar-dark rs-navbar" aria-label="Navegação principal">
+      <div class="container">
+        <a class="rs-logo navbar-brand me-lg-4" href="index.html" aria-label="Riff Store – página inicial">
+          <img src="img/site/mao-chifrada.svg" alt="" width="35" height="46">
+          <span>
+            <span class="rs-logo-nome">Riff Store</span>
+            <span class="rs-logo-sub">Merch &amp; Vinis de Rock</span>
+          </span>
+        </a>
+
+        <div class="rs-acoes order-lg-3 ms-auto">
+          <a class="btn-icone" href="produtos.html" title="Buscar produtos"><i class="bi bi-search"></i></a>
+          <a class="btn-icone" href="login.html" title="Minha Conta"><i class="bi bi-person"></i></a>
+          <a class="btn-icone" id="btn-carrinho" href="carrinho.html" title="Ver carrinho">
+            <i class="bi bi-bag"></i>
+            <span class="rs-badge-carrinho">2</span>
+          </a>
+          <button class="navbar-toggler ms-1 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#rs-menu" aria-controls="rs-menu" aria-expanded="false" aria-label="Abrir menu">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+
+        <div class="collapse navbar-collapse order-lg-2" id="rs-menu">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="produtos.html">Catálogo Completo</a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.html?categoria=camisetas">Camisetas</a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.html?categoria=vinil">Vinis</a></li>
+            <li class="nav-item"><a class="nav-link text-warning" href="produtos.html?promocao=1">Promoções</a></li>
+            <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+            <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Conteúdo Principal -->
   <main id="conteudo">
-    <section class="rs-pagina-topo" data-bg-foto="show-holofote">
+    <!-- Topo da página -->
+    <section class="rs-pagina-topo" style="background-image: url('img/fotos/show-holofote.jpg'); background-size: cover; background-position: center;">
       <div class="container">
         <nav aria-label="Trilha de navegação">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item"><a href="produtos.html">Produtos</a></li>
-            <li class="breadcrumb-item active" aria-current="page" id="trilha-atual">Todos</li>
+            <li class="breadcrumb-item active" aria-current="page">Catálogo de Produtos</li>
           </ol>
         </nav>
         <h1 id="titulo-lista">Todos os produtos</h1>
-        <p id="subtitulo-lista">Camisetas, vinis, CDs, pôsteres e acessórios para quem vive o rock.</p>
+        <p id="subtitulo-lista">Camisetas oficiais, vinis 180g, CDs, pôsteres e acessórios de rock.</p>
       </div>
     </section>
 
     <div class="container py-5">
       <div class="row g-4 g-xl-5">
-        <!-- Filtros: coluna lateral no computador, painel deslizante no celular -->
+        <!-- Filtros Laterais -->
         <aside class="col-lg-3">
-          <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="painel-filtros" aria-labelledby="titulo-filtros">
-            <div class="offcanvas-header border-bottom">
-              <h2 class="offcanvas-title h3 mb-0" id="titulo-filtros">Filtros</h2>
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#painel-filtros" aria-label="Fechar filtros"></button>
-            </div>
-            <div class="offcanvas-body d-block">
-  <!-- Labels associados aos IDs e feedbacks permitem identificar e corrigir cada campo. -->
-              <form id="form-filtros" class="rs-filtros w-100" aria-label="Filtrar produtos">
-                <div class="rs-filtro-bloco">
-                  <h2>CATEGORIAS</h2>
-                  <ul class="rs-lista-cat" id="lista-categorias">
-                    <li><a href="produtos.html" data-categoria="">Todas <span id="total-geral">–</span></a></li>
-                  </ul>
-                </div>
+          <div class="rs-painel p-4 border rounded bg-white">
+            <h2 class="h4 mb-4 border-bottom pb-2">Filtros</h2>
+            <form id="form-filtros" class="rs-filtros" aria-label="Filtrar produtos">
+              <!-- Categorias -->
+              <div class="rs-filtro-bloco mb-4">
+                <h3 class="h6 text-uppercase text-secondary fw-bold">Categorias</h3>
+                <ul class="list-unstyled rs-lista-cat mt-2">
+                  <li class="mb-1"><a href="produtos.html" class="fw-bold text-danger">Todas <span class="badge bg-secondary float-end">27</span></a></li>
+                  <li class="mb-1"><a href="produtos.html" class="text-dark">Camisetas <span class="badge bg-light text-dark float-end">8</span></a></li>
+                  <li class="mb-1"><a href="produtos.html" class="text-dark">Discos de Vinil <span class="badge bg-light text-dark float-end">7</span></a></li>
+                  <li class="mb-1"><a href="produtos.html" class="text-dark">CDs <span class="badge bg-light text-dark float-end">4</span></a></li>
+                  <li class="mb-1"><a href="produtos.html" class="text-dark">Pôsteres <span class="badge bg-light text-dark float-end">4</span></a></li>
+                  <li class="mb-1"><a href="produtos.html" class="text-dark">Acessórios <span class="badge bg-light text-dark float-end">4</span></a></li>
+                </ul>
+              </div>
 
-                <div class="rs-filtro-bloco">
-                  <h2>FAIXA DE PREÇO</h2>
-                  <label for="preco-max" class="form-label small fw-normal text-secondary mb-1">Preço máximo</label>
-                  <input type="range" class="form-range" id="preco-max" min="0" max="300" step="5" value="300">
-                  <div class="rs-faixa-valores"><span id="preco-min-rotulo">R$ 0</span><span id="preco-max-rotulo">R$ 300</span></div>
-                  <div class="d-flex gap-2 mt-3">
-                    <div class="flex-fill">
-                      <label for="preco-min-num" class="form-label small fw-normal text-secondary mb-1">Mín.</label>
-                      <input type="number" class="form-control form-control-sm" id="preco-min-num" min="0" step="1" placeholder="0" inputmode="decimal">
-                    </div>
-                    <div class="flex-fill">
-                      <label for="preco-max-num" class="form-label small fw-normal text-secondary mb-1">Máx.</label>
-                      <input type="number" class="form-control form-control-sm" id="preco-max-num" min="0" step="1" placeholder="300" inputmode="decimal">
-                    </div>
-                  </div>
+              <!-- Faixa de Preço -->
+              <div class="rs-filtro-bloco mb-4">
+                <h3 class="h6 text-uppercase text-secondary fw-bold">Preço Máximo</h3>
+                <input type="range" class="form-range" id="preco-max" min="30" max="300" step="10" value="250">
+                <div class="d-flex justify-content-between small text-secondary">
+                  <span>R$ 30</span>
+                  <span class="fw-bold text-dark">Até R$ 250</span>
+                  <span>R$ 300</span>
                 </div>
+              </div>
 
-                <div class="rs-filtro-bloco">
-                  <h2>BANDA</h2>
-                  <div class="rs-bandas-lista" id="lista-bandas"><div class="rs-esqueleto" style="height:120px"></div></div>
+              <!-- Bandas -->
+              <div class="rs-filtro-bloco mb-4">
+                <h3 class="h6 text-uppercase text-secondary fw-bold">Bandas</h3>
+                <div class="form-check mb-1"><input class="form-check-input" type="checkbox" id="b1" checked><label class="form-check-label" for="b1">AC/DC</label></div>
+                <div class="form-check mb-1"><input class="form-check-input" type="checkbox" id="b2" checked><label class="form-check-label" for="b2">Metallica</label></div>
+                <div class="form-check mb-1"><input class="form-check-input" type="checkbox" id="b3" checked><label class="form-check-label" for="b3">Nirvana</label></div>
+                <div class="form-check mb-1"><input class="form-check-input" type="checkbox" id="b4" checked><label class="form-check-label" for="b4">Iron Maiden</label></div>
+                <div class="form-check mb-1"><input class="form-check-input" type="checkbox" id="b5" checked><label class="form-check-label" for="b5">Pink Floyd</label></div>
+                <div class="form-check mb-1"><input class="form-check-input" type="checkbox" id="b6" checked><label class="form-check-label" for="b6">Queen</label></div>
+                <div class="form-check mb-1"><input class="form-check-input" type="checkbox" id="b7" checked><label class="form-check-label" for="b7">Led Zeppelin</label></div>
+              </div>
+
+              <!-- Disponibilidade -->
+              <div class="rs-filtro-bloco mb-4">
+                <h3 class="h6 text-uppercase text-secondary fw-bold">Disponibilidade</h3>
+                <div class="form-check form-switch mb-2">
+                  <input class="form-check-input" type="checkbox" id="filtro-estoque" checked>
+                  <label class="form-check-label" for="filtro-estoque">Apenas em estoque</label>
                 </div>
-
-                <div class="rs-filtro-bloco">
-                  <h2>DISPONIBILIDADE</h2>
-                  <div class="form-check form-switch mb-2">
-                    <input class="form-check-input" type="checkbox" role="switch" id="filtro-estoque">
-                    <label class="form-check-label" for="filtro-estoque">Somente em estoque</label>
-                  </div>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="filtro-promocao">
-                    <label class="form-check-label" for="filtro-promocao">Somente promoções</label>
-                  </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="filtro-promocao">
+                  <label class="form-check-label" for="filtro-promocao">Apenas promoções</label>
                 </div>
+              </div>
 
-                <button type="button" class="btn btn-rs-sec w-100 mt-4" id="limpar-filtros"><i class="bi bi-arrow-counterclockwise me-1"></i> Limpar filtros</button>
-              </form>
-            </div>
+              <a href="produtos.html" class="btn btn-outline-secondary w-100 btn-sm">Limpar Filtros</a>
+            </form>
           </div>
         </aside>
 
-        <!-- Resultados -->
+        <!-- Grade de Produtos -->
         <section class="col-lg-9" aria-labelledby="titulo-lista">
-          <div class="rs-barra-lista">
-            <div class="d-flex align-items-center gap-2 flex-wrap">
-              <button class="btn btn-rs-sec d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#painel-filtros" aria-controls="painel-filtros">
-                <i class="bi bi-sliders me-1"></i> Filtros
-              </button>
-              <p class="mb-0 text-secondary small" id="contagem-resultados" aria-live="polite">Carregando...</p>
-            </div>
+          <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <p class="mb-0 text-secondary">Exibindo <strong>8</strong> de <strong>27</strong> produtos cadastrados</p>
             <div class="d-flex align-items-center gap-2">
-              <label for="ordenar" class="small text-secondary text-nowrap">Ordenar por</label>
-              <select id="ordenar" class="form-select form-select-sm" style="min-width: 180px">
-                <option value="relevancia">Mais relevantes</option>
-                <option value="menor">Menor preço</option>
-                <option value="maior">Maior preço</option>
-                <option value="novos">Lançamentos</option>
-                <option value="nome">Nome (A–Z)</option>
+              <label for="ordenar" class="small text-secondary text-nowrap">Ordenar por:</label>
+              <select id="ordenar" class="form-select form-select-sm" style="width: auto;">
+                <option selected>Mais relevantes</option>
+                <option>Menor preço</option>
+                <option>Maior preço</option>
+                <option>Lançamentos</option>
               </select>
             </div>
           </div>
-          <div class="rs-filtros-ativos mb-3" id="filtros-ativos"></div>
 
-          <div class="row g-3 g-xl-4 row-cols-2 row-cols-md-3" id="grade-produtos"></div>
+          <!-- Grade Estática de 8 Produtos -->
+          <div class="row g-3 g-xl-4 row-cols-2 row-cols-md-3">
+            <!-- Item 1 -->
+            <div class="col">
+              <article class="rs-card">
+                <div class="rs-card-img">
+                  <div class="rs-selos"><span class="rs-selo destaque">Destaque</span></div>
+                  <img src="img/fotos/produtos/vinil-acdc-back-in-black.jpg" alt="Vinil AC/DC Back in Black" loading="lazy" width="400" height="400">
+                </div>
+                <div class="rs-card-corpo">
+                  <span class="rs-card-banda">AC/DC</span>
+                  <h3 class="rs-card-nome"><a href="produto.html">Vinil Back in Black (1980)</a></h3>
+                  <div class="rs-card-preco"><span class="rs-preco">R$ 189,90</span></div>
+                  <div class="rs-parcela">em até 6x de R$ 31,65</div>
+                  <a href="produto.html" class="btn btn-rs btn-sm w-100">Ver detalhes</a>
+                </div>
+              </article>
+            </div>
 
-          <nav class="mt-5" aria-label="Paginação dos produtos">
-            <ul class="pagination justify-content-center flex-wrap" id="paginacao"></ul>
+            <!-- Item 2 -->
+            <div class="col">
+              <article class="rs-card">
+                <div class="rs-card-img">
+                  <div class="rs-selos"><span class="rs-selo novo">Novo</span></div>
+                  <img src="img/fotos/produtos/camiseta-nirvana-bleach.jpg" alt="Camiseta Nirvana Bleach" loading="lazy" width="400" height="400">
+                </div>
+                <div class="rs-card-corpo">
+                  <span class="rs-card-banda">Nirvana</span>
+                  <h3 class="rs-card-nome"><a href="produto.html">Camiseta Nirvana Bleach</a></h3>
+                  <div class="rs-card-preco"><span class="rs-preco">R$ 89,90</span></div>
+                  <div class="rs-parcela">em até 3x de R$ 29,96</div>
+                  <a href="produto.html" class="btn btn-rs btn-sm w-100">Ver detalhes</a>
+                </div>
+              </article>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="col">
+              <article class="rs-card">
+                <div class="rs-card-img">
+                  <div class="rs-selos"><span class="rs-selo destaque">Destaque</span></div>
+                  <img src="img/fotos/produtos/vinil-pink-floyd-dark-side.jpg" alt="Vinil Pink Floyd" loading="lazy" width="400" height="400">
+                </div>
+                <div class="rs-card-corpo">
+                  <span class="rs-card-banda">Pink Floyd</span>
+                  <h3 class="rs-card-nome"><a href="produto.html">Vinil Dark Side of the Moon</a></h3>
+                  <div class="rs-card-preco"><span class="rs-preco">R$ 219,90</span></div>
+                  <div class="rs-parcela">em até 6x de R$ 36,65</div>
+                  <a href="produto.html" class="btn btn-rs btn-sm w-100">Ver detalhes</a>
+                </div>
+              </article>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="col">
+              <article class="rs-card">
+                <div class="rs-card-img">
+                  <img src="img/fotos/produtos/camiseta-metallica-master-of-puppets.jpg" alt="Camiseta Metallica" loading="lazy" width="400" height="400">
+                </div>
+                <div class="rs-card-corpo">
+                  <span class="rs-card-banda">Metallica</span>
+                  <h3 class="rs-card-nome"><a href="produto.html">Camiseta Master of Puppets</a></h3>
+                  <div class="rs-card-preco"><span class="rs-preco">R$ 94,90</span></div>
+                  <div class="rs-parcela">em até 3x de R$ 31,63</div>
+                  <a href="produto.html" class="btn btn-rs btn-sm w-100">Ver detalhes</a>
+                </div>
+              </article>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="col">
+              <article class="rs-card">
+                <div class="rs-card-img">
+                  <div class="rs-selos"><span class="rs-selo promocao">30% OFF</span></div>
+                  <img src="img/fotos/produtos/camiseta-rolling-stones-tattoo-you.jpg" alt="Camiseta Rolling Stones" loading="lazy" width="400" height="400">
+                </div>
+                <div class="rs-card-corpo">
+                  <span class="rs-card-banda">Rolling Stones</span>
+                  <h3 class="rs-card-nome"><a href="produto.html">Camiseta Tattoo You</a></h3>
+                  <div class="rs-card-preco"><span class="rs-preco">R$ 69,90</span> <span class="rs-preco-antigo">R$ 99,90</span></div>
+                  <div class="rs-parcela">em 2x de R$ 34,95</div>
+                  <a href="produto.html" class="btn btn-rs btn-sm w-100">Ver detalhes</a>
+                </div>
+              </article>
+            </div>
+
+            <!-- Item 6 -->
+            <div class="col">
+              <article class="rs-card">
+                <div class="rs-card-img">
+                  <div class="rs-selos"><span class="rs-selo promocao">18% OFF</span></div>
+                  <img src="img/fotos/produtos/vinil-led-zeppelin-iv.jpg" alt="Vinil Led Zeppelin IV" loading="lazy" width="400" height="400">
+                </div>
+                <div class="rs-card-corpo">
+                  <span class="rs-card-banda">Led Zeppelin</span>
+                  <h3 class="rs-card-nome"><a href="produto.html">Vinil Led Zeppelin IV</a></h3>
+                  <div class="rs-card-preco"><span class="rs-preco">R$ 179,90</span> <span class="rs-preco-antigo">R$ 220,00</span></div>
+                  <div class="rs-parcela">em até 6x de R$ 29,98</div>
+                  <a href="produto.html" class="btn btn-rs btn-sm w-100">Ver detalhes</a>
+                </div>
+              </article>
+            </div>
+
+            <!-- Item 7 -->
+            <div class="col">
+              <article class="rs-card">
+                <div class="rs-card-img">
+                  <img src="img/fotos/produtos/cd-iron-maiden-number-beast.jpg" alt="CD Iron Maiden" loading="lazy" width="400" height="400">
+                </div>
+                <div class="rs-card-corpo">
+                  <span class="rs-card-banda">Iron Maiden</span>
+                  <h3 class="rs-card-nome"><a href="produto.html">CD The Number of the Beast</a></h3>
+                  <div class="rs-card-preco"><span class="rs-preco">R$ 54,90</span></div>
+                  <div class="rs-parcela">à vista no Pix</div>
+                  <a href="produto.html" class="btn btn-rs btn-sm w-100">Ver detalhes</a>
+                </div>
+              </article>
+            </div>
+
+            <!-- Item 8 -->
+            <div class="col">
+              <article class="rs-card">
+                <div class="rs-card-img">
+                  <img src="img/fotos/produtos/poster-queen-live-at-wembley.jpg" alt="Pôster Queen" loading="lazy" width="400" height="400">
+                </div>
+                <div class="rs-card-corpo">
+                  <span class="rs-card-banda">Queen</span>
+                  <h3 class="rs-card-nome"><a href="produto.html">Pôster Live at Wembley</a></h3>
+                  <div class="rs-card-preco"><span class="rs-preco">R$ 49,90</span></div>
+                  <div class="rs-parcela">à vista no Pix</div>
+                  <a href="produto.html" class="btn btn-rs btn-sm w-100">Ver detalhes</a>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Paginação Estática -->
+          <nav class="mt-5" aria-label="Paginação">
+            <ul class="pagination justify-content-center">
+              <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+              <li class="page-item active"><span class="page-link bg-danger border-danger">1</span></li>
+              <li class="page-item"><a class="page-link text-dark" href="produtos.html">2</a></li>
+              <li class="page-item"><a class="page-link text-dark" href="produtos.html">3</a></li>
+              <li class="page-item"><a class="page-link text-dark" href="produtos.html">&raquo;</a></li>
+            </ul>
           </nav>
         </section>
       </div>
     </div>
   </main>
 
-  <!-- O rodapé é compartilhado e recebe os contatos e redes sociais das configurações. -->
-  <footer id="rodape"></footer>
+  <!-- Rodapé Estático -->
+  <footer id="rodape" class="rs-footer">
+    <div class="container rs-footer-principal py-5">
+      <div class="row g-4 g-lg-5">
+        <div class="col-lg-3">
+          <a class="rs-logo mb-3" href="index.html">
+            <img src="img/site/mao-chifrada.svg" alt="" width="35" height="46">
+            <span><span class="rs-logo-nome">Riff Store</span><span class="rs-logo-sub">Merch &amp; Vinis de Rock</span></span>
+          </a>
+          <p class="mt-3 mb-4 small rs-footer-sobre">Camisetas de bandas, discos de vinil, CDs, pôsteres e acessórios para quem vive o rock.</p>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <h2>Loja</h2>
+          <ul class="list-unstyled">
+            <li><a href="produtos.html">Camisetas</a></li>
+            <li><a href="produtos.html">Discos de vinil</a></li>
+            <li><a href="produtos.html">CDs</a></li>
+            <li><a href="produtos.html">Pôsteres</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <h2>Ajuda</h2>
+          <ul class="list-unstyled">
+            <li><a href="login.html">Minha conta</a></li>
+            <li><a href="carrinho.html">Meu carrinho</a></li>
+            <li><a href="contato.html">Dúvidas Frequentes</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <h2>Institucional</h2>
+          <ul class="list-unstyled">
+            <li><a href="sobre.html">Sobre nós</a></li>
+            <li><a href="contato.html">Fale conosco</a></li>
+          </ul>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <h2>Atendimento</h2>
+          <ul class="list-unstyled text-secondary small">
+            <li class="mb-2"><i class="bi bi-envelope me-2 text-danger"></i> contato@riffstore.com</li>
+            <li class="mb-2"><i class="bi bi-geo-alt me-2 text-danger"></i> Monte Carmelo – MG (UFU)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="rs-footer-selos border-top border-dark py-3">
+      <div class="container text-center text-secondary small">
+        &copy; 2026 Riff Store. Protótipo para Programação para Web I — FACOM/UFU.
+      </div>
+    </div>
+  </footer>
 
-  <!-- Dependências primeiro, dados/API depois, app.js antes do controlador específico da página. -->
-  <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="js/compartilhado/config.js"></script>
-  <script src="js/compartilhado/fotos.js"></script>
-  <script src="js/demo/dados.js"></script>
-  <script src="js/demo/api-local.js"></script>
-  <script src="js/compartilhado/app.js"></script>
-  <script src="js/paginas/produtos.js"></script>
 </body>
 </html>

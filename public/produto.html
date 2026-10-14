@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<!-- Detalhes: galeria, compra, lista de faixas e avaliações de um produto escolhido pelo slug na URL. Os espaços com IDs recebem dados de produto.js. -->
+<!-- Protótipo HTML5 & CSS3 - Detalhes do Produto | Riff Store (Programação para Web I) -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <!-- O viewport faz os tamanhos responsivos acompanharem a largura real do dispositivo. -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Produto | Riff Store</title>
-  <meta name="description" content="Detalhes do produto na Riff Store.">
+  <title>Vinil AC/DC - Back in Black | Riff Store</title>
+  <meta name="description" content="Vinil AC/DC - Back in Black (1980) prensagem 180g na Riff Store.">
   <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
-  <!-- A ordem das folhas preserva o Bootstrap como base e aplica style.css por último. -->
   <link rel="stylesheet" href="css/fontes.css">
   <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
@@ -16,155 +14,264 @@
 </head>
 <body data-pagina="produto">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-  <!-- app.js monta o cabeçalho comum, seus links e os indicadores de sessão/carrinho. -->
-  <header id="topo"></header>
 
-  <!-- main identifica o conteúdo principal e é o destino do link acessível de pular navegação. -->
-  <main id="conteudo" class="container py-4 py-lg-5">
-    <nav aria-label="Trilha de navegação">
-      <ol class="breadcrumb mb-4" id="trilha">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item"><a href="produtos.html">Produtos</a></li>
-      </ol>
-    </nav>
-
-    <div id="produto-carregando" class="row g-5">
-      <div class="col-lg-6"><div class="rs-esqueleto" style="aspect-ratio:1"></div></div>
-      <div class="col-lg-6"><div class="rs-esqueleto mb-3" style="height:60px"></div><div class="rs-esqueleto mb-3" style="height:40px;width:60%"></div><div class="rs-esqueleto" style="height:200px"></div></div>
+  <!-- Barra de avisos no topo -->
+  <div class="rs-aviso" aria-live="polite">
+    <div class="container text-center">
+      <span class="rs-aviso-texto">
+        <i class="bi bi-truck text-danger"></i> <strong>Frete grátis</strong> acima de R$ 299 &nbsp;|&nbsp; 
+        <i class="bi bi-credit-card text-danger"></i> Até <strong>6x sem juros</strong> &nbsp;|&nbsp; 
+        <i class="bi bi-tag-fill text-warning"></i> Cupom de 10% OFF: <strong>ROCK10</strong>
+      </span>
     </div>
+  </div>
 
-    <div id="produto-erro" class="rs-vazio" hidden>
-      <i class="bi bi-emoji-frown" aria-hidden="true"></i>
-      <h1 class="h2 mt-3">Produto não encontrado</h1>
-      <p class="text-secondary">Ele pode ter saído do catálogo. Que tal dar uma olhada nos outros?</p>
-      <a href="produtos.html" class="btn btn-rs">Ver produtos</a>
-    </div>
+  <!-- Cabeçalho -->
+  <header id="topo" class="rs-header">
+    <nav class="navbar navbar-expand-lg navbar-dark rs-navbar" aria-label="Navegação principal">
+      <div class="container">
+        <a class="rs-logo navbar-brand me-lg-4" href="index.html" aria-label="Riff Store – página inicial">
+          <img src="img/site/mao-chifrada.svg" alt="" width="35" height="46">
+          <span>
+            <span class="rs-logo-nome">Riff Store</span>
+            <span class="rs-logo-sub">Merch &amp; Vinis de Rock</span>
+          </span>
+        </a>
 
-    <article id="produto" hidden>
-      <div class="row g-4 g-lg-5">
-        <!-- Galeria -->
-        <div class="col-lg-6">
-          <div class="rs-galeria-principal" id="galeria-principal" title="Clique para ampliar">
-            <div class="rs-selos" id="produto-selos"></div>
-            <img id="imagem-principal" src="img/site/sem-imagem.svg" alt="">
-          </div>
-          <div class="rs-miniaturas" id="miniaturas" aria-label="Outras imagens do produto"></div>
+        <div class="rs-acoes order-lg-3 ms-auto">
+          <a class="btn-icone" href="produtos.html" title="Buscar produtos"><i class="bi bi-search"></i></a>
+          <a class="btn-icone" href="login.html" title="Minha Conta"><i class="bi bi-person"></i></a>
+          <a class="btn-icone" id="btn-carrinho" href="carrinho.html" title="Ver carrinho">
+            <i class="bi bi-bag"></i>
+            <span class="rs-badge-carrinho">2</span>
+          </a>
+          <button class="navbar-toggler ms-1 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#rs-menu" aria-controls="rs-menu" aria-expanded="false" aria-label="Abrir menu">
+            <i class="bi bi-list"></i>
+          </button>
         </div>
 
-        <!-- Informações e compra -->
-        <div class="col-lg-6" id="comprar">
-          <a class="rs-kicker" id="produto-banda" href="#"></a>
-          <h1 class="rs-produto-nome" id="produto-nome"></h1>
-          <a href="#avaliacoes" class="d-inline-flex align-items-center gap-2 text-reset mb-3" id="produto-nota"></a>
-
-          <div class="d-flex align-items-baseline gap-3 flex-wrap mb-1">
-            <p class="rs-produto-preco mb-0" id="produto-preco"></p>
-            <span class="rs-produto-preco-antigo" id="produto-preco-antigo"></span>
-            <span class="rs-desconto" id="produto-desconto" hidden></span>
-          </div>
-          <p class="text-secondary small mb-3" id="produto-parcelas"></p>
-
-          <div class="rs-oferta-box mb-4" id="produto-oferta" hidden>
-            <div><strong class="d-block text-rs"><i class="bi bi-alarm"></i> Oferta por tempo limitado</strong><span class="small text-secondary">Depois disso o preço volta ao normal.</span></div>
-            <div id="produto-contagem" class="ms-auto"></div>
-          </div>
-
-  <!-- Labels associados aos IDs e feedbacks permitem identificar e corrigir cada campo. -->
-          <form id="form-compra" novalidate>
-            <fieldset class="mb-4" id="bloco-tamanhos" hidden>
-              <legend class="rs-rotulo d-flex justify-content-between w-100">Tamanho <a href="contato.html#faq-tamanhos" class="fw-normal text-decoration-underline small text-secondary" style="letter-spacing:0;text-transform:none">Tabela de medidas</a></legend>
-              <div class="rs-tamanhos" role="radiogroup" id="tamanhos">
-                <input type="radio" class="btn-check" name="tamanho" id="tam-p" value="P"><label for="tam-p">P</label>
-                <input type="radio" class="btn-check" name="tamanho" id="tam-m" value="M"><label for="tam-m">M</label>
-                <input type="radio" class="btn-check" name="tamanho" id="tam-g" value="G"><label for="tam-g">G</label>
-                <input type="radio" class="btn-check" name="tamanho" id="tam-gg" value="GG"><label for="tam-gg">GG</label>
-              </div>
-              <div class="invalid-feedback" id="erro-tamanho">Escolha um tamanho para continuar.</div>
-            </fieldset>
-
-            <div class="d-flex flex-wrap align-items-end gap-3 mb-3">
-              <div>
-                <label class="rs-rotulo" for="quantidade">Quantidade</label>
-                <div class="rs-qtd">
-                  <button type="button" data-qtd="-1" aria-label="Diminuir quantidade"><i class="bi bi-dash"></i></button>
-                  <input type="number" id="quantidade" name="quantidade" value="1" min="1" max="10" inputmode="numeric">
-                  <button type="button" data-qtd="1" aria-label="Aumentar quantidade"><i class="bi bi-plus"></i></button>
-                </div>
-              </div>
-              <button type="submit" class="btn btn-rs btn-lg flex-grow-1" id="btn-adicionar" style="height:48px;padding-block:0">
-                <i class="bi bi-bag-plus me-2"></i>Adicionar ao carrinho
-              </button>
-            </div>
-          </form>
-          <p class="small mb-4" id="produto-estoque"></p>
-
-          <ul class="rs-info-lista border-top pt-4">
-            <li><i class="bi bi-truck"></i>Frete grátis em compras acima de R$ 299</li>
-            <li><i class="bi bi-arrow-repeat"></i>Primeira troca grátis em até 30 dias</li>
-            <li><i class="bi bi-shield-check"></i>Compra 100% segura</li>
+        <div class="collapse navbar-collapse order-lg-2" id="rs-menu">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.html">Catálogo Completo</a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.html?categoria=camisetas">Camisetas</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="produtos.html?categoria=vinil">Vinis</a></li>
+            <li class="nav-item"><a class="nav-link text-warning" href="produtos.html?promocao=1">Promoções</a></li>
+            <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+            <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
           </ul>
         </div>
       </div>
+    </nav>
+  </header>
 
-      <!-- Abas: descrição, detalhes, faixas e avaliações -->
-      <section class="mt-5 pt-lg-3" aria-label="Mais informações sobre o produto">
-        <ul class="nav nav-tabs" role="tablist">
-          <li class="nav-item" role="presentation"><button class="nav-link active" id="aba-descricao" data-bs-toggle="tab" data-bs-target="#painel-descricao" type="button" role="tab" aria-controls="painel-descricao" aria-selected="true">Descrição</button></li>
-          <li class="nav-item" role="presentation" id="item-aba-faixas" hidden><button class="nav-link" id="aba-faixas" data-bs-toggle="tab" data-bs-target="#painel-faixas" type="button" role="tab" aria-controls="painel-faixas" aria-selected="false">Faixas</button></li>
-          <li class="nav-item" role="presentation"><button class="nav-link" id="aba-avaliacoes" data-bs-toggle="tab" data-bs-target="#painel-avaliacoes" type="button" role="tab" aria-controls="painel-avaliacoes" aria-selected="false">Avaliações <span id="qtd-avaliacoes" class="badge rounded-pill text-bg-dark ms-1">0</span></button></li>
-        </ul>
-        <div class="tab-content pt-4">
-          <div class="tab-pane fade show active" id="painel-descricao" role="tabpanel" aria-labelledby="aba-descricao" tabindex="0">
-            <div class="row g-4">
-              <div class="col-lg-7"><p class="lead fs-6" id="produto-descricao" style="line-height:1.8"></p></div>
-              <div class="col-lg-5">
-                <div class="bg-rs-cinza rounded-4 p-4">
-                  <h2 class="h5 fw-bold font-sans" style="font-family:var(--rs-fonte-texto);text-transform:none;letter-spacing:0">Detalhes</h2>
-                  <ul class="mb-0 ps-3" id="produto-detalhes"></ul>
-                </div>
-              </div>
-            </div>
+  <!-- Conteúdo Principal -->
+  <main id="conteudo" class="container py-4 py-lg-5">
+    <!-- Trilha de navegação -->
+    <nav aria-label="Trilha de navegação">
+      <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item"><a href="produtos.html">Catálogo</a></li>
+        <li class="breadcrumb-item"><a href="produtos.html?categoria=vinil">Discos de Vinil</a></li>
+        <li class="breadcrumb-item active" aria-current="page">AC/DC - Back in Black</li>
+      </ol>
+    </nav>
+
+    <!-- Artigo do Produto -->
+    <article class="row g-4 g-lg-5 mb-5">
+      <!-- Galeria de Imagens -->
+      <div class="col-lg-6">
+        <div class="rs-galeria-principal border rounded p-2 text-center bg-white shadow-sm position-relative">
+          <div class="position-absolute top-0 start-0 m-3">
+            <span class="badge bg-danger">Destaque</span>
+            <span class="badge bg-dark">180g Audiófilo</span>
           </div>
-          <div class="tab-pane fade" id="painel-faixas" role="tabpanel" aria-labelledby="aba-faixas" tabindex="0">
-            <!-- As faixas são informações do álbum; esta área não reproduz mídia. -->
-            <ol class="rs-faixas" id="produto-faixas"></ol>
-          </div>
-          <div class="tab-pane fade" id="painel-avaliacoes" role="tabpanel" aria-labelledby="aba-avaliacoes" tabindex="0">
-            <div class="row g-5" id="avaliacoes">
-              <div class="col-lg-4">
-                <div class="rs-painel text-center">
-                  <div class="rs-nota-grande" id="nota-media">–</div>
-                  <div id="nota-estrelas" class="fs-5"></div>
-                  <p class="small text-secondary mt-1 mb-3" id="nota-total"></p>
-                  <div id="nota-barras" class="text-start small"></div>
-                </div>
-                <div class="mt-4" id="area-avaliar"></div>
-              </div>
-              <div class="col-lg-8" id="lista-avaliacoes"></div>
-            </div>
-          </div>
+          <img src="img/fotos/produtos/vinil-acdc-back-in-black.jpg" alt="Vinil AC/DC Back in Black" class="img-fluid rounded" style="max-height: 480px;">
         </div>
-      </section>
+        <div class="d-flex gap-2 mt-3 justify-content-center">
+          <img src="img/fotos/produtos/vinil-acdc-back-in-black.jpg" alt="Miniatura 1" class="img-thumbnail border-danger" style="width: 75px; height: 75px; object-fit: cover; cursor: pointer;">
+          <img src="img/fotos/toca-discos-agulha.jpg" alt="Miniatura 2" class="img-thumbnail" style="width: 75px; height: 75px; object-fit: cover; cursor: pointer;">
+          <img src="img/fotos/loja-discos-2.jpg" alt="Miniatura 3" class="img-thumbnail" style="width: 75px; height: 75px; object-fit: cover; cursor: pointer;">
+        </div>
+      </div>
+
+      <!-- Informações e Compra -->
+      <div class="col-lg-6">
+        <span class="rs-kicker text-danger fw-bold text-uppercase">AC/DC · Álbum Clássico</span>
+        <h1 class="rs-produto-nome h2 mt-1 mb-2">Vinil Back in Black (1980) — Edição Comemorativa 180g</h1>
+
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <span class="rs-estrelas text-warning fs-5">
+            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+          </span>
+          <span class="fw-bold">5.0</span>
+          <span class="text-secondary small">(32 avaliações de clientes verificados)</span>
+        </div>
+
+        <div class="p-3 bg-light rounded border mb-4">
+          <div class="d-flex align-items-baseline gap-3">
+            <span class="fs-2 fw-bold text-danger">R$ 189,90</span>
+            <span class="text-decoration-line-through text-secondary">R$ 220,00</span>
+            <span class="badge bg-success">14% de economia</span>
+          </div>
+          <p class="text-secondary small mb-0 mt-1">Em até <strong>6x de R$ 31,65 sem juros</strong> no cartão ou <strong>R$ 170,91</strong> no Pix (10% OFF extra com cupom).</p>
+        </div>
+
+        <!-- Formulário Estático de Compra -->
+        <form action="carrinho.html" method="get">
+          <div class="mb-4">
+            <label class="fw-bold d-block mb-2">Formato da Mídia:</label>
+            <div class="btn-group" role="group" aria-label="Formatos disponíveis">
+              <input type="radio" class="btn-check" name="formato" id="fmt-lp" checked>
+              <label class="btn btn-outline-dark" for="fmt-lp"><i class="bi bi-vinyl me-1"></i> LP Vinil 180g</label>
+              <input type="radio" class="btn-check" name="formato" id="fmt-cd">
+              <label class="btn btn-outline-dark" for="fmt-cd"><i class="bi bi-disc me-1"></i> CD Remaster</label>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-end gap-3 mb-4">
+            <div style="width: 110px;">
+              <label class="fw-bold mb-1" for="quantidade">Qtd:</label>
+              <input type="number" id="quantidade" name="quantidade" class="form-control text-center" value="1" min="1" max="5">
+            </div>
+            <a href="carrinho.html" class="btn btn-rs btn-lg flex-grow-1 text-center py-2">
+              <i class="bi bi-bag-plus me-2"></i> Adicionar ao Carrinho
+            </a>
+          </div>
+        </form>
+
+        <!-- Simulador de Frete Estático -->
+        <div class="p-3 border rounded bg-white mb-4">
+          <label for="cep" class="fw-semibold small d-block mb-1"><i class="bi bi-truck me-1"></i> Simular Prazo e Frete:</label>
+          <div class="input-group input-group-sm mb-2" style="max-width: 320px;">
+            <input type="text" id="cep" class="form-control" placeholder="00000-000" value="38500-000">
+            <button class="btn btn-outline-dark" type="button">Calcular</button>
+          </div>
+          <p class="small text-success mb-0"><i class="bi bi-check-circle-fill me-1"></i> Envio Correios: <strong>R$ 19,90</strong> (3 a 5 dias úteis) ou <strong>Grátis</strong> para compras acima de R$ 299.</p>
+        </div>
+
+        <!-- Selos de Confiança -->
+        <div class="row g-2 small text-secondary">
+          <div class="col-6"><i class="bi bi-shield-check text-danger me-1"></i> Produto 100% Original e Lacrado</div>
+          <div class="col-6"><i class="bi bi-box-seam text-danger me-1"></i> Embalagem Especial Anti-Impacto</div>
+        </div>
+      </div>
     </article>
 
-    <!-- Relacionados -->
-    <section class="mt-5 pt-4" id="secao-relacionados" hidden aria-labelledby="titulo-relacionados">
-      <div class="rs-secao-titulo"><div><span class="rs-kicker">Combina com</span><h2 id="titulo-relacionados">Você também pode gostar</h2></div></div>
-      <div class="row g-3 g-lg-4 row-cols-2 row-cols-lg-4" id="relacionados"></div>
+    <!-- Abas / Seção de Detalhes e Faixas -->
+    <section class="border-top pt-4 mb-5">
+      <h2 class="h3 mb-3">Descrição do Álbum</h2>
+      <p class="lead">Lançado em julho de 1980, <em>Back in Black</em> é o sétimo álbum de estúdio da banda de rock australiana AC/DC e um dos discos mais vendidos de toda a história da música, com mais de 50 milhões de cópias comercializadas.</p>
+      <p>Esta reedição audiófila especial de 180 gramas foi prensada a partir das matrizes analógicas originais, oferecendo fidelidade sonora estéreo incomparável, graves encorpados e os vocais cortantes de Brian Johnson em sua estreia triunfal na banda.</p>
+
+      <h3 class="h4 mt-4 mb-3"><i class="bi bi-music-note-list me-2 text-danger"></i>Lista de Faixas (Tracklist)</h3>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="card bg-light border-0">
+            <div class="card-header bg-dark text-white fw-bold">Lado A</div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between bg-transparent"><span>1. Hells Bells</span> <span class="text-secondary">5:12</span></li>
+              <li class="list-group-item d-flex justify-content-between bg-transparent"><span>2. Shoot to Thrill</span> <span class="text-secondary">5:17</span></li>
+              <li class="list-group-item d-flex justify-content-between bg-transparent"><span>3. What Do You Do for Money Honey</span> <span class="text-secondary">3:35</span></li>
+              <li class="list-group-item d-flex justify-content-between bg-transparent"><span>4. Given the Dog a Bone</span> <span class="text-secondary">3:31</span></li>
+              <li class="list-group-item d-flex justify-content-between bg-transparent"><span>5. Let Me Put My Love into You</span> <span class="text-secondary">4:15</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card bg-light border-0">
+            <div class="card-header bg-dark text-white fw-bold">Lado B</div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between bg-transparent"><span>6. Back in Black</span> <span class="text-secondary">4:15</span></li>
+              <li class="list-group-item d-flex justify-content-between bg-transparent"><span>7. You Shook Me All Night Long</span> <span class="text-secondary">3:30</span></li>
+              <li class="list-group-item d-flex justify-content-between bg-transparent"><span>8. Have a Drink on Me</span> <span class="text-secondary">3:58</span></li>
+              <li class="list-group-item d-flex justify-content-between bg-transparent"><span>9. Shake a Leg</span> <span class="text-secondary">4:05</span></li>
+              <li class="list-group-item d-flex justify-content-between bg-transparent"><span>10. Rock and Roll Ain't Noise Pollution</span> <span class="text-secondary">4:15</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Avaliações dos Clientes -->
+    <section class="border-top pt-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h3 mb-0">Avaliações dos Compradores</h2>
+        <span class="badge bg-danger p-2 fs-6">Média: 5.0 / 5.0</span>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="p-3 border rounded bg-white">
+            <div class="d-flex justify-content-between mb-1">
+              <strong>Marcelo R.</strong>
+              <span class="text-warning"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></span>
+            </div>
+            <p class="small text-secondary mb-1">"Prensagem sensacional! O riff de Shoot to Thrill salta na sala de som. Chegou super rápido e muito bem embalado."</p>
+            <small class="text-muted">Compra verificada em Outubro/2026</small>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="p-3 border rounded bg-white">
+            <div class="d-flex justify-content-between mb-1">
+              <strong>Fernanda P.</strong>
+              <span class="text-warning"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></span>
+            </div>
+            <p class="small text-secondary mb-1">"Comprei de presente pro meu namorado e ele pirou. Capa gatefold de muita qualidade e encarte fiel ao lançamento de 1980."</p>
+            <small class="text-muted">Compra verificada em Setembro/2026</small>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
-  <!-- O rodapé é compartilhado e recebe os contatos e redes sociais das configurações. -->
-  <footer id="rodape"></footer>
+  <!-- Rodapé Estático -->
+  <footer id="rodape" class="rs-footer">
+    <div class="container rs-footer-principal py-5">
+      <div class="row g-4 g-lg-5">
+        <div class="col-lg-3">
+          <a class="rs-logo mb-3" href="index.html">
+            <img src="img/site/mao-chifrada.svg" alt="" width="35" height="46">
+            <span><span class="rs-logo-nome">Riff Store</span><span class="rs-logo-sub">Merch &amp; Vinis de Rock</span></span>
+          </a>
+          <p class="mt-3 mb-4 small rs-footer-sobre">Camisetas de bandas, discos de vinil, CDs, pôsteres e acessórios para quem vive o rock.</p>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <h2>Loja</h2>
+          <ul class="list-unstyled">
+            <li><a href="produtos.html">Camisetas</a></li>
+            <li><a href="produtos.html">Discos de vinil</a></li>
+            <li><a href="produtos.html">CDs</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <h2>Ajuda</h2>
+          <ul class="list-unstyled">
+            <li><a href="login.html">Minha conta</a></li>
+            <li><a href="carrinho.html">Meu carrinho</a></li>
+            <li><a href="contato.html">Dúvidas Frequentes</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <h2>Institucional</h2>
+          <ul class="list-unstyled">
+            <li><a href="sobre.html">Sobre nós</a></li>
+            <li><a href="contato.html">Fale conosco</a></li>
+          </ul>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <h2>Atendimento</h2>
+          <ul class="list-unstyled text-secondary small">
+            <li class="mb-2"><i class="bi bi-envelope me-2 text-danger"></i> contato@riffstore.com</li>
+            <li class="mb-2"><i class="bi bi-geo-alt me-2 text-danger"></i> Monte Carmelo – MG (UFU)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="rs-footer-selos border-top border-dark py-3 text-center text-secondary small">
+      &copy; 2026 Riff Store. Protótipo para Programação para Web I — FACOM/UFU.
+    </div>
+  </footer>
 
-  <!-- Dependências primeiro, dados/API depois, app.js antes do controlador específico da página. -->
-  <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="js/compartilhado/config.js"></script>
-  <script src="js/compartilhado/fotos.js"></script>
-  <script src="js/demo/dados.js"></script>
-  <script src="js/demo/api-local.js"></script>
-  <script src="js/compartilhado/app.js"></script>
-  <script src="js/paginas/produto.js"></script>
 </body>
 </html>

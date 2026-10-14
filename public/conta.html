@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<!-- Conta: informações do usuário autenticado, histórico de pedidos e edição de dados. conta.js preenche o conteúdo após consultar a sessão. -->
+<!-- Protótipo HTML5 & CSS3 - Painel da Conta do Cliente | Riff Store (Programação para Web I) -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <!-- O viewport faz os tamanhos responsivos acompanharem a largura real do dispositivo. -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Minha conta | Riff Store</title>
+  <title>Minha Conta | Riff Store</title>
   <meta name="description" content="Seus dados e histórico de pedidos na Riff Store.">
   <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
-  <!-- A ordem das folhas preserva o Bootstrap como base e aplica style.css por último. -->
   <link rel="stylesheet" href="css/fontes.css">
   <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
@@ -16,72 +14,172 @@
 </head>
 <body data-pagina="conta">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-  <!-- app.js monta o cabeçalho comum, seus links e os indicadores de sessão/carrinho. -->
-  <header id="topo"></header>
 
-  <!-- main identifica o conteúdo principal e é o destino do link acessível de pular navegação. -->
-  <main id="conteudo">
-    <section class="rs-pagina-topo" data-bg-foto="show-festa">
+  <!-- Cabeçalho -->
+  <header id="topo" class="rs-header">
+    <nav class="navbar navbar-expand-lg navbar-dark rs-navbar" aria-label="Navegação principal">
       <div class="container">
-        <span class="rs-kicker claro">Minha conta</span>
-        <h1 id="saudacao">Olá!</h1>
-        <p id="resumo-conta">Acompanhe seus pedidos e mantenha seus dados atualizados.</p>
+        <a class="rs-logo navbar-brand me-lg-4" href="index.html" aria-label="Riff Store – página inicial">
+          <img src="img/site/mao-chifrada.svg" alt="" width="35" height="46">
+          <span>
+            <span class="rs-logo-nome">Riff Store</span>
+            <span class="rs-logo-sub">Merch &amp; Vinis de Rock</span>
+          </span>
+        </a>
+
+        <div class="rs-acoes order-lg-3 ms-auto">
+          <a class="btn-icone" href="produtos.html" title="Buscar produtos"><i class="bi bi-search"></i></a>
+          <a class="btn-icone active" href="conta.html" title="Minha Conta"><i class="bi bi-person-circle"></i></a>
+          <a class="btn-icone" id="btn-carrinho" href="carrinho.html" title="Ver carrinho">
+            <i class="bi bi-bag"></i>
+            <span class="rs-badge-carrinho">2</span>
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse order-lg-2" id="rs-menu">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.html">Catálogo Completo</a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.html?categoria=camisetas">Camisetas</a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.html?categoria=vinil">Vinis</a></li>
+            <li class="nav-item"><a class="nav-link text-warning" href="produtos.html?promocao=1">Promoções</a></li>
+            <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+            <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main id="conteudo">
+    <section class="rs-pagina-topo" style="background-image: url('img/fotos/show-festa.jpg'); background-size: cover; background-position: center;">
+      <div class="container">
+        <span class="rs-kicker claro">Painel do Cliente</span>
+        <h1>Olá, Rafael Lemos!</h1>
+        <p>Acompanhe seus pedidos em tempo real e mantenha seus dados de entrega atualizados.</p>
       </div>
     </section>
 
     <div class="container py-5">
       <div class="row g-4 g-xl-5">
+        <!-- Menu Lateral da Conta -->
         <div class="col-lg-3">
-          <nav class="nav flex-column rs-conta-menu" role="tablist" aria-label="Seções da conta">
-            <button class="nav-link active" id="aba-pedidos" data-bs-toggle="tab" data-bs-target="#painel-pedidos" type="button" role="tab" aria-controls="painel-pedidos" aria-selected="true"><i class="bi bi-box-seam"></i> Meus pedidos</button>
-            <button class="nav-link" id="aba-dados" data-bs-toggle="tab" data-bs-target="#painel-dados" type="button" role="tab" aria-controls="painel-dados" aria-selected="false"><i class="bi bi-person-gear"></i> Meus dados</button>
-            <a class="nav-link" href="admin.html" id="link-admin" hidden><i class="bi bi-speedometer2"></i> Painel administrativo</a>
-            <button class="nav-link text-danger" type="button" data-sair><i class="bi bi-box-arrow-right"></i> Sair</button>
-          </nav>
+          <div class="rs-painel p-3 border rounded bg-white shadow-sm">
+            <div class="text-center pb-3 border-bottom mb-3">
+              <span class="rs-avatar fs-4 p-4 mb-2" style="background:#b01116;">RL</span>
+              <h2 class="h6 mb-0 fw-bold">Rafael Lemos</h2>
+              <small class="text-secondary">rafael.lemos@ufu.br</small>
+            </div>
+            <nav class="nav flex-column gap-1">
+              <button class="nav-link text-start active btn btn-light fw-bold text-danger border-0" data-bs-toggle="tab" data-bs-target="#painel-pedidos"><i class="bi bi-box-seam me-2"></i> Meus Pedidos</button>
+              <button class="nav-link text-start btn btn-light border-0" data-bs-toggle="tab" data-bs-target="#painel-dados"><i class="bi bi-person-gear me-2"></i> Meus Dados</button>
+              <a href="admin.html" class="nav-link text-start btn btn-light border-0 text-dark"><i class="bi bi-speedometer2 me-2"></i> Painel Admin</a>
+              <a href="index.html" class="nav-link text-start btn btn-light border-0 text-danger"><i class="bi bi-box-arrow-right me-2"></i> Sair</a>
+            </nav>
+          </div>
         </div>
 
+        <!-- Conteúdo das Abas -->
         <div class="col-lg-9 tab-content">
-          <section class="tab-pane fade show active" id="painel-pedidos" role="tabpanel" aria-labelledby="aba-pedidos" tabindex="0">
-            <h2 class="mb-4">Histórico de pedidos</h2>
-            <div id="lista-pedidos"><div class="rs-esqueleto" style="height:160px"></div></div>
+          <!-- Aba 1: Histórico de Pedidos Estático -->
+          <section class="tab-pane fade show active" id="painel-pedidos" role="tabpanel">
+            <h2 class="h4 mb-4 pb-2 border-bottom">Histórico de Pedidos</h2>
+
+            <!-- Pedido 1 (Mais recente) -->
+            <article class="card border rounded mb-4 shadow-sm">
+              <div class="card-header bg-light d-flex justify-content-between align-items-center py-3 flex-wrap gap-2">
+                <div>
+                  <span class="fw-bold fs-6">Pedido #1042</span>
+                  <span class="text-secondary small ms-2">Realizado hoje às 11:45</span>
+                </div>
+                <div>
+                  <span class="badge bg-warning text-dark px-3 py-2 fs-6"><i class="bi bi-hourglass-split me-1"></i> Em Separação</span>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="d-flex align-items-center gap-3 mb-3 pb-3 border-bottom">
+                  <img src="img/fotos/produtos/vinil-acdc-back-in-black.jpg" alt="" class="rounded border" width="60" height="60" style="object-fit: cover;">
+                  <div class="flex-grow-1">
+                    <h3 class="h6 mb-0">Vinil AC/DC – Back in Black (1980)</h3>
+                    <small class="text-secondary">Prensagem 180g · Qtd: 1 · R$ 189,90</small>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center gap-3 mb-3 pb-3 border-bottom">
+                  <img src="img/fotos/produtos/camiseta-nirvana-bleach.jpg" alt="" class="rounded border" width="60" height="60" style="object-fit: cover;">
+                  <div class="flex-grow-1">
+                    <h3 class="h6 mb-0">Camiseta Nirvana Bleach</h3>
+                    <small class="text-secondary">Tamanho: M · Qtd: 1 · R$ 89,90</small>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-1">
+                  <div>
+                    <small class="text-secondary d-block">Entrega em: Av. Goiás, 1500 - Monte Carmelo/MG</small>
+                    <small class="text-success fw-bold"><i class="bi bi-qr-code me-1"></i> Pago via Pix (Chave confirmada)</small>
+                  </div>
+                  <div class="text-end">
+                    <span class="text-secondary small">Total com frete e cupom:</span>
+                    <span class="fs-4 fw-bold text-danger d-block">R$ 271,72</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Pedido 2 (Anterior) -->
+            <article class="card border rounded mb-4 shadow-sm">
+              <div class="card-header bg-light d-flex justify-content-between align-items-center py-3 flex-wrap gap-2">
+                <div>
+                  <span class="fw-bold fs-6">Pedido #1038</span>
+                  <span class="text-secondary small ms-2">Realizado em 28/Set/2026</span>
+                </div>
+                <div>
+                  <span class="badge bg-success px-3 py-2 fs-6"><i class="bi bi-check-circle-fill me-1"></i> Entregue</span>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <img src="img/fotos/produtos/camiseta-metallica-master-of-puppets.jpg" alt="" class="rounded border" width="60" height="60" style="object-fit: cover;">
+                  <div class="flex-grow-1">
+                    <h3 class="h6 mb-0">Camiseta Metallica Master of Puppets</h3>
+                    <small class="text-secondary">Tamanho: G · Qtd: 1 · R$ 94,90</small>
+                  </div>
+                  <span class="fw-bold">R$ 94,90</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-secondary">Código de Rastreio: <strong>BR2026UFU987654</strong></small>
+                  <a href="produto.html" class="btn btn-sm btn-outline-danger"><i class="bi bi-star me-1"></i> Avaliar Produto</a>
+                </div>
+              </div>
+            </article>
           </section>
 
-          <section class="tab-pane fade" id="painel-dados" role="tabpanel" aria-labelledby="aba-dados" tabindex="0">
-            <h2 class="mb-4">Meus dados</h2>
-  <!-- Labels associados aos IDs e feedbacks permitem identificar e corrigir cada campo. -->
-            <form id="form-dados" class="rs-painel" novalidate>
+          <!-- Aba 2: Meus Dados -->
+          <section class="tab-pane fade" id="painel-dados" role="tabpanel">
+            <h2 class="h4 mb-4 pb-2 border-bottom">Meus Dados Cadastrais</h2>
+            <form class="card p-4 border rounded shadow-sm bg-white">
               <div class="row g-3">
                 <div class="col-md-6">
-                  <label for="conta-nome" class="form-label">Nome completo</label>
-                  <input type="text" class="form-control" id="conta-nome" name="nome" autocomplete="name" required maxlength="120">
-                  <div class="invalid-feedback"></div>
+                  <label for="conta-nome" class="form-label small fw-semibold">Nome Completo</label>
+                  <input type="text" class="form-control" id="conta-nome" value="Rafael Lemos">
                 </div>
                 <div class="col-md-6">
-                  <label for="conta-email" class="form-label">E-mail</label>
-                  <input type="email" class="form-control" id="conta-email" readonly aria-describedby="ajuda-email">
-                  <div class="form-text" id="ajuda-email">O e-mail é usado no login e não pode ser alterado.</div>
+                  <label for="conta-email" class="form-label small fw-semibold">E-mail</label>
+                  <input type="email" class="form-control" id="conta-email" value="rafael.lemos@ufu.br" readonly>
+                  <small class="text-secondary">O e-mail é a chave de login.</small>
                 </div>
                 <div class="col-md-6">
-                  <label for="conta-telefone" class="form-label">Telefone</label>
-                  <input type="tel" class="form-control" id="conta-telefone" name="telefone" data-mascara="telefone" autocomplete="tel">
-                  <div class="invalid-feedback"></div>
+                  <label for="conta-tel" class="form-label small fw-semibold">Telefone</label>
+                  <input type="tel" class="form-control" id="conta-tel" value="(34) 99876-5432">
+                </div>
+                <div class="col-md-6">
+                  <label for="conta-senha" class="form-label small fw-semibold">Alterar Senha</label>
+                  <input type="password" class="form-control" id="conta-senha" placeholder="••••••••">
                 </div>
               </div>
-              <hr class="my-4">
-              <h3 class="h4">Alterar senha <span class="text-secondary fs-6 text-capitalize" style="font-family:var(--rs-fonte-texto)">(opcional)</span></h3>
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <label for="senha-atual" class="form-label">Senha atual</label>
-                  <input type="password" class="form-control" id="senha-atual" name="senhaAtual" autocomplete="current-password">
-                  <div class="invalid-feedback"></div>
-                </div>
-                <div class="col-md-6">
-                  <label for="nova-senha" class="form-label">Nova senha</label>
-                  <input type="password" class="form-control" id="nova-senha" name="novaSenha" autocomplete="new-password" minlength="6">
-                  <div class="invalid-feedback"></div>
-                </div>
+              <div class="mt-4 text-end">
+                <button type="button" class="btn btn-rs">Salvar Alterações</button>
               </div>
-              <button type="submit" class="btn btn-rs mt-4">Salvar alterações</button>
             </form>
           </section>
         </div>
@@ -89,17 +187,13 @@
     </div>
   </main>
 
-  <!-- O rodapé é compartilhado e recebe os contatos e redes sociais das configurações. -->
-  <footer id="rodape"></footer>
+  <!-- Rodapé Estático -->
+  <footer id="rodape" class="rs-footer py-4 border-top">
+    <div class="container text-center text-secondary small">
+      &copy; 2026 Riff Store. Protótipo para Programação para Web I — FACOM/UFU.
+    </div>
+  </footer>
 
-  <!-- Dependências primeiro, dados/API depois, app.js antes do controlador específico da página. -->
-  <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="js/compartilhado/config.js"></script>
-  <script src="js/compartilhado/fotos.js"></script>
-  <script src="js/demo/dados.js"></script>
-  <script src="js/demo/api-local.js"></script>
-  <script src="js/compartilhado/app.js"></script>
-  <script src="js/paginas/conta.js"></script>
 </body>
 </html>

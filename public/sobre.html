@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<!-- Página institucional: textos, imagens e seções apresentam a identidade da loja fictícia. Os conteúdos se distribuem em colunas responsivas. -->
+<!-- Protótipo HTML5 & CSS3 - Sobre a Loja | Riff Store (Programação para Web I) -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <!-- O viewport faz os tamanhos responsivos acompanharem a largura real do dispositivo. -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sobre a Riff Store</title>
+  <title>Sobre a Riff Store | Merch &amp; Vinis de Rock</title>
   <meta name="description" content="Conheça a história e os valores da Riff Store: uma loja virtual para quem vive o rock.">
   <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
-  <!-- A ordem das folhas preserva o Bootstrap como base e aplica style.css por último. -->
   <link rel="stylesheet" href="css/fontes.css">
   <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
@@ -16,12 +14,59 @@
 </head>
 <body data-pagina="sobre">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-  <!-- app.js monta o cabeçalho comum, seus links e os indicadores de sessão/carrinho. -->
-  <header id="topo"></header>
 
-  <!-- main identifica o conteúdo principal e é o destino do link acessível de pular navegação. -->
+  <!-- Barra de avisos no topo -->
+  <div class="rs-aviso" aria-live="polite">
+    <div class="container text-center">
+      <span class="rs-aviso-texto">
+        <i class="bi bi-truck text-danger"></i> <strong>Frete grátis</strong> acima de R$ 299 &nbsp;|&nbsp; 
+        <i class="bi bi-tag-fill text-warning"></i> Cupom de 10% OFF: <strong>ROCK10</strong>
+      </span>
+    </div>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header id="topo" class="rs-header">
+    <nav class="navbar navbar-expand-lg navbar-dark rs-navbar" aria-label="Navegação principal">
+      <div class="container">
+        <a class="rs-logo navbar-brand me-lg-4" href="index.html" aria-label="Riff Store – página inicial">
+          <img src="img/site/mao-chifrada.svg" alt="" width="35" height="46">
+          <span>
+            <span class="rs-logo-nome">Riff Store</span>
+            <span class="rs-logo-sub">Merch &amp; Vinis de Rock</span>
+          </span>
+        </a>
+
+        <div class="rs-acoes order-lg-3 ms-auto">
+          <a class="btn-icone" href="produtos.html" title="Buscar produtos"><i class="bi bi-search"></i></a>
+          <a class="btn-icone" href="login.html" title="Minha Conta"><i class="bi bi-person"></i></a>
+          <a class="btn-icone" id="btn-carrinho" href="carrinho.html" title="Ver carrinho">
+            <i class="bi bi-bag"></i>
+            <span class="rs-badge-carrinho">2</span>
+          </a>
+          <button class="navbar-toggler ms-1 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#rs-menu" aria-controls="rs-menu" aria-expanded="false" aria-label="Abrir menu">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+
+        <div class="collapse navbar-collapse order-lg-2" id="rs-menu">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.html">Catálogo Completo</a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.html?categoria=camisetas">Camisetas</a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.html?categoria=vinil">Vinis</a></li>
+            <li class="nav-item"><a class="nav-link text-warning" href="produtos.html?promocao=1">Promoções</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="sobre.html">Sobre</a></li>
+            <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Conteúdo Principal -->
   <main id="conteudo">
-    <section class="rs-pagina-topo" data-bg-foto="publico-maos">
+    <section class="rs-pagina-topo" style="background-image: url('img/fotos/publico-maos.jpg'); background-size: cover; background-position: center;">
       <div class="container">
         <nav aria-label="Trilha de navegação">
           <ol class="breadcrumb">
@@ -30,7 +75,7 @@
           </ol>
         </nav>
         <h1>Sobre a Riff Store</h1>
-        <p>Uma loja virtual para quem vive o rock. Música. Estilo. Atitude.</p>
+        <p>Uma loja virtual criada para quem vive e respira rock n' roll. Música. Estilo. Atitude.</p>
       </div>
     </section>
 
@@ -40,19 +85,29 @@
         <div class="row g-5 align-items-center">
           <div class="col-lg-6">
             <figure class="rs-sobre-foto m-0">
-              <img src="img/fotos/publico-show-2.jpg" data-foto="publico-show-2" alt="Público com as mãos para o alto em um show de rock">
+              <img src="img/fotos/publico-show-2.jpg" alt="Show de rock" class="rounded shadow img-fluid">
             </figure>
           </div>
           <div class="col-lg-6">
-            <span class="rs-kicker">Nossa história</span>
+            <span class="rs-kicker">Nossa História</span>
             <h2 class="mt-2">De fã para fã</h2>
-            <p class="lead mt-3">A Riff Store é uma loja virtual criada por fãs de rock para fãs de rock.</p>
-            <p>Nosso objetivo é aproximar você da sua música preferida, com produtos que carregam história, atitude e muita identidade. No rock, <em>riff</em> é aquela frase curta e marcante, quase sempre tocada na guitarra, que faz uma música ser reconhecida nos primeiros segundos. É isso que a gente quer ser: fácil de lembrar e impossível de confundir.</p>
-            <p>Reunimos num só lugar camisetas de bandas, discos de vinil, CDs, pôsteres e acessórios, com informações detalhadas para quem coleciona (edição, ano, faixas) e filtros simples para quem está procurando um presente.</p>
-            <div class="row g-3 mt-2 text-center">
-              <div class="col-4"><div class="rs-numero" data-contar="31">0</div><span class="small text-secondary">produtos</span></div>
-              <div class="col-4"><div class="rs-numero" data-contar="13">0</div><span class="small text-secondary">bandas</span></div>
-              <div class="col-4"><div class="rs-numero" data-contar="5">0</div><span class="small text-secondary">categorias</span></div>
+            <p class="lead mt-3">A Riff Store nasceu da paixão genuína por guitarras distorcidas, vinis bem prensados e camisetas com história.</p>
+            <p>No universo do rock, um <em>riff</em> é aquele acorde marcante que torna uma música inesquecível logo nos primeiros segundos. É essa energia que transmitimos em cada produto do nosso catálogo.</p>
+            <p>Este protótipo foi idealizado e construído para a disciplina de <strong>Programação para Web I (FACOM/UFU)</strong>, campus Monte Carmelo, sob orientação do Prof. Adriano Mendonça Rocha.</p>
+            
+            <div class="row g-3 mt-4 text-center">
+              <div class="col-4 border-end">
+                <div class="fs-2 fw-bold text-danger">27+</div>
+                <span class="small text-secondary">Produtos Cadastrados</span>
+              </div>
+              <div class="col-4 border-end">
+                <div class="fs-2 fw-bold text-danger">10+</div>
+                <span class="small text-secondary">Bandas Clássicas</span>
+              </div>
+              <div class="col-4">
+                <div class="fs-2 fw-bold text-danger">5</div>
+                <span class="small text-secondary">Categorias de Merch</span>
+              </div>
             </div>
           </div>
         </div>
@@ -60,117 +115,80 @@
     </section>
 
     <!-- Valores -->
-    <section class="rs-secao bg-rs-cinza" aria-labelledby="titulo-valores">
+    <section class="rs-secao bg-light py-5" aria-labelledby="titulo-valores">
       <div class="container">
         <div class="text-center mb-5">
-          <span class="rs-kicker">No que a gente acredita</span>
+          <span class="rs-kicker">Nossos Pilares</span>
           <h2 id="titulo-valores" class="mt-2">Música. Estilo. Atitude.</h2>
         </div>
         <div class="row g-4">
           <div class="col-md-4">
-            <div class="rs-valor">
-              <div class="icone"><i class="bi bi-music-note-beamed" aria-hidden="true"></i></div>
+            <div class="rs-valor p-4 border rounded bg-white shadow-sm h-100">
+              <div class="icone fs-1 text-danger mb-3"><i class="bi bi-music-note-beamed"></i></div>
               <h3>Música</h3>
-              <p class="text-secondary mb-0">Tudo começa no som. Vinis e CDs com informações sobre a edição, o ano de lançamento e a lista de faixas.</p>
+              <p class="text-secondary mb-0">Tudo começa no som. Discos de vinil 180g e CDs com encartes fiéis, prensagens audiófilas e tracklist detalhado.</p>
             </div>
           </div>
           <div class="col-md-4">
-            <div class="rs-valor">
-              <div class="icone"><i class="bi bi-heart-fill" aria-hidden="true"></i></div>
+            <div class="rs-valor p-4 border rounded bg-white shadow-sm h-100">
+              <div class="icone fs-1 text-danger mb-3"><i class="bi bi-heart-fill"></i></div>
               <h3>Estilo</h3>
-              <p class="text-secondary mb-0">Camisetas, pôsteres e acessórios para levar a sua banda favorita para o dia a dia.</p>
+              <p class="text-secondary mb-0">Camisetas 100% algodão, pôsteres de alta gramatura e acessórios para levar a sua banda favorita para onde for.</p>
             </div>
           </div>
           <div class="col-md-4">
-            <div class="rs-valor">
-              <div class="icone"><img src="img/site/mao-chifrada.svg" alt="" aria-hidden="true"></div>
+            <div class="rs-valor p-4 border rounded bg-white shadow-sm h-100">
+              <div class="icone mb-3"><img src="img/site/mao-chifrada.svg" alt="" width="35" height="40"></div>
               <h3>Atitude</h3>
-              <p class="text-secondary mb-0">Atendimento direto, sem enrolação, e uma loja feita por quem também vive o rock.</p>
+              <p class="text-secondary mb-0">Atendimento direto, embalagens reforçadas anti-impacto e uma plataforma pensada por quem ama rock.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Linha do tempo -->
-    <section class="rs-secao" aria-labelledby="titulo-trajetoria">
-      <div class="container">
-        <div class="row g-5">
-          <div class="col-lg-5">
-            <span class="rs-kicker">Trajetória</span>
-            <h2 id="titulo-trajetoria" class="mt-2">Como a Riff Store nasceu</h2>
-            <p class="text-secondary mt-3">Tudo começou em Monte Carmelo, no Triângulo Mineiro, entre amigos que trocavam discos e camisetas nos fins de semana. Hoje enviamos rock para todo o Brasil.</p>
-          </div>
-          <div class="col-lg-7">
-            <ol class="rs-linha-historia ps-4 mb-0">
-              <li><strong>O começo</strong>Três amigos que trocavam discos e camisetas pelas redes sociais percebem que faltava um catálogo organizado, com busca e controle de pedidos.</li>
-              <li><strong>A ideia</strong>Nasce o nome Riff Store e o símbolo da mão chifrada em vermelho: curto, fácil de lembrar e com a cara do rock.</li>
-              <li><strong>A curadoria</strong>Cada produto passa pelo crivo da equipe: só entra no catálogo o que a gente usaria no show.</li>
-              <li><strong>No ar</strong>A loja online abre as portas com camisetas, vinis, CDs, pôsteres e acessórios, e envia para todo o Brasil.</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Equipe -->
-    <section class="rs-secao pt-0" aria-labelledby="titulo-equipe">
+    <!-- Equipe Acadêmica -->
+    <section class="rs-secao" aria-labelledby="titulo-equipe">
       <div class="container">
         <div class="text-center mb-5">
-          <span class="rs-kicker">Quem faz</span>
-          <h2 id="titulo-equipe" class="mt-2">A banda por trás da loja</h2>
+          <span class="rs-kicker">Quem Desenvolveu</span>
+          <h2 id="titulo-equipe" class="mt-2">Equipe do Projeto</h2>
+          <p class="text-secondary">Estudantes de Ciência da Computação / Sistemas de Informação — FACOM / UFU</p>
         </div>
         <div class="row g-4 justify-content-center">
-          <div class="col-sm-6 col-lg-3 rs-equipe"><div class="foto" aria-hidden="true">GF</div><h3 class="h4 mb-0">Gabriel Fernandes</h3><span class="small text-secondary">Cofundador · Curadoria e vitrine</span></div>
-          <div class="col-sm-6 col-lg-3 rs-equipe"><div class="foto" aria-hidden="true">RL</div><h3 class="h4 mb-0">Rafael Lemos</h3><span class="small text-secondary">Cofundador · Atendimento e pedidos</span></div>
-          <div class="col-sm-6 col-lg-3 rs-equipe"><div class="foto" aria-hidden="true">NB</div><h3 class="h4 mb-0">Nicolas Bernardes</h3><span class="small text-secondary">Cofundador · Operações e estoque</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="container" aria-label="Chamada para a loja">
-      <div class="rs-cta text-center" data-bg-foto="guitarrista-palco-2">
-        <h2 class="display-5">Bora montar o seu setlist?</h2>
-        <p class="text-white-50">Camisetas, vinis, CDs, pôsteres e acessórios esperando por você.</p>
-        <div class="d-flex justify-content-center gap-2 flex-wrap">
-          <a href="produtos.html" class="btn btn-rs btn-lg">Ver produtos</a>
-          <a href="contato.html" class="btn btn-outline-light btn-rs-claro btn-lg">Fale conosco</a>
+          <div class="col-sm-6 col-lg-4 text-center">
+            <div class="p-4 border rounded bg-white shadow-sm">
+              <span class="rs-avatar p-4 fs-3 mb-3 d-inline-flex" style="background:#b01116;">GF</span>
+              <h3 class="h5 mb-1">Gabriel Fernandes</h3>
+              <span class="small text-secondary">Curadoria, Design e Vitrine</span>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-4 text-center">
+            <div class="p-4 border rounded bg-white shadow-sm">
+              <span class="rs-avatar p-4 fs-3 mb-3 d-inline-flex" style="background:#8c0d11;">RL</span>
+              <h3 class="h5 mb-1">Rafael Lemos</h3>
+              <span class="small text-secondary">Atendimento, Pedidos e Interface</span>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-4 text-center">
+            <div class="p-4 border rounded bg-white shadow-sm">
+              <span class="rs-avatar p-4 fs-3 mb-3 d-inline-flex" style="background:#333;">NB</span>
+              <h3 class="h5 mb-1">Nicolas Bernardes</h3>
+              <span class="small text-secondary">Estoque, Catálogo e Operações</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- O rodapé é compartilhado e recebe os contatos e redes sociais das configurações. -->
-  <footer id="rodape"></footer>
+  <!-- Rodapé Estático -->
+  <footer id="rodape" class="rs-footer py-4 border-top">
+    <div class="container text-center text-secondary small">
+      &copy; 2026 Riff Store. Protótipo para Programação para Web I — FACOM/UFU.
+    </div>
+  </footer>
 
-  <!-- Dependências primeiro, dados/API depois, app.js antes do controlador específico da página. -->
-  <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="js/compartilhado/config.js"></script>
-  <script src="js/compartilhado/fotos.js"></script>
-  <script src="js/demo/dados.js"></script>
-  <script src="js/demo/api-local.js"></script>
-  <script src="js/compartilhado/app.js"></script>
-  <script>
-    // Atualiza os números com os dados reais do catálogo e anima a contagem quando aparecem na tela
-    $(function () {
-      Promise.all([RS.api('GET', '/api/categorias'), RS.api('GET', '/api/bandas')]).then(([cats, bandas]) => {
-        $('[data-contar]').eq(0).attr('data-contar', cats.reduce((s, c) => s + c.total, 0));
-        $('[data-contar]').eq(1).attr('data-contar', bandas.length);
-        $('[data-contar]').eq(2).attr('data-contar', cats.length);
-      }).catch(() => {}).finally(() => {
-        const observador = new IntersectionObserver(entradas => {
-          entradas.forEach(e => {
-            if (!e.isIntersecting) return;
-            const $n = $(e.target);
-            const fim = Number($n.attr('data-contar'));
-            $({ v: 0 }).animate({ v: fim }, { duration: 1200, step: v => $n.text(Math.round(v)), complete: () => $n.text(fim) });
-            observador.unobserve(e.target);
-          });
-        });
-        $('[data-contar]').each((i, el) => observador.observe(el));
-      });
-    });
-  </script>
 </body>
 </html>

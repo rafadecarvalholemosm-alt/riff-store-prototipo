@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<!-- Checkout: quatro formulários representam identificação, endereço, pagamento simulado e revisão. O atributo hidden controla a etapa exibida. -->
+<!-- Protótipo HTML5 & CSS3 - Finalização de Pedido (Checkout) | Riff Store (Programação para Web I) -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <!-- O viewport faz os tamanhos responsivos acompanharem a largura real do dispositivo. -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Finalizar pedido | Riff Store</title>
-  <meta name="description" content="Finalização do pedido na Riff Store.">
+  <title>Finalizar Pedido | Riff Store</title>
+  <meta name="description" content="Checkout e finalização de compra na Riff Store.">
   <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
-  <!-- A ordem das folhas preserva o Bootstrap como base e aplica style.css por último. -->
   <link rel="stylesheet" href="css/fontes.css">
   <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
@@ -16,216 +14,192 @@
 </head>
 <body data-pagina="checkout">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-  <!-- app.js monta o cabeçalho comum, seus links e os indicadores de sessão/carrinho. -->
-  <header id="topo"></header>
 
-  <!-- main identifica o conteúdo principal e é o destino do link acessível de pular navegação. -->
+  <!-- Cabeçalho simplificado de Checkout (foco na conversão) -->
+  <header id="topo" class="rs-header">
+    <nav class="navbar navbar-dark rs-navbar py-2" aria-label="Navegação do checkout">
+      <div class="container d-flex justify-content-between align-items-center">
+        <a class="rs-logo navbar-brand" href="index.html" aria-label="Riff Store">
+          <img src="img/site/mao-chifrada.svg" alt="" width="30" height="40">
+          <span>
+            <span class="rs-logo-nome fs-4">Riff Store</span>
+            <span class="rs-logo-sub" style="font-size: 0.5rem;">Ambiente Seguro</span>
+          </span>
+        </a>
+        <div class="text-white small">
+          <i class="bi bi-lock-fill text-success fs-5 me-1"></i> Checkout Seguro SSL 256-bit
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Conteúdo Principal -->
   <main id="conteudo" class="container py-4 py-lg-5">
-    <h1 class="text-center mb-4">Finalizar pedido</h1>
+    <h1 class="h2 text-center mb-4">Finalização de Pedido</h1>
 
-    <ol class="rs-etapas" id="etapas" aria-label="Etapas da compra">
-      <li class="atual" aria-current="step">Identificação</li>
-      <li>Endereço</li>
-      <li>Pagamento</li>
-      <li>Revisão</li>
+    <!-- Indicador de Etapas -->
+    <ol class="rs-etapas mb-5" aria-label="Etapas da compra">
+      <li class="passada text-success"><i class="bi bi-check-circle-fill me-1"></i> Identificação</li>
+      <li class="passada text-success"><i class="bi bi-check-circle-fill me-1"></i> Endereço</li>
+      <li class="atual fw-bold text-danger"><i class="bi bi-credit-card me-1"></i> Pagamento</li>
+      <li class="text-secondary"><i class="bi bi-flag me-1"></i> Conclusão</li>
     </ol>
 
-    <div id="checkout-vazio" class="rs-vazio rs-painel" hidden>
-      <i class="bi bi-bag-x" aria-hidden="true"></i>
-      <h2 class="h3 mt-3">Seu carrinho está vazio</h2>
-      <p class="text-secondary">Adicione produtos ao carrinho para finalizar um pedido.</p>
-      <a href="produtos.html" class="btn btn-rs">Ver produtos</a>
-    </div>
-
-    <div class="row g-4 g-xl-5" id="checkout" hidden>
+    <div class="row g-4 g-xl-5">
+      <!-- Coluna dos Formulários de Checkout -->
       <div class="col-lg-7 col-xl-8">
-        <!-- Etapa 1: identificação -->
-  <!-- Labels associados aos IDs e feedbacks permitem identificar e corrigir cada campo. -->
-        <form class="rs-painel rs-etapa" data-etapa="1" novalidate>
-          <h2>Dados do cliente</h2>
-          <p class="text-secondary small mb-4">Preenchidos com os dados da sua conta. Confira antes de continuar.</p>
-          <div class="mb-3">
-            <label for="nome" class="form-label">Nome completo</label>
-            <input type="text" class="form-control" id="nome" name="nome" autocomplete="name" required maxlength="120">
-            <div class="invalid-feedback"></div>
-          </div>
-          <div class="row g-3 mb-4">
-            <div class="col-md-7">
-              <label for="email" class="form-label">E-mail</label>
-              <input type="email" class="form-control" id="email" name="email" autocomplete="email" required maxlength="160">
-              <div class="invalid-feedback"></div>
-            </div>
-            <div class="col-md-5">
-              <label for="telefone" class="form-label">Telefone</label>
-              <input type="tel" class="form-control" id="telefone" name="telefone" autocomplete="tel" placeholder="(34) 99999-9999" data-mascara="telefone" required>
-              <div class="invalid-feedback"></div>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between">
-            <a href="carrinho.html" class="btn btn-rs-sec"><i class="bi bi-arrow-left me-1"></i> Carrinho</a>
-            <button type="submit" class="btn btn-rs px-5">Continuar</button>
-          </div>
-        </form>
-
-        <!-- Etapa 2: endereço -->
-        <form class="rs-painel rs-etapa" data-etapa="2" novalidate hidden>
-          <h2>Endereço de entrega</h2>
-          <p class="text-secondary small mb-4">Digite o CEP para preencher o endereço automaticamente.</p>
+        <!-- 1. Dados Pessoais -->
+        <section class="card border-0 shadow-sm p-4 mb-4 bg-white rounded">
+          <h2 class="h5 mb-3 border-bottom pb-2"><i class="bi bi-person-circle me-2 text-danger"></i>1. Dados do Cliente</h2>
           <div class="row g-3">
-            <div class="col-sm-5 col-md-4">
-              <label for="cep" class="form-label">CEP</label>
-              <input type="text" class="form-control" id="cep" name="cep" inputmode="numeric" autocomplete="postal-code" placeholder="00000-000" data-mascara="cep" required>
-              <div class="invalid-feedback"></div>
-              <div class="form-text" id="cep-status"></div>
+            <div class="col-md-12">
+              <label for="nome" class="form-label small fw-semibold">Nome Completo</label>
+              <input type="text" class="form-control" id="nome" value="Rafael Lemos" required>
             </div>
-            <div class="col-12 col-md-8">
-              <label for="endereco" class="form-label">Endereço</label>
-              <input type="text" class="form-control" id="endereco" name="endereco" autocomplete="address-line1" placeholder="Rua, avenida..." required maxlength="160">
-              <div class="invalid-feedback"></div>
-            </div>
-            <div class="col-5 col-md-3">
-              <label for="numero" class="form-label">Número</label>
-              <input type="text" class="form-control" id="numero" name="numero" required maxlength="10">
-              <div class="invalid-feedback"></div>
-            </div>
-            <div class="col-7 col-md-4">
-              <label for="complemento" class="form-label">Complemento <span class="text-secondary fw-normal">(opcional)</span></label>
-              <input type="text" class="form-control" id="complemento" name="complemento" autocomplete="address-line2" maxlength="80">
+            <div class="col-md-7">
+              <label for="email" class="form-label small fw-semibold">E-mail para Envio da Nota Fiscal</label>
+              <input type="email" class="form-control" id="email" value="rafael.lemos@ufu.br" required>
             </div>
             <div class="col-md-5">
-              <label for="bairro" class="form-label">Bairro</label>
-              <input type="text" class="form-control" id="bairro" name="bairro" required maxlength="80">
-              <div class="invalid-feedback"></div>
+              <label for="telefone" class="form-label small fw-semibold">Telefone / WhatsApp</label>
+              <input type="tel" class="form-control" id="telefone" value="(34) 99876-5432" required>
             </div>
-            <div class="col-8 col-md-8">
-              <label for="cidade" class="form-label">Cidade</label>
-              <input type="text" class="form-control" id="cidade" name="cidade" autocomplete="address-level2" required maxlength="80">
-              <div class="invalid-feedback"></div>
+          </div>
+        </section>
+
+        <!-- 2. Endereço de Entrega -->
+        <section class="card border-0 shadow-sm p-4 mb-4 bg-white rounded">
+          <h2 class="h5 mb-3 border-bottom pb-2"><i class="bi bi-geo-alt-fill me-2 text-danger"></i>2. Endereço de Entrega</h2>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label for="cep" class="form-label small fw-semibold">CEP</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="cep" value="38500-000">
+                <button class="btn btn-outline-secondary" type="button">Buscar</button>
+              </div>
             </div>
-            <div class="col-4 col-md-4">
-              <label for="uf" class="form-label">Estado</label>
-              <select class="form-select" id="uf" name="uf" autocomplete="address-level1" required>
-                <option value="">UF</option>
+            <div class="col-md-8">
+              <label for="endereco" class="form-label small fw-semibold">Logradouro (Rua / Avenida)</label>
+              <input type="text" class="form-control" id="endereco" value="Avenida Goiás" required>
+            </div>
+            <div class="col-md-3">
+              <label for="numero" class="form-label small fw-semibold">Número</label>
+              <input type="text" class="form-control" id="numero" value="1500" required>
+            </div>
+            <div class="col-md-4">
+              <label for="complemento" class="form-label small fw-semibold">Complemento</label>
+              <input type="text" class="form-control" id="complemento" value="Apto 302">
+            </div>
+            <div class="col-md-5">
+              <label for="bairro" class="form-label small fw-semibold">Bairro</label>
+              <input type="text" class="form-control" id="bairro" value="Centro" required>
+            </div>
+            <div class="col-md-8">
+              <label for="cidade" class="form-label small fw-semibold">Cidade</label>
+              <input type="text" class="form-control" id="cidade" value="Monte Carmelo" required>
+            </div>
+            <div class="col-md-4">
+              <label for="uf" class="form-label small fw-semibold">Estado</label>
+              <select class="form-select" id="uf">
+                <option value="MG" selected>Minas Gerais (MG)</option>
+                <option value="SP">São Paulo (SP)</option>
+                <option value="RJ">Rio de Janeiro (RJ)</option>
               </select>
-              <div class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="d-flex justify-content-between mt-4">
-            <button type="button" class="btn btn-rs-sec" data-voltar><i class="bi bi-arrow-left me-1"></i> Voltar</button>
-            <button type="submit" class="btn btn-rs px-5">Continuar</button>
-          </div>
-        </form>
+        </section>
 
-        <!-- Etapa 3: pagamento -->
-        <form class="rs-painel rs-etapa" data-etapa="3" novalidate hidden>
-          <h2>Pagamento</h2>
-          <p class="small text-secondary d-flex gap-2 align-items-center"><i class="bi bi-shield-lock-fill text-success"></i> Ambiente de demonstração: nenhum valor é cobrado e os dados do cartão não são enviados.</p>
-          <fieldset class="rs-pagamento d-grid gap-2 mb-3">
-            <legend class="form-label">Forma de pagamento</legend>
-            <input type="radio" class="btn-check" name="pagamento" id="pg-pix" value="pix" checked>
-            <label for="pg-pix"><i class="bi bi-qr-code"></i><span><strong>Pix</strong><small>Aprovação imediata</small></span><span class="logos"><img src="img/pagamentos/pix.svg" alt="Pix"></span></label>
-            <input type="radio" class="btn-check" name="pagamento" id="pg-cartao" value="cartao">
-            <label for="pg-cartao"><i class="bi bi-credit-card-2-front"></i><span><strong>Cartão de crédito</strong><small>Em até 6x sem juros</small></span><span class="logos"><img src="img/pagamentos/visa.svg" alt="Visa"><img src="img/pagamentos/mastercard.svg" alt="Mastercard"><img src="img/pagamentos/amex.svg" alt="American Express"></span></label>
-            <input type="radio" class="btn-check" name="pagamento" id="pg-boleto" value="boleto">
-            <label for="pg-boleto"><i class="bi bi-upc-scan"></i><span><strong>Boleto bancário</strong><small>Vence em 3 dias úteis</small></span><span class="logos"><img src="img/pagamentos/boleto.svg" alt="Boleto"></span></label>
-          </fieldset>
-          <div id="dados-cartao" class="row g-3" hidden>
-            <div class="col-12">
-              <label for="cartao-numero" class="form-label">Número do cartão</label>
-              <div class="position-relative">
-                <input type="text" class="form-control pe-5" id="cartao-numero" name="cartaoNumero" inputmode="numeric" autocomplete="off" placeholder="0000 0000 0000 0000" maxlength="23">
-                <img id="bandeira-cartao" src="img/pagamentos/visa.svg" alt="" hidden style="position:absolute;right:.6rem;top:50%;transform:translateY(-50%);height:24px">
-              </div>
-              <div class="invalid-feedback"></div>
-            </div>
-            <div class="col-12">
-              <label for="cartao-nome" class="form-label">Nome impresso no cartão</label>
-              <input type="text" class="form-control" id="cartao-nome" name="cartaoNome" autocomplete="off">
-              <div class="invalid-feedback"></div>
-            </div>
-            <div class="col-6">
-              <label for="cartao-validade" class="form-label">Validade</label>
-              <input type="text" class="form-control" id="cartao-validade" name="cartaoValidade" placeholder="MM/AA" inputmode="numeric" autocomplete="off" maxlength="5">
-              <div class="invalid-feedback"></div>
-            </div>
-            <div class="col-6">
-              <label for="cartao-cvv" class="form-label">CVV</label>
-              <input type="text" class="form-control" id="cartao-cvv" name="cartaoCvv" inputmode="numeric" autocomplete="off" maxlength="4">
-              <div class="invalid-feedback"></div>
-            </div>
-            <div class="col-12">
-              <label for="parcelas" class="form-label">Parcelas</label>
-              <select class="form-select" id="parcelas" name="parcelas"></select>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between mt-4">
-            <button type="button" class="btn btn-rs-sec" data-voltar><i class="bi bi-arrow-left me-1"></i> Voltar</button>
-            <button type="submit" class="btn btn-rs px-5">Revisar pedido</button>
-          </div>
-        </form>
+        <!-- 3. Forma de Pagamento -->
+        <section class="card border-0 shadow-sm p-4 mb-4 bg-white rounded">
+          <h2 class="h5 mb-3 border-bottom pb-2"><i class="bi bi-credit-card-2-front-fill me-2 text-danger"></i>3. Opções de Pagamento</h2>
+          
+          <ul class="nav nav-pills mb-3 gap-2" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active btn-rs" id="tab-pix" data-bs-toggle="pill" type="button"><i class="bi bi-qr-code me-1"></i> Pix (Aprovação Imediata)</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link btn-outline-dark" id="tab-cartao" data-bs-toggle="pill" type="button"><i class="bi bi-credit-card me-1"></i> Cartão de Crédito</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link btn-outline-dark" id="tab-boleto" data-bs-toggle="pill" type="button"><i class="bi bi-upc-scan me-1"></i> Boleto Bancário</button>
+            </li>
+          </ul>
 
-        <!-- Etapa 4: revisão -->
-        <section class="rs-painel rs-etapa" data-etapa="4" hidden aria-labelledby="titulo-revisao">
-          <h2 id="titulo-revisao">Revise seu pedido</h2>
-          <p class="text-secondary small">Confira os itens, o endereço e a forma de pagamento antes de confirmar.</p>
-          <ul class="list-unstyled mb-4" id="revisao-itens"></ul>
-          <div class="row g-3 mb-4">
-            <div class="col-md-6">
-              <div class="bg-rs-cinza rounded-4 p-3 h-100">
-                <div class="d-flex justify-content-between"><strong class="small text-uppercase" style="letter-spacing:.1em">Entrega</strong><button type="button" class="btn btn-link btn-sm p-0" data-ir="2">Alterar</button></div>
-                <p class="small mb-0 mt-2" id="revisao-endereco"></p>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="bg-rs-cinza rounded-4 p-3 h-100">
-                <div class="d-flex justify-content-between"><strong class="small text-uppercase" style="letter-spacing:.1em">Pagamento</strong><button type="button" class="btn btn-link btn-sm p-0" data-ir="3">Alterar</button></div>
-                <p class="small mb-0 mt-2" id="revisao-pagamento"></p>
-              </div>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
-            <button type="button" class="btn btn-rs-sec" data-voltar><i class="bi bi-arrow-left me-1"></i> Voltar</button>
-            <button type="button" class="btn btn-rs btn-lg px-5" id="confirmar"><i class="bi bi-lock-fill me-2"></i>Confirmar pedido</button>
+          <!-- Conteúdo Pix Ativo -->
+          <div class="p-3 bg-light rounded border text-center my-3">
+            <div class="mb-2"><img src="img/pagamentos/pix.svg" alt="Pix" height="35"></div>
+            <p class="fw-semibold mb-1">Pague com Pix e garanta aprovação imediata do seu pedido!</p>
+            <p class="small text-secondary mb-3">Após clicar em confirmar, um QR Code será gerado para pagamento pelo aplicativo do seu banco.</p>
+            <div class="badge bg-success-subtle text-success p-2 fs-6">Valor com desconto do cupom: R$ 271,72</div>
           </div>
         </section>
       </div>
 
+      <!-- Coluna Direita: Resumo do Pedido -->
       <div class="col-lg-5 col-xl-4">
-        <aside class="rs-resumo" aria-labelledby="titulo-resumo">
-          <h2 id="titulo-resumo">Seu pedido</h2>
-          <ul class="list-unstyled mb-3" id="resumo-itens"></ul>
-          <div class="rs-resumo-linha"><span>Subtotal</span><strong id="subtotal"></strong></div>
-          <div class="rs-resumo-linha rs-resumo-desconto" id="linha-desconto" hidden><span>Desconto (<span id="desconto-cupom"></span>)</span><strong id="desconto"></strong></div>
-          <div class="rs-resumo-linha"><span>Frete</span><strong id="frete"></strong></div>
-          <div class="rs-resumo-linha rs-resumo-total"><span>Total</span><span id="total"></span></div>
+        <aside class="card border-0 shadow-sm p-4 bg-white rounded sticky-top" style="top: 90px;">
+          <h2 class="h5 mb-3 border-bottom pb-2">Seu Pedido</h2>
+
+          <!-- Lista de Itens -->
+          <ul class="list-unstyled mb-3">
+            <li class="d-flex align-items-center gap-3 mb-3 pb-2 border-bottom">
+              <img src="img/fotos/produtos/vinil-acdc-back-in-black.jpg" alt="" class="rounded border" width="50" height="50" style="object-fit: cover;">
+              <div class="flex-grow-1">
+                <h3 class="small fw-bold mb-0">Vinil AC/DC – Back in Black</h3>
+                <small class="text-secondary">Qtd: 1 · Edição 180g</small>
+              </div>
+              <span class="small fw-bold">R$ 189,90</span>
+            </li>
+            <li class="d-flex align-items-center gap-3 mb-3 pb-2 border-bottom">
+              <img src="img/fotos/produtos/camiseta-nirvana-bleach.jpg" alt="" class="rounded border" width="50" height="50" style="object-fit: cover;">
+              <div class="flex-grow-1">
+                <h3 class="small fw-bold mb-0">Camiseta Nirvana Bleach</h3>
+                <small class="text-secondary">Qtd: 1 · Tam: M</small>
+              </div>
+              <span class="small fw-bold">R$ 89,90</span>
+            </li>
+          </ul>
+
+          <div class="d-flex justify-content-between mb-2 small">
+            <span>Subtotal:</span>
+            <strong>R$ 279,80</strong>
+          </div>
+          <div class="d-flex justify-content-between mb-2 small text-success">
+            <span>Desconto Cupom (ROCK10):</span>
+            <strong>- R$ 27,98</strong>
+          </div>
+          <div class="d-flex justify-content-between mb-3 small">
+            <span>Frete Correios:</span>
+            <strong>R$ 19,90</strong>
+          </div>
+
+          <hr>
+
+          <div class="d-flex justify-content-between align-items-baseline mb-4">
+            <span class="fs-5 fw-bold">Total:</span>
+            <span class="fs-3 fw-bold text-danger">R$ 271,72</span>
+          </div>
+
+          <!-- Botão de Finalização -->
+          <a href="conta.html" class="btn btn-rs btn-lg w-100 py-3 text-center d-block">
+            <i class="bi bi-lock-fill me-2"></i> Confirmar Pedido
+          </a>
+
+          <div class="text-center mt-3 small text-secondary">
+            <i class="bi bi-shield-lock me-1 text-success"></i> Seus dados estão protegidos por criptografia.
+          </div>
         </aside>
       </div>
     </div>
-
-    <!-- Pedido confirmado -->
-    <section class="rs-painel text-center py-5 mx-auto" style="max-width:640px" id="sucesso" hidden aria-live="polite">
-      <div class="rs-sucesso-icone"><i class="bi bi-check-lg"></i></div>
-      <h2 class="display-5">Pedido confirmado!</h2>
-      <p class="lead">Seu pedido <strong id="sucesso-numero"></strong> foi registrado com sucesso.</p>
-      <p class="text-secondary" id="sucesso-pagamento"></p>
-      <div class="d-flex justify-content-center gap-2 flex-wrap mt-4">
-        <a href="conta.html" class="btn btn-rs">Acompanhar meus pedidos</a>
-        <a href="produtos.html" class="btn btn-rs-sec">Continuar comprando</a>
-      </div>
-    </section>
   </main>
 
-  <!-- O rodapé é compartilhado e recebe os contatos e redes sociais das configurações. -->
-  <footer id="rodape"></footer>
+  <!-- Rodapé Estático -->
+  <footer id="rodape" class="rs-footer py-4 border-top">
+    <div class="container text-center text-secondary small">
+      &copy; 2026 Riff Store. Protótipo para Programação para Web I — FACOM/UFU.
+    </div>
+  </footer>
 
-  <!-- Dependências primeiro, dados/API depois, app.js antes do controlador específico da página. -->
-  <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="js/compartilhado/config.js"></script>
-  <script src="js/compartilhado/fotos.js"></script>
-  <script src="js/demo/dados.js"></script>
-  <script src="js/demo/api-local.js"></script>
-  <script src="js/compartilhado/app.js"></script>
-  <script src="js/paginas/checkout.js"></script>
 </body>
 </html>

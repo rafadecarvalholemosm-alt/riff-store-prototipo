@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<!-- Contato: canais de atendimento, formulário e perguntas frequentes em accordion. contato.js valida os campos e usa as configurações da loja. -->
+<!-- Protótipo HTML5 & CSS3 - Contato e FAQ | Riff Store (Programação para Web I) -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <!-- O viewport faz os tamanhos responsivos acompanharem a largura real do dispositivo. -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Contato e perguntas frequentes | Riff Store</title>
+  <title>Contato e Perguntas Frequentes | Riff Store</title>
   <meta name="description" content="Fale com a Riff Store e tire suas dúvidas sobre trocas, entregas, pagamento e tamanhos.">
   <link rel="icon" href="img/site/favicon.svg" type="image/svg+xml">
-  <!-- A ordem das folhas preserva o Bootstrap como base e aplica style.css por último. -->
   <link rel="stylesheet" href="css/fontes.css">
   <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
@@ -16,12 +14,59 @@
 </head>
 <body data-pagina="contato">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-  <!-- app.js monta o cabeçalho comum, seus links e os indicadores de sessão/carrinho. -->
-  <header id="topo"></header>
 
-  <!-- main identifica o conteúdo principal e é o destino do link acessível de pular navegação. -->
+  <!-- Barra de avisos no topo -->
+  <div class="rs-aviso" aria-live="polite">
+    <div class="container text-center">
+      <span class="rs-aviso-texto">
+        <i class="bi bi-truck text-danger"></i> <strong>Frete grátis</strong> acima de R$ 299 &nbsp;|&nbsp; 
+        <i class="bi bi-tag-fill text-warning"></i> Cupom de 10% OFF: <strong>ROCK10</strong>
+      </span>
+    </div>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header id="topo" class="rs-header">
+    <nav class="navbar navbar-expand-lg navbar-dark rs-navbar" aria-label="Navegação principal">
+      <div class="container">
+        <a class="rs-logo navbar-brand me-lg-4" href="index.html" aria-label="Riff Store – página inicial">
+          <img src="img/site/mao-chifrada.svg" alt="" width="35" height="46">
+          <span>
+            <span class="rs-logo-nome">Riff Store</span>
+            <span class="rs-logo-sub">Merch &amp; Vinis de Rock</span>
+          </span>
+        </a>
+
+        <div class="rs-acoes order-lg-3 ms-auto">
+          <a class="btn-icone" href="produtos.html" title="Buscar produtos"><i class="bi bi-search"></i></a>
+          <a class="btn-icone" href="login.html" title="Minha Conta"><i class="bi bi-person"></i></a>
+          <a class="btn-icone" id="btn-carrinho" href="carrinho.html" title="Ver carrinho">
+            <i class="bi bi-bag"></i>
+            <span class="rs-badge-carrinho">2</span>
+          </a>
+          <button class="navbar-toggler ms-1 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#rs-menu" aria-controls="rs-menu" aria-expanded="false" aria-label="Abrir menu">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+
+        <div class="collapse navbar-collapse order-lg-2" id="rs-menu">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.html">Catálogo Completo</a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.html?categoria=camisetas">Camisetas</a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.html?categoria=vinil">Vinis</a></li>
+            <li class="nav-item"><a class="nav-link text-warning" href="produtos.html?promocao=1">Promoções</a></li>
+            <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="contato.html">Contato</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Conteúdo Principal -->
   <main id="conteudo">
-    <section class="rs-pagina-topo" data-bg-foto="loja-discos-2">
+    <section class="rs-pagina-topo" style="background-image: url('img/fotos/loja-discos-2.jpg'); background-size: cover; background-position: center;">
       <div class="container">
         <nav aria-label="Trilha de navegação">
           <ol class="breadcrumb">
@@ -29,135 +74,147 @@
             <li class="breadcrumb-item active" aria-current="page">Contato</li>
           </ol>
         </nav>
-        <h1>Fale conosco</h1>
-        <p>Dúvidas, sugestões ou problemas com um pedido? Manda uma mensagem!</p>
+        <h1>Fale Conosco</h1>
+        <p>Dúvidas, sugestões ou suporte sobre seu pedido? Envie uma mensagem!</p>
       </div>
     </section>
 
     <section class="rs-secao">
       <div class="container">
         <div class="row g-4 g-xl-5">
+          <!-- Formulário de Contato -->
           <div class="col-lg-7">
-  <!-- Labels associados aos IDs e feedbacks permitem identificar e corrigir cada campo. -->
-            <form id="form-contato" class="rs-painel" novalidate>
-              <h2>Envie sua mensagem</h2>
-              <p class="text-secondary small mb-4">Respondemos em até 2 dias úteis. Os campos marcados com * são obrigatórios.</p>
+            <form id="form-contato" class="rs-painel p-4 border rounded bg-white shadow-sm" action="#" method="post">
+              <h2 class="h4 mb-3 border-bottom pb-2">Envie sua mensagem</h2>
+              <p class="text-secondary small mb-4">Respondemos em até 24 horas úteis.</p>
               <div class="row g-3">
                 <div class="col-md-6">
-                  <label for="ct-nome" class="form-label">Nome *</label>
-                  <input type="text" class="form-control" id="ct-nome" name="nome" autocomplete="name" required maxlength="120">
-                  <div class="invalid-feedback"></div>
+                  <label for="ct-nome" class="form-label small fw-semibold">Nome Completo *</label>
+                  <input type="text" class="form-control" id="ct-nome" placeholder="Seu nome" required>
                 </div>
                 <div class="col-md-6">
-                  <label for="ct-email" class="form-label">E-mail *</label>
-                  <input type="email" class="form-control" id="ct-email" name="email" autocomplete="email" required maxlength="160">
-                  <div class="invalid-feedback"></div>
+                  <label for="ct-email" class="form-label small fw-semibold">E-mail *</label>
+                  <input type="email" class="form-control" id="ct-email" placeholder="seu@email.com" required>
                 </div>
                 <div class="col-12">
-                  <label for="ct-assunto" class="form-label">Assunto *</label>
-                  <select class="form-select" id="ct-assunto" name="assunto" required>
-                    <option value="">Selecione...</option>
+                  <label for="ct-assunto" class="form-label small fw-semibold">Assunto *</label>
+                  <select class="form-select" id="ct-assunto" required>
+                    <option value="">Selecione o motivo do contato...</option>
                     <option value="duvida">Dúvida sobre um produto</option>
-                    <option value="pedido">Meu pedido</option>
+                    <option value="pedido">Status do meu pedido</option>
                     <option value="troca">Troca ou devolução</option>
-                    <option value="sugestao">Sugestão</option>
+                    <option value="sugestao">Sugestão de banda para o catálogo</option>
                     <option value="outro">Outro assunto</option>
                   </select>
-                  <div class="invalid-feedback"></div>
                 </div>
                 <div class="col-12">
-                  <label for="ct-mensagem" class="form-label">Mensagem *</label>
-                  <textarea class="form-control" id="ct-mensagem" name="mensagem" rows="6" maxlength="2000" required aria-describedby="ct-contador"></textarea>
-                  <div class="invalid-feedback"></div>
-                  <div class="rs-contador-texto text-end mt-1" id="ct-contador">0 / 2000</div>
+                  <label for="ct-mensagem" class="form-label small fw-semibold">Mensagem *</label>
+                  <textarea class="form-control" id="ct-mensagem" rows="5" placeholder="Escreva sua mensagem aqui..." required></textarea>
                 </div>
               </div>
-              <button type="submit" class="btn btn-rs btn-lg mt-3"><i class="bi bi-send me-2"></i>Enviar</button>
+              <button type="submit" class="btn btn-rs btn-lg mt-4"><i class="bi bi-send me-2"></i>Enviar Mensagem</button>
             </form>
           </div>
 
+          <!-- Outros Canais -->
           <div class="col-lg-5">
-            <div class="rs-painel h-100">
-              <h2>Outros canais</h2>
-              <div id="canais">
-                <div class="rs-canal"><i class="bi bi-envelope" aria-hidden="true"></i><div><span class="small text-secondary d-block">E-mail</span><a href="#" id="canal-email">–</a></div></div>
-                <div class="rs-canal"><i class="bi bi-telephone" aria-hidden="true"></i><div><span class="small text-secondary d-block">Telefone</span><a href="#" id="canal-telefone">–</a></div></div>
-                <div class="rs-canal"><i class="bi bi-whatsapp" aria-hidden="true"></i><div><span class="small text-secondary d-block">WhatsApp</span><a href="#" id="canal-whatsapp">–</a></div></div>
-                <div class="rs-canal"><i class="bi bi-geo-alt" aria-hidden="true"></i><div><span class="small text-secondary d-block">Localização</span><span class="fw-semibold" id="canal-endereco">–</span></div></div>
-                <div class="rs-canal"><i class="bi bi-clock" aria-hidden="true"></i><div><span class="small text-secondary d-block">Atendimento</span><span class="fw-semibold" id="canal-horario">–</span></div></div>
+            <div class="rs-painel p-4 border rounded bg-white shadow-sm h-100">
+              <h2 class="h4 mb-3 border-bottom pb-2">Nossos Canais</h2>
+              <div class="d-flex flex-column gap-3 mt-3">
+                <div class="d-flex align-items-center gap-3">
+                  <i class="bi bi-envelope fs-3 text-danger"></i>
+                  <div>
+                    <span class="small text-secondary d-block">E-mail Oficial</span>
+                    <strong>contato@riffstore.com</strong>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                  <i class="bi bi-whatsapp fs-3 text-success"></i>
+                  <div>
+                    <span class="small text-secondary d-block">WhatsApp de Atendimento</span>
+                    <strong>(34) 99999-7433</strong>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                  <i class="bi bi-geo-alt fs-3 text-danger"></i>
+                  <div>
+                    <span class="small text-secondary d-block">Localização</span>
+                    <strong>FACOM / UFU – Campus Monte Carmelo</strong>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                  <i class="bi bi-clock fs-3 text-secondary"></i>
+                  <div>
+                    <span class="small text-secondary d-block">Horário de Funcionamento</span>
+                    <strong>Segunda a Sexta: 09h às 18h</strong>
+                  </div>
+                </div>
               </div>
-              <h3 class="h4 mt-4">Siga a Riff Store</h3>
-              <div class="rs-redes" id="redes-contato"></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Perguntas frequentes -->
-    <section class="rs-secao bg-rs-cinza" id="faq" aria-labelledby="titulo-faq">
+    <!-- Perguntas Frequentes (FAQ Acordeão Estático) -->
+    <section class="rs-secao bg-light py-5" id="faq">
       <div class="container" style="max-width:880px">
         <div class="text-center mb-5">
-          <span class="rs-kicker">Tira-dúvidas</span>
-          <h2 id="titulo-faq" class="rs-faq-titulo mt-2">Perguntas frequentes</h2>
-          <p class="rs-faq-intro">Veja as respostas sobre pedidos, frete, pagamentos e tamanhos. Se precisar de ajuda, envie uma mensagem pelo formulário acima.</p>
+          <span class="rs-kicker">Tira-Dúvidas</span>
+          <h2 class="h2 mt-2">Perguntas Frequentes</h2>
+          <p class="text-secondary">Confira as dúvidas mais comuns sobre entregas, pagamentos e cuidados com os produtos.</p>
         </div>
-        <!-- Cada pergunta é um botão do Bootstrap, que atualiza aria-expanded ao abrir a resposta. -->
-        <div class="accordion rs-faq" id="acordeao-faq">
+
+        <div class="accordion rs-faq shadow-sm" id="acordeao-faq">
           <div class="accordion-item">
-            <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r-demo" aria-expanded="false" aria-controls="r-demo">A Riff Store realiza vendas reais?</button></h3>
-            <div id="r-demo" class="accordion-collapse collapse" data-bs-parent="#acordeao-faq">
-              <div class="accordion-body">Não. A Riff Store é um projeto acadêmico. Você pode navegar pelos produtos, criar uma conta e registrar pedidos de demonstração. Pagamentos e entregas são simulados e nenhuma cobrança é realizada.</div>
-            </div>
-          </div>
-          <div class="accordion-item" id="faq-entregas">
-            <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#r1" aria-expanded="true" aria-controls="r1">Qual o prazo de entrega?</button></h3>
+            <h3 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#r1">
+                Qual o prazo de entrega dos pedidos?
+              </button>
+            </h3>
             <div id="r1" class="accordion-collapse collapse show" data-bs-parent="#acordeao-faq">
-              <div class="accordion-body">Na loja fictícia, o prazo estimado é de 3 a 5 dias úteis para o Sudeste e de 5 a 10 dias úteis para as demais regiões, após a separação do pedido. Acompanhe os estados <strong>Recebido, Em separação, Enviado e Entregue</strong> em <a href="conta.html">Minha conta</a>. Esses estados fazem parte da demonstração; não há envio de produtos reais.</div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r2" aria-expanded="false" aria-controls="r2">Quanto custa o frete?</button></h3>
-            <div id="r2" class="accordion-collapse collapse" data-bs-parent="#acordeao-faq">
-              <div class="accordion-body">O frete simulado custa <strong>R$ 19,90</strong> e é <strong>grátis a partir de R$ 299,00</strong> em produtos. Esse limite é calculado antes do desconto de um cupom. O carrinho mostra o frete e o total antes de finalizar o pedido.</div>
-            </div>
-          </div>
-          <div class="accordion-item" id="faq-trocas">
-            <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r3" aria-expanded="false" aria-controls="r3">Como faço uma troca ou devolução?</button></h3>
-            <div id="r3" class="accordion-collapse collapse" data-bs-parent="#acordeao-faq">
-              <div class="accordion-body">A política da loja fictícia prevê a primeira troca gratuita em até 30 dias. Para demonstrar uma solicitação, use o formulário acima, selecione <strong>Troca ou devolução</strong> e informe o número do pedido e o produto. Como não há vendas reais, o formulário registra apenas uma mensagem de demonstração.</div>
-            </div>
-          </div>
-          <div class="accordion-item" id="faq-tamanhos">
-            <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r4" aria-expanded="false" aria-controls="r4">Qual o meu tamanho de camiseta?</button></h3>
-            <div id="r4" class="accordion-collapse collapse" data-bs-parent="#acordeao-faq">
               <div class="accordion-body">
-                <p>As camisetas têm modelagem unissex. Meça uma camiseta que você já usa, estendida, e compare:</p>
-                <div class="table-responsive">
-                  <table class="table table-sm table-striped text-center mb-0">
-                    <caption class="small">Medidas em centímetros (tolerância de 2 cm)</caption>
-                    <thead><tr><th scope="col">Tamanho</th><th scope="col">Largura</th><th scope="col">Altura</th><th scope="col">Manga</th></tr></thead>
-                    <tbody>
-                      <tr><th scope="row">P</th><td>50</td><td>70</td><td>20</td></tr>
-                      <tr><th scope="row">M</th><td>53</td><td>72</td><td>21</td></tr>
-                      <tr><th scope="row">G</th><td>56</td><td>74</td><td>22</td></tr>
-                      <tr><th scope="row">GG</th><td>59</td><td>76</td><td>23</td></tr>
-                    </tbody>
-                  </table>
-                </div>
+                O prazo estimado é de <strong>3 a 5 dias úteis</strong> para a região Sudeste e de <strong>5 a 10 dias úteis</strong> para as demais regiões do país. Você pode acompanhar cada etapa do pedido na página <a href="conta.html">Minha Conta</a>.
               </div>
             </div>
           </div>
+
           <div class="accordion-item">
-            <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r5" aria-expanded="false" aria-controls="r5">Quais as formas de pagamento?</button></h3>
-            <div id="r5" class="accordion-collapse collapse" data-bs-parent="#acordeao-faq">
-              <div class="accordion-body">O checkout oferece <strong>Pix, cartão e boleto</strong>. Todas as opções são simuladas e não geram cobranças. Você confere os dados e o valor na etapa de revisão antes de registrar o pedido.</div>
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r2">
+                Como funciona a política de frete grátis?
+              </button>
+            </h3>
+            <div id="r2" class="accordion-collapse collapse" data-bs-parent="#acordeao-faq">
+              <div class="accordion-body">
+                O frete é <strong>100% gratuito</strong> para qualquer cidade do Brasil em compras com valor total a partir de <strong>R$ 299,00</strong>. Para valores inferiores, a taxa fixa de entrega é de R$ 19,90.
+              </div>
             </div>
           </div>
+
           <div class="accordion-item">
-            <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r6" aria-expanded="false" aria-controls="r6">Como cuidar dos meus discos de vinil?</button></h3>
-            <div id="r6" class="accordion-collapse collapse" data-bs-parent="#acordeao-faq">
-              <div class="accordion-body">Guarde os discos na vertical, protegidos do sol, do calor e da umidade. Segure-os pelas bordas e pelo selo central, evitando tocar nos sulcos. Use uma escova própria para vinil e siga as orientações do fabricante para limpar os discos e cuidar da agulha.</div>
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r3">
+                Como os discos de vinil são enviados para não quebrar?
+              </button>
+            </h3>
+            <div id="r3" class="accordion-collapse collapse" data-bs-parent="#acordeao-faq">
+              <div class="accordion-body">
+                Utilizamos caixas de papelão ondulado de parede dupla com cantoneiras de proteção plásticas e plástico-bolha reforçado. Garantimos que o vinil chegue em perfeito estado, sem vincos nem riscos na capa.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r4">
+                Como solicito uma troca de camiseta?
+              </button>
+            </h3>
+            <div id="r4" class="accordion-collapse collapse" data-bs-parent="#acordeao-faq">
+              <div class="accordion-body">
+                A primeira troca de tamanho é totalmente gratuita em até 30 dias após o recebimento. Basta enviar uma mensagem através do formulário acima informando o número do pedido e o novo tamanho desejado.
+              </div>
             </div>
           </div>
         </div>
@@ -165,17 +222,13 @@
     </section>
   </main>
 
-  <!-- O rodapé é compartilhado e recebe os contatos e redes sociais das configurações. -->
-  <footer id="rodape"></footer>
+  <!-- Rodapé Estático -->
+  <footer id="rodape" class="rs-footer py-4 border-top">
+    <div class="container text-center text-secondary small">
+      &copy; 2026 Riff Store. Protótipo para Programação para Web I — FACOM/UFU.
+    </div>
+  </footer>
 
-  <!-- Dependências primeiro, dados/API depois, app.js antes do controlador específico da página. -->
-  <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="js/compartilhado/config.js"></script>
-  <script src="js/compartilhado/fotos.js"></script>
-  <script src="js/demo/dados.js"></script>
-  <script src="js/demo/api-local.js"></script>
-  <script src="js/compartilhado/app.js"></script>
-  <script src="js/paginas/contato.js"></script>
 </body>
 </html>
