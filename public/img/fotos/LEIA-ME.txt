@@ -1,2 +1,2 @@
 Fotos do site: fundos (Unsplash), capas dos álbuns (Wikipedia) e fotos dos produtos.
-Geradas por "npm run fotos" (scripts/baixar-fotos.js). Créditos em CREDITOS.txt.
+As fotos já estão incluídas no projeto. Créditos e fontes em CREDITOS.txt.

@@ -1,4 +1,4 @@
-Créditos das imagens da Riff Store (gerado por scripts/baixar-fotos.js)
+Créditos das imagens da Riff Store
 
 Fotos de fundo, banners e acessórios: Unsplash (https://unsplash.com/license)
   show-luzes-vermelhas.jpg: https://unsplash.com/photos/Sbv0YYYdbYo

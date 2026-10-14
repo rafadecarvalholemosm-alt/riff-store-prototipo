@@ -1,287 +1,208 @@
 # Riff Store: Merch & Vinis de Rock
 
-Loja virtual **fictícia** de produtos ligados ao rock (camisetas de bandas, discos de vinil, CDs, pôsteres e acessórios), desenvolvida como Trabalho Final da disciplina **Programação para Web I** (FACOM/UFU, campus Monte Carmelo, 2026/2, Prof. Adriano Mendonça Rocha).
+Loja virtual fictícia desenvolvida para **Programação para Web I** — FACOM/UFU, campus Monte Carmelo, **2026/2**, Prof. Adriano Mendonça Rocha.
 
-**Grupo:** Gabriel Fernandes, Rafael Lemos e Nicolas Bernardes.
+**Integrantes:** Gabriel Fernandes, Rafael Lemos e Nicolas Bernardes.
 
-> Projeto acadêmico: nenhum pagamento é processado e nenhum produto é vendido. Os nomes de bandas aparecem só como exemplos de catálogo; as fotos dos produtos são montagens das capas reais dos álbuns (Wikipedia) sobre fotos livres do Wikimedia Commons, as demais fotos são do Unsplash e as prévias de áudio foram criadas pelo grupo (por código).
+**[Acessar a demonstração online](https://gabrielfmck.github.io/riff-store/)**
 
-O catálogo inicial contém **31 produtos**. O projeto oferece vitrine, carrinho, cadastro, login, pedidos, avaliações e painel administrativo, com duas formas de execução: **Node.js + MySQL**, para persistir os dados no banco, e **demonstração estática**, com os dados armazenados no navegador.
+O projeto tem 31 produtos de exemplo e permite navegar pelo catálogo, usar filtros, montar um carrinho e simular uma compra. Inclui cadastro, login, avaliações, contato e painel administrativo. Pagamentos e envio de e-mail são simulados.
 
-**Demonstração online:** [acesse a Riff Store](https://gabrielfmck.github.io/riff-store/). Essa versão utiliza os dados de exemplo no navegador, com pagamentos simulados.
+## Organização do projeto
+
+```text
+riff-store/
+├── public/                       # Arquivos entregues ao navegador
+│   ├── *.html                    # Páginas da loja
+│   ├── css/                      # Estilos e declaração das fontes
+│   ├── js/
+│   │   ├── compartilhado/        # Código utilizado em várias páginas
+│   │   │   ├── config.js         # Seleção entre API Express e demonstração
+│   │   │   ├── app.js            # API, cabeçalho, rodapé, carrinho e utilitários
+│   │   │   └── fotos.js          # Referências das fotos usadas na interface
+│   │   ├── paginas/              # Um controlador para cada página interativa
+│   │   └── demo/                 # Funcionamento sem servidor Express/MySQL
+│   │       ├── dados.js          # Dados iniciais de demonstração
+│   │       └── api-local.js      # Operações e persistência no localStorage
+│   ├── img/                      # Fotos, logos, ícones e créditos das imagens
+│   ├── audio/                    # Prévias de áudio prontas
+│   └── vendor/                   # Bibliotecas e fontes locais, com suas licenças
+├── src/                          # Código executado pelo servidor
+│   ├── banco/                    # Conexão, mensagens de erro e compatibilidade
+│   ├── rotas/                    # Autenticação, produtos, pedidos, admin e site
+│   ├── middlewares/              # Controle de acesso às rotas
+│   └── utils/                    # Validação, formatação de produtos e cupons
+├── database/
+│   ├── riff_store.sql            # Estrutura e dados iniciais do MySQL
+│   └── init.js                   # Importa esse SQL pelo comando db:init
+├── .github/workflows/pages.yml   # Publicação da pasta public/ no GitHub Pages
+├── .env.example                  # Modelo das configurações do servidor
+├── server.js                     # Entrada do Express: sessão, API e páginas
+└── package.json                  # Comandos e dependências do servidor
+```
+
+As imagens, os áudios, as fontes e as bibliotecas do navegador já estão incluídos. A execução do projeto utiliza esses arquivos prontos, sem etapas de geração de mídia ou de dados.
+
+## Por onde começar a ler o código
+
+1. **Página e aparência:** [public/index.html](public/index.html) e [public/css/style.css](public/css/style.css) mostram o HTML e os estilos da loja.
+2. **Interação da página:** [home.js](public/js/paginas/home.js) controla a página inicial. Os demais controladores estão em `public/js/paginas/`.
+3. **Código compartilhado:** [app.js](public/js/compartilhado/app.js) monta o cabeçalho e o rodapé, mantém o carrinho e oferece `RS.api()` para solicitar dados.
+4. **API e regras:** [server.js](server.js) registra as rotas de `src/rotas/`. Elas validam as solicitações e consultam o banco com [conexao.js](src/banco/conexao.js).
+5. **Banco:** [riff_store.sql](database/riff_store.sql) apresenta as tabelas, os relacionamentos e os dados de exemplo.
+
+No modo com servidor, o fluxo é **HTML → controlador da página → RS.api() → rota Express → MySQL → resposta JSON → atualização da página**. No modo estático, `RS.api()` chama [api-local.js](public/js/demo/api-local.js), que executa as operações no navegador.
 
 ## Tecnologias
 
-| Camada | Tecnologias |
+| Área | Tecnologias |
 | --- | --- |
-| Front-end | HTML5 semântico, CSS3 (variáveis CSS), JavaScript, jQuery 4, Bootstrap 5, Bootstrap Icons |
-| Back-end | Node.js, Express 5, express-session, bcryptjs |
-| Banco de dados | MySQL 8 ou MariaDB 10.4+ (XAMPP), via `mysql2` com consultas parametrizadas |
+| Interface | HTML5, CSS3, JavaScript, jQuery, Bootstrap e Bootstrap Icons |
+| Servidor | Node.js, Express, express-session e bcryptjs |
+| Banco | MySQL ou MariaDB, acessado pelo mysql2 |
+| Configuração | dotenv, com variáveis no arquivo `.env` |
 
-## Como rodar com Node.js e MySQL
+As bibliotecas da interface ficam em `public/vendor/`. O `npm install` instala as dependências do servidor.
 
-### Requisitos
+## Executar com Node.js e MySQL
 
-- **Node.js 20.9 ou superior**, com npm. Essa versão mínima atende ao `sharp`, usado na geração das imagens e instalado junto às demais dependências.
-- **MySQL 8 ou MariaDB 10.4+**. No Windows, o XAMPP oferece MariaDB e phpMyAdmin.
+É necessário ter **Node.js 20 ou superior**, npm e **MySQL 8 ou MariaDB compatível**. No Windows, o MySQL/MariaDB pode ser iniciado pelo painel do XAMPP.
 
-Clone o repositório ou extraia o ZIP do projeto. Execute os comandos abaixo no **PowerShell**, na pasta que contém o `package.json`.
-
-### 1. Instalar as dependências
+Na pasta que contém `package.json`, execute:
 
 ```powershell
 npm install
-```
-
-As imagens, fontes, bibliotecas do front-end e prévias de áudio já estão versionadas. O download das imagens é opcional para quem deseja regenerá-las.
-
-### 2. Configurar o ambiente
-
-Crie o `.env` a partir de [.env.example](.env.example), preservando o arquivo caso ele já exista:
-
-```powershell
 if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 ```
 
-| Variável | Valor de exemplo | Finalidade |
+Configure o `.env` conforme sua instalação:
+
+| Variável | Exemplo | Finalidade |
 | --- | --- | --- |
-| `PORT` | `3000` | Porta do servidor Express |
+| `PORT` | `3000` | Porta HTTP da loja |
 | `DB_HOST` | `127.0.0.1` | Endereço do MySQL |
 | `DB_PORT` | `3306` | Porta do MySQL |
-| `DB_USER` | `root` | Usuário do banco; padrão do XAMPP |
-| `DB_PASSWORD` | Vazio | Senha do banco; ajuste conforme sua instalação |
-| `DB_NAME` | `riff_store` | Nome do banco utilizado pela aplicação |
-| `SESSION_SECRET` | Substitua o texto de exemplo | Segredo para assinar o cookie de sessão |
+| `DB_USER` | `root` | Usuário do banco |
+| `DB_PASSWORD` | Vazio no XAMPP padrão | Senha do banco |
+| `DB_NAME` | `riff_store` | Nome do banco |
+| `SESSION_SECRET` | Um texto longo e aleatório | Chave para assinar o cookie de sessão |
 
-Para gerar um segredo de sessão, execute o comando abaixo e copie o resultado para `SESSION_SECRET` no `.env`:
+Para criar um segredo de sessão, copie o resultado deste comando para `SESSION_SECRET`:
 
 ```powershell
 node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
 ```
 
-O `.env` fica fora do Git pelo `.gitignore`; a configuração compartilhada está no `.env.example`.
+O `.env` é uma configuração local e fica fora do Git. O `.env.example` é o modelo compartilhado.
 
-### 3. Iniciar o MySQL
-
-Abra o painel do XAMPP e clique em **Start** na linha do **MySQL**. Inicie também o **Apache** se quiser acessar o phpMyAdmin.
-
-`npm install`, `npm start` e `npm run dev` não iniciam o serviço MySQL. Ele precisa estar ativo antes de executar a aplicação.
-
-### 4. Criar o banco na primeira execução
-
-Se o banco ainda não foi criado, carregue as tabelas e os dados de demonstração:
+Inicie o **MySQL** no XAMPP. Na primeira instalação, crie o banco:
 
 ```powershell
 npm run db:init
 ```
 
-> **Atenção:** esse comando apaga e recria as tabelas do banco configurado em `DB_NAME`. Use-o para a instalação inicial ou para restaurar os dados de exemplo. Preserve um banco existente ao corrigir problemas de conexão.
+**Atenção:** `db:init` apaga e recria as tabelas do banco indicado em `DB_NAME`. Use-o somente para instalar ou restaurar os dados de demonstração. Ele não é necessário para iniciar a loja em um banco já configurado.
 
-Como alternativa, acesse [phpMyAdmin](http://localhost/phpmyadmin), abra **Importar**, selecione [database/riff_store.sql](database/riff_store.sql) e clique em **Executar**. Esse arquivo cria o banco `riff_store` e também substitui as tabelas existentes.
+O comando importa [database/riff_store.sql](database/riff_store.sql), ajustando o nome do banco conforme o `.env`. Também é possível importar esse arquivo pelo phpMyAdmin; nessa alternativa, o nome usado é `riff_store`.
 
-### 5. Iniciar o site
-
-Durante o desenvolvimento, use o modo que reinicia o servidor ao alterar o código:
+Depois, inicie o site:
 
 ```powershell
 npm run dev
 ```
 
-Para executar sem observar alterações nos arquivos, use `npm start`.
+Abra **[http://localhost:3000](http://localhost:3000)**. Para iniciar sem reinicialização automática, use `npm start`.
 
-Acesse **[http://localhost:3000](http://localhost:3000)**. Caso altere `PORT` no `.env`, use a porta configurada.
+O servidor verifica a conexão antes de anunciar o endereço. [atualizar.js](src/banco/atualizar.js) mantém a compatibilidade com bancos de versões anteriores, acrescentando campos ausentes e atualizando imagens antigas sem recriar os registros. O arquivo `imagens-legadas.json` é usado apenas nessa atualização.
 
-O servidor verifica a conexão e conclui as atualizações de compatibilidade do banco antes de anunciar que o site está rodando. Essas atualizações acrescentam a tabela da newsletter, as colunas de cupom/desconto e substituem imagens antigas em SVG, conforme necessário, sem recriar o catálogo.
+## Executar a demonstração estática
 
-Nesse modo, cadastros, pedidos, estoque, avaliações, mensagens, newsletter e alterações administrativas ficam no **MySQL**. O carrinho permanece no `localStorage` do navegador.
+Abra [public/index.html](public/index.html) pelo **Live Server** do VS Code ou sirva a pasta `public/` com um servidor estático. A versão online no GitHub Pages usa esse mesmo modo.
 
-### Problemas comuns
+[config.js](public/js/compartilhado/config.js) seleciona a origem dos dados:
 
-| Mensagem ou situação | Como resolver |
+| `usarServidor` | Comportamento |
 | --- | --- |
-| `ECONNREFUSED` ou falha de conexão na porta 3306 | Inicie o MySQL no XAMPP e confira `DB_HOST` e `DB_PORT` no `.env`. |
-| Acesso ao MySQL negado | Confira `DB_USER` e `DB_PASSWORD`. No XAMPP padrão, o usuário é `root` e a senha fica vazia. |
-| O banco não existe | Confira `DB_NAME`. Se for uma instalação nova, execute `npm run db:init` com o MySQL ativo. |
-| Faltam tabelas no banco | Confira se a aplicação aponta para o banco correto e se a importação foi concluída. Faça backup dos dados antes de reinicializar um banco existente. |
-| `EADDRINUSE` na porta 3000 | Encerre a outra instância do servidor ou altere `PORT` no `.env`. |
-| O modo watch continua aguardando após uma falha de inicialização | Corrija a configuração ou inicie o MySQL, pressione `Ctrl+C` e execute `npm run dev` novamente. |
+| `'auto'` — padrão | Detecta a API Express; quando ela não está disponível, usa a demonstração local. |
+| `true` | Usa a API Express e o MySQL. |
+| `false` | Usa a API de demonstração no navegador. |
 
-Se o banco ficar indisponível durante uma requisição, a API responde com **HTTP 503** para os erros de conexão/configuração tratados e informa o que conferir.
+Nesse modo, dados, contas e sessão ficam no **localStorage**. Cada navegador e endereço mantém seus próprios dados. No modo Express, os registros ficam no **MySQL**; o carrinho utiliza o localStorage nos dois modos.
 
-### Contas de demonstração
+Para restaurar a demonstração estática, entre como administrador e abra **Configurações → Restaurar dados de demonstração**. Essa ação substitui os dados locais daquele navegador.
 
-As contas abaixo fazem parte dos dados iniciais, tanto no MySQL quanto no modo estático:
+## Contas de demonstração
 
 | Perfil | E-mail | Senha |
 | --- | --- | --- |
 | Administrador | `admin@riffstore.com` | `admin123` |
-| Cliente (com pedidos) | `cliente@riffstore.com` | `cliente123` |
+| Cliente | `cliente@riffstore.com` | `cliente123` |
 
-## Demonstração sem Node.js e MySQL
+## Páginas e seus controladores
 
-Abra [public/index.html](public/index.html) pelo **Live Server** do VS Code ou sirva a pasta `public/` com um servidor estático. Uma opção, se tiver Node.js instalado, é:
+Os HTML ficam em `public/`; os controladores abaixo ficam em `public/js/paginas/`.
 
-```powershell
-npx serve public
-```
-
-Acesse o endereço informado no terminal. A API de demonstração em [public/js/api-local.js](public/js/api-local.js) atende às operações no próprio navegador, e os dados ficam no **localStorage**. Cada navegador e endereço de acesso mantém seus próprios dados; eles não são sincronizados com o MySQL.
-
-### Seleção do modo de funcionamento
-
-O arquivo [public/js/config.js](public/js/config.js) controla a origem dos dados:
-
-| `usarServidor` | Comportamento |
-| --- | --- |
-| `'auto'` — padrão | Consulta `/api/configuracoes`; usa a API Express quando ela responde e os dados locais quando a detecção falha. |
-| `true` | Usa a API Express e o MySQL. |
-| `false` | Usa a API de demonstração no navegador. |
-
-Para restaurar os dados do **modo estático**, entre como administrador e abra **Configurações → Restaurar dados de demonstração**. Essa ação substitui os dados locais desse navegador. No modo MySQL, a restauração é feita pela importação do SQL ou por `npm run db:init`.
-
-### GitHub Pages
-
-O workflow [pages.yml](.github/workflows/pages.yml) está preparado para publicar a pasta `public/` em pushes na `main` ou por execução manual. Para habilitar, acesse **Settings → Pages → Source: GitHub Actions**.
-
-O Pages precisa estar habilitado no repositório antes da execução do workflow. Se a etapa de configuração mostrar `Get Pages site failed` com `Not Found`, confira essa configuração e a disponibilidade do recurso no plano da conta. Após habilitar, abra **Actions → Publicar site no GitHub Pages → Run workflow** e selecione `main` para tentar novamente.
-
-O GitHub Pages hospeda a **demonstração estática**; o servidor Express e o MySQL precisam de uma hospedagem própria para funcionar online. A disponibilidade do Pages em repositórios privados depende do plano da conta, conforme a [documentação do GitHub](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages).
-
-## Comandos disponíveis
-
-| Comando | Finalidade |
-| --- | --- |
-| `npm run dev` | Inicia o Express com reinicialização automática ao alterar o código. |
-| `npm start` | Inicia o Express sem observar alterações. |
-| `npm run db:init` | Apaga e recria as tabelas do banco configurado, carregando os dados iniciais. |
-| `npm run sql` | Regenera `database/riff_store.sql`; não altera o banco em execução. |
-| `npm run dados` | Regenera os dados do modo estático e o arquivo SQL a partir do catálogo e dos dados de exemplo. |
-| `npm run fotos` | Baixa as imagens ausentes e refaz as montagens dos produtos; requer internet. |
-| `npm run audios` | Regenera as prévias em `public/audio/`. |
-
-Edite [database/catalogo.js](database/catalogo.js) para alterar o catálogo de origem e [database/seed.js](database/seed.js) para alterar os dados de demonstração. Depois, execute `npm run dados`. Isso atualiza os arquivos gerados; os registros de um banco MySQL já existente continuam sendo administrados pelo painel ou por alterações no próprio banco.
-
-## Imagens
-
-As imagens utilizadas pelo site estão versionadas em `public/img/`. Para regenerá-las, execute `npm run fotos`; para baixar novamente todas as fontes das imagens, use `npm run fotos -- --tudo`. O processo utiliza a pasta `.cache/` como apoio e grava as fotos em `public/img/fotos/` e os logos de bandas em `public/img/bandas/`.
-
-| Imagem | Origem |
-| --- | --- |
-| Fundos, banners, categorias e galeria | Fotos do [Unsplash](https://unsplash.com) (lista em `public/js/fotos.js`) |
-| Camisetas, vinis, CDs, pôsteres e patch | Capa real do álbum (Wikipedia) aplicada por `scripts/montagens.js` sobre fotos reais do [Wikimedia Commons](https://commons.wikimedia.org) (camiseta, disco, caixa de CD, parede e jeans) |
-| Palhetas, boné, caneca, cinto e toca-discos | Fotos do Unsplash |
-| Logos das bandas (faixa rolante da home) | Wikipedia/Wikimedia Commons, convertidos para branco em `public/img/bandas/` |
-| Bandeiras de pagamento e transportadora (Visa, Mastercard, Elo, Amex, Hipercard, Diners, Pix e Correios) | Logos oficiais do Wikimedia Commons, em `public/img/pagamentos/` e `public/img/envio/` |
-
-As montagens usam o pacote `sharp` (instalado com `npm install`). Os créditos e licenças de cada foto ficam em `public/img/fotos/CREDITOS.txt`.
-
-## Páginas
-
-| Página | Arquivo | Acesso |
+| Página | HTML | JavaScript específico |
 | --- | --- | --- |
-| Início (carrossel, categorias, destaques, ofertas com contagem regressiva, lançamentos, vídeos) | `index.html` | Todos |
-| Produtos (categorias, filtros por preço, banda e estoque, ordenação e paginação via AJAX) | `produtos.html` | Todos |
-| Detalhes do produto (galeria com zoom, tamanhos, quantidade, faixas, prévia de áudio, avaliações) | `produto.html?slug=...` | Todos |
-| Carrinho (localStorage, totais, frete e cupom ROCK10 calculados na hora) | `carrinho.html` | Todos |
-| Finalizar pedido (identificação, endereço, pagamento simulado, revisão) | `checkout.html` | Cliente |
-| Login / Cadastro (abas) | `login.html` | Todos |
-| Recuperação de senha (link simulado, válido por 1 hora) | `recuperar-senha.html` | Todos |
-| Minha conta (histórico de pedidos com status e edição de dados) | `conta.html` | Cliente |
-| Sobre | `sobre.html` | Todos |
-| Contato / FAQ | `contato.html` | Todos |
-| Painel administrativo (dashboard, produtos, pedidos, usuários, avaliações, mensagens, configurações) | `admin.html` | Administrador |
+| Início | `index.html` | `home.js` |
+| Catálogo | `produtos.html` | `produtos.js` |
+| Detalhes do produto | `produto.html` | `produto.js` |
+| Carrinho | `carrinho.html` | `carrinho.js` |
+| Finalização do pedido | `checkout.html` | `checkout.js` |
+| Login e cadastro | `login.html` | `login.js` |
+| Minha conta | `conta.html` | `conta.js` |
+| Contato e FAQ | `contato.html` | `contato.js` |
+| Painel administrativo | `admin.html` | `admin.js` |
+| Recuperação de senha | `recuperar-senha.html` | Código do formulário no próprio HTML |
+| Sobre | `sobre.html` | Apenas código compartilhado |
+| Página não encontrada | `404.html` | Apenas código compartilhado |
 
-Os links **Bandas** e **Promoções** do menu abrem a vitrine já filtrada (`produtos.html?bandas=...` e `produtos.html?promocao=1`).
+O menu de bandas e o link de promoções abrem o catálogo com filtros na URL. O checkout e a conta exigem login; o painel exige perfil de administrador.
 
-## Funcionalidades implementadas
+## Alterar os dados de exemplo
 
-| ID | Funcionalidade | Situação |
-| --- | --- | --- |
-| F01 | Vitrine de produtos carregada do banco | ✅ |
-| F02 | Busca e filtros (nome, categoria, banda, preço, estoque), ordenação e paginação sem recarregar | ✅ |
-| F03 | Detalhes do produto (imagem ampliada, descrição, tamanho, quantidade, estoque) | ✅ |
-| F04 | Carrinho mantido no localStorage | ✅ |
-| F05 | Cadastro e login com senha criptografada (bcrypt) | ✅ |
-| F06 | Finalização em etapas, validada no navegador e no servidor, com baixa no estoque | ✅ |
-| F07 | Histórico de pedidos com status | ✅ |
-| F08 | Selos "Novo", "Promoção" e "Esgotado" gerados a partir dos dados | ✅ |
-| F09 | Avaliações (só para quem comprou o produto) | ✅ |
-| F10 | Contagem regressiva; a oferta sai do ar ao expirar | ✅ |
-| F11 | Formulário de contato salvo no banco | ✅ |
-| F12 | Prévias de áudio com a tag `<audio>` | ✅ |
-| F13 | Recuperação de senha | ✅ (e-mail simulado na tela) |
-| Extra | Newsletter que libera o cupom ROCK10 (10% de desconto, conferido também no servidor) | ✅ |
-| A01–A07 | Acesso restrito, gestão de produtos, pedidos, moderação, resumo, usuários e configurações | ✅ |
+- **Modo MySQL:** altere [database/riff_store.sql](database/riff_store.sql) para definir os dados de uma nova instalação. Para editar registros existentes, utilize o painel administrativo.
+- **Modo estático:** altere [dados.js](public/js/demo/dados.js). Para carregar as alterações em um navegador que já possui dados, restaure a demonstração pelo painel.
+- **Mídia:** adicione arquivos em `public/img/` ou `public/audio/` e ajuste os caminhos nos dados correspondentes.
 
-### Regras da demonstração
+O SQL e os dados da demonstração estática são arquivos independentes. Se alterar os exemplos dos dois modos, atualize ambos. Alterações no painel afetam apenas o modo e o ambiente em uso.
 
-- **Frete:** R$ 19,90, com gratuidade a partir de R$ 299,00 em produtos, antes do desconto do cupom.
-- **Cupom ROCK10:** 10% de desconto nos produtos, para e-mails inscritos na newsletter, com uso único por conta.
-- **Tamanhos das camisetas:** P, M, G e GG.
-- **Pagamentos:** Pix, cartão e boleto são opções simuladas; a aplicação não processa cobranças.
-- **Recuperação de senha:** o link é exibido na tela e expira em uma hora; nenhum e-mail é enviado.
+## Comandos
 
-## Estrutura
-
-```
-├── public/                  # o site (abre sem servidor)
-│   ├── *.html               # 12 páginas
-│   ├── css/                 # style.css e fontes.css
-│   ├── js/
-│   │   ├── config.js        # usarServidor: 'auto', true ou false
-│   │   ├── api-local.js     # API no navegador (localStorage)
-│   │   ├── dados.js         # catálogo e dados de exemplo (gerado)
-│   │   ├── fotos.js         # lista de fotos do Unsplash
-│   │   ├── app.js           # cabeçalho, rodapé, carrinho e utilitários
-│   │   └── <página>.js      # script de cada página
-│   ├── img/                 # logotipo, ícones e fotos (img/fotos)
-│   ├── audio/               # prévias das faixas
-│   └── vendor/              # Bootstrap, Bootstrap Icons, jQuery e fontes
-├── server.js                # servidor Express (páginas + API)
-├── src/
-│   ├── db.js                # pool de conexões MySQL
-│   ├── db-errors.js         # mensagens para falhas de conexão/configuração
-│   ├── atualizar-banco.js   # atualizações de compatibilidade sem recriar o catálogo
-│   ├── cupons.js            # validação e cálculo de descontos
-│   ├── middleware/         # controle de acesso
-│   └── routes/             # autenticação, produtos, pedidos, administração e contato
-├── database/                # schema.sql, riff_store.sql (importar no phpMyAdmin), catálogo e dados de exemplo
-└── scripts/                 # download das fotos, montagens, geração do SQL, dos dados e dos áudios
-```
-
-## API (resumo)
-
-| Método e rota | Descrição |
+| Comando | Função |
 | --- | --- |
-| `GET /api/categorias`, `GET /api/bandas` | Listas para menus e filtros |
-| `GET /api/produtos` | Vitrine com `busca`, `categoria`, `bandas`, `precoMin`, `precoMax`, `estoque`, `promocao`, `ordem`, `pagina` |
-| `GET /api/produtos/destaques`, `GET /api/produtos/ofertas` | Destaques e promoções ativas |
-| `GET /api/produtos/:slug` | Detalhes, avaliações e relacionados |
-| `POST /api/produtos/:id/avaliacoes` | Avaliar (cliente que comprou) |
-| `POST /api/auth/cadastro`, `/login`, `/logout`, `/recuperar`, `/redefinir` · `GET /api/auth/me` · `PUT /api/auth/conta` | Autenticação e conta |
-| `GET /api/pedidos`, `POST /api/pedidos` | Histórico e finalização do pedido |
-| `GET /api/pedidos/frete` | Regra de frete utilizada no carrinho |
-| `POST /api/mensagens`, `GET /api/configuracoes` | Contato e dados da loja |
-| `POST /api/newsletter`, `POST /api/cupons/validar` | Inscrição na newsletter e cupom **ROCK10** (10% nos produtos, uma vez por conta, para e-mails inscritos) |
-| `/api/admin/*` | Rotas do painel (somente administradores) |
+| `npm run dev` | Inicia o Express e reinicia ao alterar o código. |
+| `npm start` | Inicia o Express. |
+| `npm run db:init` | Importa o SQL e recria as tabelas com os dados iniciais. |
 
-## Segurança
+## Regras e limitações
 
-As proteções abaixo se aplicam ao **modo Node.js + MySQL**:
+- Frete de **R$ 19,90**, gratuito a partir de **R$ 299,00** em produtos, antes do desconto.
+- Cupom **ROCK10**: desconto de 10% nos produtos, para e-mails inscritos na newsletter, com uso único por conta.
+- Camisetas nos tamanhos **P, M, G e GG**; compra limitada ao estoque disponível.
+- Pix, cartão e boleto são opções simuladas; nenhuma cobrança é realizada.
+- A recuperação de senha mostra um link válido por uma hora; nenhum e-mail é enviado.
+- No servidor, senhas usam bcrypt, consultas são parametrizadas, pedidos utilizam transações e acesso administrativo é validado pela sessão.
+- Na demonstração estática, as regras de conta e acesso são exemplos executados no navegador.
 
-- Senhas guardadas com hash **bcrypt**; o hash nunca sai do servidor.
-- Valores recebidos nas consultas são enviados por **parâmetros** (`?`), para evitar injeção de SQL.
-- Os dados são **validados também no servidor**; preços, estoque e desconto do cupom vêm sempre do banco, nunca do navegador.
-- Pedido gravado numa **transação** com `SELECT ... FOR UPDATE`, para o estoque não ficar negativo.
-- **Sessões** com cookie `HttpOnly` e `SameSite=Lax`; as rotas `/api/admin` respondem só ao perfil administrador.
-- Textos vindos do banco são escapados antes de entrar no HTML (contra XSS).
+## Problemas comuns
 
-No modo estático, contas, sessão e validações são controladas pelo navegador, com um hash de senha próprio da demonstração. Esse modo serve para apresentar e experimentar as funcionalidades; as restrições de acesso do servidor são aplicadas pela API Express no modo MySQL.
+| Problema | O que conferir |
+| --- | --- |
+| `ECONNREFUSED` na porta 3306 | Inicie o MySQL e confira `DB_HOST` e `DB_PORT`. |
+| Acesso ao banco negado | Confira `DB_USER` e `DB_PASSWORD`. |
+| Banco ou tabelas inexistentes | Confira `DB_NAME` e a instalação do SQL. Preserve os dados antes de reinicializar um banco existente. |
+| `EADDRINUSE` na porta 3000 | Encerre a outra instância ou altere `PORT`. |
+| Alterações não aparecem no modo estático | Recarregue a página. Se mudou os dados iniciais, restaure a demonstração pelo painel. |
 
-## Identidade visual
+## Publicação
 
-Paleta do protótipo: **preto** no cabeçalho, nos banners e no rodapé; **branco e cinza-claro** na área de conteúdo; **vermelho** (`#B01116`) nas ações principais e nos selos. Títulos em fonte condensada (Bebas Neue), texto em Inter e o logotipo em Pirata One com a "mão chifrada" do protótipo.
+O workflow [pages.yml](.github/workflows/pages.yml) publica a pasta `public/` quando há um push na `main`. No repositório, a origem do GitHub Pages deve estar configurada como **GitHub Actions**.
+
+Essa publicação hospeda a demonstração estática. A versão com Express e MySQL utiliza um servidor próprio.
 
 ## Créditos
 
-Bootstrap e Bootstrap Icons (MIT), jQuery (MIT), fontes Bebas Neue, Pirata One e Inter (SIL Open Font License, via Fontsource), fotos do Unsplash (Unsplash License), fotos de base do Wikimedia Commons (CC0, domínio público e CC BY-SA; ver `public/img/fotos/CREDITOS.txt`), logos de pagamento e dos Correios do Wikimedia Commons (domínio público; marcas de seus donos) e capas de álbuns da Wikipedia (uso acadêmico; direitos das gravadoras e artistas). Logotipo e prévias de áudio criados pelo grupo.
+Bootstrap, Bootstrap Icons e jQuery (MIT); fontes Bebas Neue, Pirata One e Inter (SIL Open Font License); fotos do Unsplash; fotos de base e logos do Wikimedia Commons; capas de álbuns da Wikipedia. As fotos dos produtos incluem montagens dessas imagens. Os créditos específicos estão em [public/img/fotos/CREDITOS.txt](public/img/fotos/CREDITOS.txt) e as licenças das bibliotecas estão em `public/vendor/`.
+
+Logotipo e prévias de áudio criados pelo grupo para a demonstração acadêmica. Marcas e capas pertencem aos seus respectivos titulares; o site não realiza vendas reais.

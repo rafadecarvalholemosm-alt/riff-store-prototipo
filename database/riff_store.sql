@@ -13,7 +13,7 @@
 --   (o banco "riff_store" é criado automaticamente; reimportar apaga os dados)
 --
 -- Contas: admin@riffstore.com / admin123  ·  cliente@riffstore.com / cliente123
--- Gerado por scripts/gerar-sql.js
+-- Arquivo de instalação: estrutura e dados iniciais usados por npm run db:init.
 -- =============================================================
 
 SET NAMES utf8mb4;

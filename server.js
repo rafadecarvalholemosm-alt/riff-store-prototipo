@@ -6,14 +6,14 @@
 /*
  * Riff Store: Merch & Vinis de Rock
  * Servidor Express: entrega as páginas (pasta public) e a API REST (/api).
- * Para o site usar esta API e o MySQL, defina usarServidor: true em public/js/config.js.
+ * O modo automático em public/js/compartilhado/config.js detecta esta API.
  */
 require('dotenv').config({ quiet: true });
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
-const db = require('./src/db');
-const databaseErrorMessage = require('./src/db-errors');
+const db = require('./src/banco/conexao');
+const databaseErrorMessage = require('./src/banco/erros');
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -32,11 +32,11 @@ app.use(session({
 }));
 
 // API --------------------------------------------------------------
-app.use('/api/auth', require('./src/routes/auth'));
-app.use('/api/pedidos', require('./src/routes/pedidos'));
-app.use('/api/admin', require('./src/routes/admin'));
-app.use('/api', require('./src/routes/produtos'));
-app.use('/api', require('./src/routes/site'));
+app.use('/api/auth', require('./src/rotas/autenticacao'));
+app.use('/api/pedidos', require('./src/rotas/pedidos'));
+app.use('/api/admin', require('./src/rotas/admin'));
+app.use('/api', require('./src/rotas/produtos'));
+app.use('/api', require('./src/rotas/site'));
 
 app.use('/api', (req, res) => res.status(404).json({ erro: 'Rota não encontrada.' }));
 
@@ -60,7 +60,7 @@ async function start() {
   try {
     // Só disponibiliza a API depois de conectar e atualizar o banco existente.
     await db.query('SELECT 1');
-    await require('./src/atualizar-banco')();
+    await require('./src/banco/atualizar')();
     app.listen(PORT, () => {
       console.log(`Riff Store rodando em http://localhost:${PORT}`);
     });

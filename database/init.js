@@ -1,24 +1,30 @@
 /*
- * Instalação inicial do banco: executa a estrutura e os dados produzidos pelo gerador.
+ * Instalação inicial do banco: executa a estrutura e os dados de riff_store.sql.
  * As configurações são carregadas do .env antes de abrir a conexão.
  * Este comando recria tabelas; não deve ser usado para apenas iniciar o MySQL.
  */
 /*
  * Cria o banco de dados da Riff Store e carrega os dados iniciais, executando
- * o mesmo SQL de database/riff_store.sql (gerado por scripts/gerar-sql.js).
+ * o mesmo SQL de database/riff_store.sql, também importável pelo phpMyAdmin.
  * Uso: npm run db:init   (ATENÇÃO: apaga e recria todas as tabelas)
  *
  * No XAMPP também dá para importar database/riff_store.sql pelo phpMyAdmin.
  */
 require('dotenv').config({ quiet: true });
+const fs = require('node:fs');
+const path = require('node:path');
 const mysql = require('mysql2/promise');
-const { gerarSql } = require('../scripts/gerar-sql');
-const databaseErrorMessage = require('../src/db-errors');
+const databaseErrorMessage = require('../src/banco/erros');
 
 const DB_NAME = process.env.DB_NAME || 'riff_store';
 
 async function main() {
   if (!/^[A-Za-z0-9_]+$/.test(DB_NAME)) throw new Error('DB_NAME inválido');
+
+  // Usa o arquivo SQL incluído no projeto; apenas o nome do banco vem do .env.
+  const sql = fs.readFileSync(path.join(__dirname, 'riff_store.sql'), 'utf8')
+    .replace(/(CREATE DATABASE IF NOT EXISTS|USE) riff_store\b/g,
+      (_, comando) => `${comando} \`${DB_NAME}\``);
 
   const conn = await mysql.createConnection({
     host: process.env.DB_HOST || '127.0.0.1',
@@ -31,9 +37,14 @@ async function main() {
   });
 
   console.log(`> Criando o banco "${DB_NAME}" e carregando os dados...`);
-  await conn.query(gerarSql(DB_NAME));
-  const [[{ total }]] = await conn.query(`SELECT COUNT(*) AS total FROM \`${DB_NAME}\`.produtos`);
-  await conn.end();
+  let total;
+  try {
+    await conn.query(sql);
+    [[{ total }]] = await conn.query(`SELECT COUNT(*) AS total FROM \`${DB_NAME}\`.produtos`);
+  } finally {
+    // Fecha a conexão mesmo se houver erro durante a importação.
+    await conn.end();
+  }
 
   console.log(`> Pronto! ${total} produtos cadastrados.`);
   console.log('  Administrador: admin@riffstore.com / admin123');
