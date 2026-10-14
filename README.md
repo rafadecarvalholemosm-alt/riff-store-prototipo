@@ -8,6 +8,8 @@ Loja virtual **fictícia** de produtos ligados ao rock (camisetas de bandas, dis
 
 O catálogo inicial contém **31 produtos**. O projeto oferece vitrine, carrinho, cadastro, login, pedidos, avaliações e painel administrativo, com duas formas de execução: **Node.js + MySQL**, para persistir os dados no banco, e **demonstração estática**, com os dados armazenados no navegador.
 
+**Demonstração online:** [acesse a Riff Store](https://gabrielfmck.github.io/riff-store/). Essa versão utiliza os dados de exemplo no navegador, com pagamentos simulados.
+
 ## Tecnologias
 
 | Camada | Tecnologias |
