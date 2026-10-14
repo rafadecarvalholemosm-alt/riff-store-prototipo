@@ -85,7 +85,7 @@ router.post('/', exigirLogin, async (req, res) => {
 
   const conn = await db.getConnection();
   try {
-    // A transação permite desfazer todas as gravações caso uma validação ou consulta falhe.
+    // Pedido, itens e estoque pertencem à mesma transação: uma falha desfaz o conjunto inteiro.
     await conn.beginTransaction();
 
     const [[usuario]] = await conn.query('SELECT bloqueado FROM usuarios WHERE id = ?', [req.session.usuario.id]);
@@ -183,7 +183,7 @@ router.post('/', exigirLogin, async (req, res) => {
       await conn.query('UPDATE produtos SET estoque = estoque - ? WHERE id = ?', [qtd, id]);
     }
 
-    // Confirma conjuntamente o pedido, seus itens e a baixa do estoque.
+    // Depois de todas as gravações, confirma conjuntamente o pedido, seus itens e a baixa do estoque.
     await conn.commit();
     res.status(201).json({ mensagem: 'Pedido registrado com sucesso!', pedido: { id: r.insertId, subtotal, frete, desconto, total } });
   } catch (err) {

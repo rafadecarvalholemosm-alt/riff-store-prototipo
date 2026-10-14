@@ -14,8 +14,10 @@ const pool = mysql.createPool({
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_NAME || 'riff_store',
   connectTimeout: 5000,
+  // Quando as dez conexões estão ocupadas, as próximas consultas aguardam uma conexão livre.
   waitForConnections: true,
   connectionLimit: 10,
+  // Converte DECIMAL do MySQL em Number para os cálculos monetários da aplicação.
   decimalNumbers: true,
   dateStrings: false,
   charset: 'utf8mb4'

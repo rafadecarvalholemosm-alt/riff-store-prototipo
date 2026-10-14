@@ -67,6 +67,7 @@ router.get('/produtos', async (req, res) => {
 // Lê e valida os campos do formulário de produto
 // O formulário é validado antes de produzir os valores enviados ao INSERT ou UPDATE.
 async function lerProduto(body) {
+  // Converte o formulário para as colunas do banco e reúne erros por campo antes de gravar.
   const p = {
     nome: texto(body.nome, 140),
     banda: texto(body.banda, 80),
@@ -83,7 +84,6 @@ async function lerProduto(body) {
     tem_tamanhos: body.temTamanhos ? 1 : 0,
     imagem: texto(body.imagem, 255),
     galeria: texto(body.galeria, 1000) || null,
-    audio_preview: texto(body.audio, 255) || null,
     destaque: body.destaque ? 1 : 0,
     ativo: body.ativo === false ? 0 : 1
   };
@@ -170,6 +170,7 @@ router.get('/pedidos', async (req, res) => {
   res.json(pedidos);
 });
 
+// O painel só pode enviar os estados previstos no fluxo de acompanhamento do pedido.
 router.patch('/pedidos/:id', async (req, res) => {
   if (!STATUS.includes(req.body.status)) return res.status(400).json({ erro: 'Status inválido.' });
   const [r] = await db.query('UPDATE pedidos SET status = ? WHERE id = ?', [req.body.status, req.params.id]);

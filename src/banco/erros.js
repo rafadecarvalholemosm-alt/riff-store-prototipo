@@ -5,6 +5,7 @@
  */
 // Mensagens de configuração usadas pelo servidor e pelo comando db:init.
 function databaseErrorMessage(error) {
+  // Uma tentativa de conexão pode reunir erros de IPv4 e IPv6; qualquer código reconhecido orienta a resposta.
   const codes = [error.code, ...(error.errors || []).map(item => item.code)];
   const host = process.env.DB_HOST || '127.0.0.1';
   const port = Number(process.env.DB_PORT) || 3306;

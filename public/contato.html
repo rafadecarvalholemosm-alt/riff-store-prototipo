@@ -99,25 +99,33 @@
       <div class="container" style="max-width:880px">
         <div class="text-center mb-5">
           <span class="rs-kicker">Tira-dúvidas</span>
-          <h2 id="titulo-faq" class="mt-2">Perguntas frequentes</h2>
+          <h2 id="titulo-faq" class="rs-faq-titulo mt-2">Perguntas frequentes</h2>
+          <p class="rs-faq-intro">Veja as respostas sobre pedidos, frete, pagamentos e tamanhos. Se precisar de ajuda, envie uma mensagem pelo formulário acima.</p>
         </div>
-        <div class="accordion" id="acordeao-faq">
+        <!-- Cada pergunta é um botão do Bootstrap, que atualiza aria-expanded ao abrir a resposta. -->
+        <div class="accordion rs-faq" id="acordeao-faq">
+          <div class="accordion-item">
+            <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r-demo" aria-expanded="false" aria-controls="r-demo">A Riff Store realiza vendas reais?</button></h3>
+            <div id="r-demo" class="accordion-collapse collapse" data-bs-parent="#acordeao-faq">
+              <div class="accordion-body">Não. A Riff Store é um projeto acadêmico. Você pode navegar pelos produtos, criar uma conta e registrar pedidos de demonstração. Pagamentos e entregas são simulados e nenhuma cobrança é realizada.</div>
+            </div>
+          </div>
           <div class="accordion-item" id="faq-entregas">
             <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#r1" aria-expanded="true" aria-controls="r1">Qual o prazo de entrega?</button></h3>
             <div id="r1" class="accordion-collapse collapse show" data-bs-parent="#acordeao-faq">
-              <div class="accordion-body">Os pedidos são separados em até 2 dias úteis após a confirmação do pagamento. Depois disso, o prazo é de 3 a 5 dias úteis para o Sudeste e de 5 a 10 dias úteis para as demais regiões. Você acompanha cada etapa em <a href="conta.html">Minha conta</a>.</div>
+              <div class="accordion-body">Na loja fictícia, o prazo estimado é de 3 a 5 dias úteis para o Sudeste e de 5 a 10 dias úteis para as demais regiões, após a separação do pedido. Acompanhe os estados <strong>Recebido, Em separação, Enviado e Entregue</strong> em <a href="conta.html">Minha conta</a>. Esses estados fazem parte da demonstração; não há envio de produtos reais.</div>
             </div>
           </div>
           <div class="accordion-item">
             <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r2" aria-expanded="false" aria-controls="r2">Quanto custa o frete?</button></h3>
             <div id="r2" class="accordion-collapse collapse" data-bs-parent="#acordeao-faq">
-              <div class="accordion-body">O frete tem valor fixo de R$ 19,90 para todo o Brasil e é <strong>grátis</strong> em compras a partir de R$ 299.</div>
+              <div class="accordion-body">O frete simulado custa <strong>R$ 19,90</strong> e é <strong>grátis a partir de R$ 299,00</strong> em produtos. Esse limite é calculado antes do desconto de um cupom. O carrinho mostra o frete e o total antes de finalizar o pedido.</div>
             </div>
           </div>
           <div class="accordion-item" id="faq-trocas">
             <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r3" aria-expanded="false" aria-controls="r3">Como faço uma troca ou devolução?</button></h3>
             <div id="r3" class="accordion-collapse collapse" data-bs-parent="#acordeao-faq">
-              <div class="accordion-body">Você tem até 30 dias após o recebimento para trocar (a primeira troca é grátis) e 7 dias para desistir da compra. O produto deve estar sem uso e com etiqueta. Envie uma mensagem pelo formulário acima com o assunto “Troca ou devolução” e o número do pedido.</div>
+              <div class="accordion-body">A política da loja fictícia prevê a primeira troca gratuita em até 30 dias. Para demonstrar uma solicitação, use o formulário acima, selecione <strong>Troca ou devolução</strong> e informe o número do pedido e o produto. Como não há vendas reais, o formulário registra apenas uma mensagem de demonstração.</div>
             </div>
           </div>
           <div class="accordion-item" id="faq-tamanhos">
@@ -143,13 +151,13 @@
           <div class="accordion-item">
             <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r5" aria-expanded="false" aria-controls="r5">Quais as formas de pagamento?</button></h3>
             <div id="r5" class="accordion-collapse collapse" data-bs-parent="#acordeao-faq">
-              <div class="accordion-body">Pix, cartão de crédito em até 6x sem juros e boleto. No Pix a aprovação é imediata e o pedido já entra em separação.</div>
+              <div class="accordion-body">O checkout oferece <strong>Pix, cartão e boleto</strong>. Todas as opções são simuladas e não geram cobranças. Você confere os dados e o valor na etapa de revisão antes de registrar o pedido.</div>
             </div>
           </div>
           <div class="accordion-item">
             <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r6" aria-expanded="false" aria-controls="r6">Como cuidar dos meus discos de vinil?</button></h3>
             <div id="r6" class="accordion-collapse collapse" data-bs-parent="#acordeao-faq">
-              <div class="accordion-body">Guarde os discos na vertical, longe do sol e do calor, e segure-os sempre pelas bordas. Use uma escova antiestática antes de tocar e troque a agulha do toca-discos a cada 500 a 1.000 horas de uso.</div>
+              <div class="accordion-body">Guarde os discos na vertical, protegidos do sol, do calor e da umidade. Segure-os pelas bordas e pelo selo central, evitando tocar nos sulcos. Use uma escova própria para vinil e siga as orientações do fabricante para limpar os discos e cuidar da agulha.</div>
             </div>
           </div>
         </div>

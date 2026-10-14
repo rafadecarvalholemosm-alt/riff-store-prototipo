@@ -12,6 +12,7 @@
  */
 (function (raiz) {
   const FOTOS = {
+    // As chaves correspondem aos atributos data-bg-foto e data-foto encontrados nos HTML.
     // Banners e fundos
     'show-luzes-vermelhas': ['Sbv0YYYdbYo', 1920],
     'show-palco-vermelho': ['hunYJNQZAio', 1920],

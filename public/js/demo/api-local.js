@@ -128,10 +128,12 @@
   }
 
   function salvar() {
+    // Serializa o banco inteiro porque localStorage guarda texto; a próxima visita recupera esse JSON.
     try { localStorage.setItem(CHAVE_BANCO, JSON.stringify(banco)); } catch (e) { /* armazenamento cheio ou bloqueado */ }
   }
 
   function proximoId(tabela) {
+    // Simula o AUTO_INCREMENT do MySQL, sem reutilizar um ID ainda presente na tabela local.
     return banco[tabela].reduce((m, r) => Math.max(m, r.id), 0) + 1;
   }
 
@@ -181,7 +183,7 @@
       promocaoFim: emPromocao ? p.promocao_fim : null,
       estoque: p.estoque, temTamanhos: !!p.tem_tamanhos, imagem: p.imagem,
       galeria: [p.imagem, ...(p.galeria ? p.galeria.split(',').filter(Boolean) : [])],
-      audio: p.audio_preview, destaque: !!p.destaque, selos,
+      destaque: !!p.destaque, selos,
       mediaNotas: n.media, totalAvaliacoes: n.total
     };
   }
@@ -554,7 +556,7 @@
       preco_promocional: b.precoPromocional !== '' && b.precoPromocional !== null && b.precoPromocional !== undefined ? parseFloat(b.precoPromocional) : null,
       promocao_fim: b.promocaoFim ? iso(b.promocaoFim) : null, estoque: parseInt(b.estoque, 10),
       tem_tamanhos: b.temTamanhos ? 1 : 0, imagem: texto(b.imagem, 255), galeria: texto(b.galeria, 1000) || null,
-      audio_preview: texto(b.audio, 255) || null, destaque: b.destaque ? 1 : 0, ativo: b.ativo === false ? 0 : 1
+      destaque: b.destaque ? 1 : 0, ativo: b.ativo === false ? 0 : 1
     };
     const erros = {};
     if (p.nome.length < 3) erros.nome = 'Informe o nome do produto.';
@@ -719,6 +721,7 @@
   // ------------------------------------------------------------------ Roteador
   // O roteador compara método e caminho com padrões, simulando as operações da API REST.
   async function requisicao(metodo, url, dados) {
+    // O mesmo contrato de método, caminho e JSON permite às páginas trocar de modo sem mudar seus formulários.
     await carregarBanco();
     const [caminho, qs] = url.split('?');
     const q = { ...Object.fromEntries(new URLSearchParams(qs || '')), ...(metodo === 'GET' ? dados || {} : {}) };

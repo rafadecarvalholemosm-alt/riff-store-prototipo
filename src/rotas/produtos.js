@@ -23,7 +23,7 @@ const SELECT_PRODUTO = `
 const PRECO_ATUAL = `(CASE WHEN p.preco_promocional IS NOT NULL AND p.promocao_fim > NOW()
                           THEN p.preco_promocional ELSE p.preco END)`;
 
-// ORDER BY utiliza opções fixas: o nome recebido na URL não é inserido diretamente no SQL.
+// ORDER BY utiliza esta lista de opções permitidas: o nome recebido na URL nunca entra diretamente no SQL.
 const ORDENACOES = {
   relevancia: `p.destaque DESC, (p.estoque > 0) DESC, total_avaliacoes DESC, p.id`,
   menor: `${PRECO_ATUAL} ASC, p.id`,
@@ -185,6 +185,7 @@ router.get('/produtos/:slug', async (req, res) => {
 });
 
 // POST /api/produtos/:id/avaliacoes -> só para clientes que compraram o produto
+// O middleware verifica a sessão; a consulta abaixo verifica também se essa conta comprou o produto.
 router.post('/produtos/:id/avaliacoes', exigirLogin, async (req, res) => {
   const produtoId = parseInt(req.params.id, 10);
   const nota = parseInt(req.body.nota, 10);

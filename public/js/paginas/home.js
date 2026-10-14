@@ -18,11 +18,13 @@ $(function () {
 
   // map transforma a lista em cards; join une os fragmentos antes de inseri-los no DOM.
   function grade($alvo, produtos, opcoes) {
+    // Registrar a lista antes de montar os cards mantém os botões de compra rápida ligados aos produtos.
     registrarProdutos(produtos);
     $alvo.html(produtos.map(p => `<div class="col">${cardProduto(p, opcoes)}</div>`).join(''));
   }
 
   function esqueletos($alvo, n) {
+    // Os blocos reservam espaço enquanto a API responde, reduzindo saltos no layout dos produtos.
     $alvo.html(Array.from({ length: n }, () => '<div class="col"><div class="rs-esqueleto" style="aspect-ratio:3/4.4"></div></div>').join(''));
   }
 
@@ -87,10 +89,12 @@ $(function () {
   // Faixa rolante com as bandas (conteúdo duplicado para o laço contínuo).
   // Bandas com logo incluído em img/bandas/ aparecem com o logo; as demais, com o nome.
   const LOGOS_BANDAS = ['ac-dc', 'guns-n-roses', 'iron-maiden', 'led-zeppelin', 'legiao-urbana', 'metallica',
-    'nirvana', 'pink-floyd', 'queen', 'ramones', 'rolling-stones', 'sepultura'];
+    'nirvana', 'queen', 'ramones', 'rolling-stones', 'sepultura'];
   const slugBanda = nome => nome.normalize('NFD').replace(/[\u0300-\u036f']/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   api('GET', '/api/bandas').then(bandas => {
-    const itens = bandas.map(b => {
+    // A seleção desta faixa é independente dos filtros de bandas do catálogo.
+    const bandasDaFaixa = bandas.filter(b => slugBanda(b.nome) !== 'pink-floyd');
+    const itens = bandasDaFaixa.map(b => {
       const slug = slugBanda(b.nome);
       const marca = LOGOS_BANDAS.includes(slug)
         ? `<img class="rs-marquee-logo rs-logo-${slug}" src="img/bandas/${slug}.png" alt="${esc(b.nome)}">`

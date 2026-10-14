@@ -2,7 +2,9 @@
  * IDs relacionam categorias, produtos e usuários.
  * dias e promoDias são relativos à criação dos dados no navegador; não são datas fixas.
  * Alterações pelo painel ficam no localStorage; restaurar a demonstração recarrega estes dados.
- * O modo MySQL utiliza os dados de database/riff_store.sql. */
+ * O modo MySQL utiliza os dados de database/riff_store.sql.
+ * O campo versao é usado por api-local.js para reconhecer a estrutura dos dados persistidos.
+ * faixas contém texto separado por linhas, que a página do produto transforma em uma lista. */
 window.RS_DADOS = {
  "versao": 5,
  "categorias": [
@@ -60,7 +62,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 1,
    "imagem": "img/fotos/produtos/camiseta-nirvana-bleach.jpg",
    "galeria": "img/fotos/capas/camiseta-nirvana-bleach.jpg,img/fotos/camisetas-arara.jpg",
-   "audio_preview": null,
    "destaque": 1,
    "ativo": 1,
    "dias": 60
@@ -82,7 +83,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 1,
    "imagem": "img/fotos/produtos/camiseta-rolling-stones-tattoo-you.jpg",
    "galeria": "img/fotos/capas/camiseta-rolling-stones-tattoo-you.jpg,img/fotos/camisetas-arara.jpg",
-   "audio_preview": null,
    "destaque": 1,
    "ativo": 1,
    "dias": 67
@@ -104,7 +104,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 1,
    "imagem": "img/fotos/produtos/camiseta-acdc-highway-to-hell.jpg",
    "galeria": "img/fotos/capas/camiseta-acdc-highway-to-hell.jpg,img/fotos/camisetas-arara.jpg",
-   "audio_preview": null,
    "destaque": 1,
    "ativo": 1,
    "dias": 74
@@ -126,7 +125,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 1,
    "imagem": "img/fotos/produtos/camiseta-metallica-master-of-puppets.jpg",
    "galeria": "img/fotos/capas/camiseta-metallica-master-of-puppets.jpg,img/fotos/camisetas-arara.jpg",
-   "audio_preview": null,
    "destaque": 0,
    "ativo": 1,
    "dias": 6
@@ -148,7 +146,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 1,
    "imagem": "img/fotos/produtos/camiseta-iron-maiden-trooper.jpg",
    "galeria": "img/fotos/capas/camiseta-iron-maiden-trooper.jpg,img/fotos/camisetas-arara.jpg",
-   "audio_preview": null,
    "destaque": 0,
    "ativo": 1,
    "dias": 88
@@ -170,7 +167,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 1,
    "imagem": "img/fotos/produtos/camiseta-ramones-rocket-to-russia.jpg",
    "galeria": "img/fotos/capas/camiseta-ramones-rocket-to-russia.jpg,img/fotos/camisetas-arara.jpg",
-   "audio_preview": null,
    "destaque": 0,
    "ativo": 1,
    "dias": 95
@@ -192,7 +188,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 1,
    "imagem": "img/fotos/produtos/camiseta-led-zeppelin-i.jpg",
    "galeria": "img/fotos/capas/camiseta-led-zeppelin-i.jpg,img/fotos/camisetas-arara.jpg",
-   "audio_preview": null,
    "destaque": 0,
    "ativo": 1,
    "dias": 102
@@ -214,7 +209,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 1,
    "imagem": "img/fotos/produtos/camiseta-queen-news-of-the-world.jpg",
    "galeria": "img/fotos/capas/camiseta-queen-news-of-the-world.jpg,img/fotos/camisetas-arara.jpg",
-   "audio_preview": null,
    "destaque": 0,
    "ativo": 1,
    "dias": 10
@@ -236,7 +230,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 1,
    "imagem": "img/fotos/produtos/camiseta-legiao-urbana-que-pais-e-este.jpg",
    "galeria": "img/fotos/capas/camiseta-legiao-urbana-que-pais-e-este.jpg,img/fotos/camisetas-arara.jpg",
-   "audio_preview": null,
    "destaque": 0,
    "ativo": 1,
    "dias": 116
@@ -258,7 +251,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 1,
    "imagem": "img/fotos/produtos/camiseta-sepultura-roots.jpg",
    "galeria": "img/fotos/capas/camiseta-sepultura-roots.jpg,img/fotos/camisetas-arara.jpg",
-   "audio_preview": null,
    "destaque": 0,
    "ativo": 1,
    "dias": 12
@@ -280,7 +272,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/vinil-pink-floyd-dark-side.jpg",
    "galeria": "img/fotos/capas/vinil-pink-floyd-dark-side.jpg,img/fotos/toca-discos-agulha.jpg",
-   "audio_preview": "audio/previa-1.wav",
    "destaque": 1,
    "ativo": 1,
    "dias": 130
@@ -302,7 +293,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/vinil-nirvana-unplugged.jpg",
    "galeria": "img/fotos/capas/vinil-nirvana-unplugged.jpg,img/fotos/toca-discos-agulha.jpg",
-   "audio_preview": "audio/previa-2.wav",
    "destaque": 0,
    "ativo": 1,
    "dias": 137
@@ -324,7 +314,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/vinil-acdc-back-in-black.jpg",
    "galeria": "img/fotos/capas/vinil-acdc-back-in-black.jpg,img/fotos/toca-discos-agulha.jpg",
-   "audio_preview": "audio/previa-3.wav",
    "destaque": 1,
    "ativo": 1,
    "dias": 144
@@ -346,7 +335,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/vinil-led-zeppelin-iv.jpg",
    "galeria": "img/fotos/capas/vinil-led-zeppelin-iv.jpg,img/fotos/toca-discos-agulha.jpg",
-   "audio_preview": "audio/previa-1.wav",
    "destaque": 0,
    "ativo": 1,
    "dias": 151
@@ -368,7 +356,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/vinil-metallica-black-album.jpg",
    "galeria": "img/fotos/capas/vinil-metallica-black-album.jpg,img/fotos/toca-discos-agulha.jpg",
-   "audio_preview": "audio/previa-3.wav",
    "destaque": 0,
    "ativo": 1,
    "dias": 7
@@ -390,7 +377,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/vinil-queen-night-opera.jpg",
    "galeria": "img/fotos/capas/vinil-queen-night-opera.jpg,img/fotos/toca-discos-agulha.jpg",
-   "audio_preview": "audio/previa-2.wav",
    "destaque": 0,
    "ativo": 1,
    "dias": 165
@@ -412,7 +398,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/vinil-secos-molhados.jpg",
    "galeria": "img/fotos/capas/vinil-secos-molhados.jpg,img/fotos/toca-discos-agulha.jpg",
-   "audio_preview": "audio/previa-1.wav",
    "destaque": 0,
    "ativo": 1,
    "dias": 9
@@ -434,7 +419,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/cd-iron-maiden-number-beast.jpg",
    "galeria": "img/fotos/capas/cd-iron-maiden-number-beast.jpg,img/fotos/cds-caixa.jpg",
-   "audio_preview": "audio/previa-3.wav",
    "destaque": 0,
    "ativo": 1,
    "dias": 179
@@ -456,7 +440,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/cd-ramones-1976.jpg",
    "galeria": "img/fotos/capas/cd-ramones-1976.jpg,img/fotos/cds-caixa.jpg",
-   "audio_preview": "audio/previa-2.wav",
    "destaque": 0,
    "ativo": 1,
    "dias": 186
@@ -478,7 +461,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/cd-legiao-urbana-dois.jpg",
    "galeria": "img/fotos/capas/cd-legiao-urbana-dois.jpg,img/fotos/cds-caixa.jpg",
-   "audio_preview": null,
    "destaque": 0,
    "ativo": 1,
    "dias": 193
@@ -500,7 +482,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/cd-guns-n-roses-use-your-illusion-i.jpg",
    "galeria": "img/fotos/capas/cd-guns-n-roses-use-your-illusion-i.jpg,img/fotos/cds-caixa.jpg",
-   "audio_preview": "audio/previa-3.wav",
    "destaque": 1,
    "ativo": 1,
    "dias": 200
@@ -522,7 +503,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/poster-led-zeppelin-physical-graffiti.jpg",
    "galeria": "img/fotos/capas/poster-led-zeppelin-physical-graffiti.jpg,img/fotos/posteres-parede.jpg",
-   "audio_preview": null,
    "destaque": 1,
    "ativo": 1,
    "dias": 207
@@ -544,7 +524,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/poster-acdc-let-there-be-rock.jpg",
    "galeria": "img/fotos/capas/poster-acdc-let-there-be-rock.jpg,img/fotos/posteres-parede.jpg",
-   "audio_preview": null,
    "destaque": 0,
    "ativo": 1,
    "dias": 214
@@ -566,7 +545,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/poster-queen-live-at-wembley.jpg",
    "galeria": "img/fotos/capas/poster-queen-live-at-wembley.jpg,img/fotos/posteres-parede.jpg",
-   "audio_preview": null,
    "destaque": 0,
    "ativo": 1,
    "dias": 6
@@ -588,7 +566,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/poster-pink-floyd-wall.jpg",
    "galeria": "img/fotos/capas/poster-pink-floyd-wall.jpg,img/fotos/posteres-parede.jpg",
-   "audio_preview": null,
    "destaque": 0,
    "ativo": 1,
    "dias": 228
@@ -610,7 +587,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/kit-palhetas-riff.jpg",
    "galeria": null,
-   "audio_preview": null,
    "destaque": 1,
    "ativo": 1,
    "dias": 235
@@ -632,7 +608,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/bone-riff-store.jpg",
    "galeria": null,
-   "audio_preview": null,
    "destaque": 0,
    "ativo": 1,
    "dias": 242
@@ -654,7 +629,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/caneca-riff-store.jpg",
    "galeria": null,
-   "audio_preview": null,
    "destaque": 0,
    "ativo": 1,
    "dias": 249
@@ -676,7 +650,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/patch-ramones.jpg",
    "galeria": "img/fotos/capas/patch-ramones.jpg",
-   "audio_preview": null,
    "destaque": 0,
    "ativo": 1,
    "dias": 256
@@ -698,7 +671,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/cinto-rebites-riff.jpg",
    "galeria": null,
-   "audio_preview": null,
    "destaque": 0,
    "ativo": 1,
    "dias": 12
@@ -720,7 +692,6 @@ window.RS_DADOS = {
    "tem_tamanhos": 0,
    "imagem": "img/fotos/produtos/toca-discos-portatil.jpg",
    "galeria": null,
-   "audio_preview": null,
    "destaque": 0,
    "ativo": 1,
    "dias": 270

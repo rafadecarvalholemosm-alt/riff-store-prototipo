@@ -33,8 +33,8 @@ $(function () {
     dashboard: carregarResumo, produtos: carregarProdutos, pedidos: carregarPedidos, usuarios: carregarUsuarios,
     avaliacoes: carregarAvaliacoes, mensagens: carregarMensagens, configuracoes: carregarConfig
   };
-  // O fragmento da URL seleciona a seção, permitindo acessar uma área por link direto.
   function abrirSecao() {
+    // O # da URL seleciona o painel e permite voltar a ele por um link direto, sem criar outro HTML.
     const secao = location.hash.slice(1) in carregadores ? location.hash.slice(1) : 'dashboard';
     $('[data-painel]').prop('hidden', true);
     $(`[data-painel="${secao}"]`).prop('hidden', false);
@@ -158,8 +158,8 @@ $(function () {
     return x.toISOString().slice(0, 16);
   }
 
-  // O mesmo formulário do modal atende cadastro e edição, dependendo do produto recebido.
   function abrirProduto(p) {
+    // O mesmo modal serve para cadastrar e editar; reset evita reaproveitar os campos do produto anterior.
     editando = p ? p.id : null;
     const $f = $('#form-produto');
     $f[0].reset();
@@ -169,7 +169,7 @@ $(function () {
       $('#p-nome').val(p.nome); $('#p-banda').val(p.banda); $('#p-categoria').val(p.categoriaId);
       $('#p-preco').val(p.preco); $('#p-estoque').val(p.estoque); $('#p-descricao').val(p.descricao);
       $('#p-detalhes').val(p.detalhes || ''); $('#p-faixas').val(p.faixas.join('\n')); $('#p-ano').val(p.ano || '');
-      $('#p-audio').val(p.audio || ''); $('#p-preco-promo').val(p.precoPromocional || '');
+      $('#p-preco-promo').val(p.precoPromocional || '');
       $('#p-promo-fim').val(p.precoPromocional ? paraDatetimeLocal(p.promocaoFimBruto) : '');
       $('#p-imagem').val(p.imagem); $('#p-galeria').val(p.galeria.slice(1).join(','));
       $('#p-tamanhos').prop('checked', p.temTamanhos); $('#p-destaque').prop('checked', p.destaque); $('#p-ativo').prop('checked', p.ativo);
@@ -197,7 +197,7 @@ $(function () {
       nome: $('#p-nome').val().trim(), banda: $('#p-banda').val().trim(), categoriaId: $('#p-categoria').val(),
       preco: $('#p-preco').val(), estoque: $('#p-estoque').val(), descricao: $('#p-descricao').val().trim(),
       detalhes: $('#p-detalhes').val().trim(), faixas: $('#p-faixas').val().trim(), ano: $('#p-ano').val(),
-      audio: $('#p-audio').val().trim(), precoPromocional: $('#p-preco-promo').val(),
+      precoPromocional: $('#p-preco-promo').val(),
       promocaoFim: $('#p-promo-fim').val() ? new Date($('#p-promo-fim').val()).toISOString() : '',
       imagem: $('#p-imagem').val().trim(), galeria: $('#p-galeria').val().trim(),
       temTamanhos: $('#p-tamanhos').is(':checked'), destaque: $('#p-destaque').is(':checked'), ativo: $('#p-ativo').is(':checked')

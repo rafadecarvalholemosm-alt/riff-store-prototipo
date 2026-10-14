@@ -19,6 +19,7 @@ async function verificarCupom(conn, codigoInformado, emails, usuarioId) {
   const cupom = CUPONS[codigo];
   if (!cupom) throw new ErroCupom('Cupom inválido.');
 
+  // A conta e o checkout podem fornecer o mesmo e-mail; Set elimina a repetição antes da consulta.
   const lista = [...new Set(emails.filter(Boolean).map(e => String(e).trim().toLowerCase()))];
   if (cupom.exigeNewsletter) {
     const [linhas] = lista.length
@@ -34,6 +35,7 @@ async function verificarCupom(conn, codigoInformado, emails, usuarioId) {
   return { codigo, percentual: cupom.percentual };
 }
 
+// Arredondar antes de dividir por cem mantém o resultado na precisão de centavos.
 const calcularDesconto = (subtotal, percentual) => Math.round(subtotal * percentual) / 100;
 
 module.exports = { verificarCupom, calcularDesconto, ErroCupom };

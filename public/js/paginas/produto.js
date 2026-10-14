@@ -1,9 +1,9 @@
 /* Controlador da página produto.html.
  * O slug da URL seleciona os detalhes do produto na API.
- * A página coordena galeria, zoom, tamanhos, quantidade, áudio e avaliações.
+ * A página coordena galeria, zoom, tamanhos, quantidade, faixas e avaliações.
  * O estoque disponível considera também o que o usuário já colocou no carrinho.
  */
-// Detalhes do produto: galeria, tamanhos, quantidade, carrinho, prévia de áudio e avaliações.
+// Detalhes do produto: galeria, tamanhos, quantidade, carrinho, faixas e avaliações.
 $(function () {
   const { api, esc, moeda, data, parametro, estrelas, parcelas, carrinho, montarContagem, cardProduto, registrarProdutos, aviso } = RS;
   const slug = parametro('slug');
@@ -17,6 +17,7 @@ $(function () {
   }
 
   function carregar() {
+    // A resposta reúne produto, avaliações e relacionados para atualizar os três blocos desta página.
     return api('GET', `/api/produtos/${encodeURIComponent(slug)}`).then(r => {
       produto = r.produto;
       montarProduto(r.produto);
@@ -67,13 +68,9 @@ $(function () {
     $('#produto-detalhes').html((p.detalhes || '').split('\n').filter(Boolean).map(d => `<li class="mb-1">${esc(d)}</li>`).join('') || '<li>Sem informações adicionais.</li>');
 
     if (p.faixas.length) {
+      // O texto de cada faixa é escapado antes de entrar no HTML; produtos sem faixas mantêm a aba oculta.
       $('#item-aba-faixas').prop('hidden', false);
       $('#produto-faixas').html(p.faixas.map(f => `<li>${esc(f)}</li>`).join(''));
-      if (p.audio) {
-        $('#bloco-previa').prop('hidden', false);
-        $('#audio-previa source').attr('src', p.audio);
-        $('#audio-previa')[0].load();
-      }
     }
     atualizarEstoque();
 
@@ -158,9 +155,6 @@ $(function () {
     }
   });
   $(document).on('carrinho:alterado', () => produto && atualizarEstoque());
-
-  // Disco girando enquanto a prévia toca
-  $('#audio-previa').on('play', () => $('#player').addClass('tocando')).on('pause ended', () => $('#player').removeClass('tocando'));
 
   // ------------------------------------------------------------------ Avaliações
   // Calcula a distribuição das notas e monta comentários e formulário quando permitido.

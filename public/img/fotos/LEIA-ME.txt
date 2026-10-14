@@ -1,2 +1,0 @@
-Fotos do site: fundos (Unsplash), capas dos álbuns (Wikipedia) e fotos dos produtos.
-As fotos já estão incluídas no projeto. Créditos e fontes em CREDITOS.txt.

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Detalhes: galeria, compra, áudio e avaliações de um produto escolhido pelo slug na URL. Os espaços com IDs recebem dados de produto.js. -->
+<!-- Detalhes: galeria, compra, lista de faixas e avaliações de um produto escolhido pelo slug na URL. Os espaços com IDs recebem dados de produto.js. -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -126,22 +126,8 @@
             </div>
           </div>
           <div class="tab-pane fade" id="painel-faixas" role="tabpanel" aria-labelledby="aba-faixas" tabindex="0">
-            <div class="row g-4">
-              <div class="col-lg-7"><ol class="rs-faixas" id="produto-faixas"></ol></div>
-              <div class="col-lg-5" id="bloco-previa" hidden>
-                <div class="rs-player" id="player">
-                  <div class="disco-mini" aria-hidden="true"></div>
-                  <div class="flex-grow-1">
-                    <strong class="d-block small mb-1">Ouça uma prévia</strong>
-                    <audio controls preload="none" id="audio-previa">
-                      <source type="audio/wav">
-                      Seu navegador não suporta a reprodução de áudio.
-                    </audio>
-                  </div>
-                </div>
-                <p class="small text-secondary mt-2">Ouça um trecho antes de levar o disco para casa.</p>
-              </div>
-            </div>
+            <!-- As faixas são informações do álbum; esta área não reproduz mídia. -->
+            <ol class="rs-faixas" id="produto-faixas"></ol>
           </div>
           <div class="tab-pane fade" id="painel-avaliacoes" role="tabpanel" aria-labelledby="aba-avaliacoes" tabindex="0">
             <div class="row g-5" id="avaliacoes">

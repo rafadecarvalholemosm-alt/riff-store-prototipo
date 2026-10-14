@@ -32,6 +32,8 @@ app.use(session({
 }));
 
 // API --------------------------------------------------------------
+// Os prefixos abaixo completam os caminhos definidos em cada Router.
+// Por exemplo, /login em autenticacao.js passa a ser /api/auth/login.
 app.use('/api/auth', require('./src/rotas/autenticacao'));
 app.use('/api/pedidos', require('./src/rotas/pedidos'));
 app.use('/api/admin', require('./src/rotas/admin'));
@@ -41,6 +43,7 @@ app.use('/api', require('./src/rotas/site'));
 app.use('/api', (req, res) => res.status(404).json({ erro: 'Rota não encontrada.' }));
 
 // Páginas -----------------------------------------------------------
+// A API é registrada primeiro para que um endereço /api desconhecido receba JSON, e não uma página HTML.
 // Caminhos sem /api são atendidos pelos HTML, CSS, JavaScript e imagens de public/.
 app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'] }));
 app.use((req, res) => res.status(404).sendFile(path.join(__dirname, 'public', '404.html')));

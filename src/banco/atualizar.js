@@ -13,6 +13,7 @@ const pool = require('./conexao');
 const imagensLegadas = require('./imagens-legadas.json');
 
 async function colunaExiste(tabela, coluna) {
+  // information_schema descreve as tabelas: consultar antes evita repetir um ALTER TABLE já aplicado.
   const [[r]] = await pool.query(
     `SELECT COUNT(*) AS total FROM information_schema.columns
       WHERE table_schema = DATABASE() AND table_name = ? AND column_name = ?`, [tabela, coluna]
@@ -32,6 +33,7 @@ async function atualizarBanco() {
     await pool.query('ALTER TABLE pedidos ADD COLUMN desconto DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER cupom');
   }
 
+  // A condição sobre .svg preserva imagens personalizadas e limita a atualização às ilustrações antigas.
   let alterados = 0;
   for (const { slug, imagem, galeria } of imagensLegadas) {
     const [r] = await pool.query(

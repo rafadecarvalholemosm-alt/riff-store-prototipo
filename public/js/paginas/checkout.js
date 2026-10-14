@@ -27,6 +27,7 @@ $(function () {
     let salvo = {};
     try { salvo = JSON.parse(sessionStorage.getItem(RASCUNHO)) || {}; } catch (e) { /* ignora */ }
     const inicial = { nome: usuario.nome, email: usuario.email, telefone: usuario.telefone || '', ...salvo };
+    // O rascunho aparece por último para preservar dados já digitados ao voltar para esta tela.
     Object.entries(inicial).forEach(([campo, valor]) => {
       const $c = $(`.rs-etapa [name="${campo}"]`);
       if ($c.is(':radio')) $c.filter(`[value="${valor}"]`).prop('checked', true);
@@ -63,6 +64,7 @@ $(function () {
   // ------------------------------------------------------------------ Navegação entre etapas
   // Mostra uma etapa por vez e atualiza o foco e aria-current para orientar a navegação.
   function irPara(n) {
+    // A etapa controla os formulários visíveis e o indicador de progresso; os dados anteriores continuam preenchidos.
     etapa = n;
     $('.rs-etapa').prop('hidden', true);
     $(`.rs-etapa[data-etapa="${n}"]`).prop('hidden', false);

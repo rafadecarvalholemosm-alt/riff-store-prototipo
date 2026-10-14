@@ -38,6 +38,7 @@ router.post('/mensagens', async (req, res) => {
 router.post('/newsletter', async (req, res) => {
   const email = texto(req.body.email, 160).toLowerCase();
   if (!emailValido(email)) return res.status(400).json({ erro: 'Informe um e-mail válido.', campos: { email: 'Informe um e-mail válido.' } });
+  // A chave do e-mail evita duplicatas; INSERT IGNORE mantém a inscrição mesmo se ela já existir.
   await db.query('INSERT IGNORE INTO newsletter (email) VALUES (?)', [email]);
   res.status(201).json({ mensagem: 'Inscrição confirmada! Use o cupom ROCK10 e ganhe 10% de desconto.', cupom: 'ROCK10' });
 });
@@ -57,6 +58,7 @@ router.post('/cupons/validar', async (req, res) => {
 // GET /api/configuracoes -> contato e redes sociais exibidos no site
 router.get('/configuracoes', async (req, res) => {
   const [linhas] = await db.query('SELECT chave, valor FROM configuracoes');
+  // Transforma pares chave/valor em um objeto que cabeçalho, rodapé e contato conseguem consultar.
   res.json(Object.fromEntries(linhas.map(l => [l.chave, l.valor])));
 });
 

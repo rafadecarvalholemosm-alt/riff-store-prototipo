@@ -20,6 +20,7 @@ function dadosSessao(u) {
 
 // Cria uma nova sessão (evita fixação de sessão) e guarda o usuário nela
 function iniciarSessao(req, usuario) {
+  // A Promise permite aguardar regenerate e save antes de responder ao login ou cadastro.
   return new Promise((resolve, reject) => {
     req.session.regenerate(err => {
       if (err) return reject(err);
@@ -48,6 +49,7 @@ router.post('/cadastro', async (req, res) => {
   if (senha.length < 6) erros.senha = 'A senha deve ter pelo menos 6 caracteres.';
   if (Object.keys(erros).length) return res.status(400).json({ erro: 'Verifique os campos destacados.', campos: erros });
 
+  // A mensagem por campo permite que o formulário destaque o e-mail já cadastrado.
   const [[existe]] = await db.query('SELECT id FROM usuarios WHERE email = ?', [email]);
   if (existe) return res.status(409).json({ erro: 'Este e-mail já está cadastrado.', campos: { email: 'E-mail já cadastrado.' } });
 
@@ -116,6 +118,7 @@ router.put('/conta', exigirLogin, async (req, res) => {
 // POST /api/auth/recuperar -> gera um link de redefinição válido por 1 hora.
 // Como a loja é fictícia, nenhum e-mail é enviado: o link é devolvido na resposta
 // para simular a mensagem que o cliente receberia.
+// O token aleatório expira em uma hora e é apagado depois de uma redefinição bem-sucedida.
 router.post('/recuperar', async (req, res) => {
   const email = texto(req.body.email, 160).toLowerCase();
   if (!emailValido(email)) return res.status(400).json({ erro: 'Informe um e-mail válido.' });

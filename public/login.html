@@ -24,8 +24,8 @@
     <div class="rs-auth-arte" data-bg-foto="guitarrista-palco-2">
       <div>
         <span class="rs-kicker claro">Riff Store</span>
-        <blockquote class="mt-3">Música.<br>Estilo.<br><span class="text-rs" style="color:#ff4c52!important">Atitude.</span></blockquote>
-        <p class="text-white-50 mt-3 mb-0 d-none d-lg-block" style="max-width:26rem">Com a sua conta você acompanha os pedidos, finaliza compras mais rápido e avalia os produtos que comprou.</p>
+        <blockquote class="mt-3"><span>Música.</span> <span>Estilo.</span> <span class="rs-auth-acento">Atitude.</span></blockquote>
+        <p class="rs-auth-descricao mt-3 mb-0">Com a sua conta você acompanha os pedidos, finaliza compras mais rápido e avalia os produtos que comprou.</p>
       </div>
     </div>
 
@@ -71,38 +71,41 @@
             <h1 class="h2 mb-1">Crie sua conta</h1>
             <p class="text-secondary small mb-4">Leva menos de um minuto.</p>
             <form id="form-cadastro" novalidate>
-              <div class="mb-3">
-                <label for="cad-nome" class="form-label">Nome completo</label>
-                <input type="text" class="form-control" id="cad-nome" name="nome" autocomplete="name" required maxlength="120">
-                <div class="invalid-feedback"></div>
-              </div>
-              <div class="mb-3">
-                <label for="cad-email" class="form-label">E-mail</label>
-                <input type="email" class="form-control" id="cad-email" name="email" autocomplete="email" required maxlength="160">
-                <div class="invalid-feedback"></div>
-              </div>
-              <div class="mb-3">
-                <label for="cad-telefone" class="form-label">Telefone <span class="text-secondary fw-normal">(opcional)</span></label>
-                <input type="tel" class="form-control" id="cad-telefone" name="telefone" autocomplete="tel" placeholder="(34) 99999-9999" data-mascara="telefone">
-                <div class="invalid-feedback"></div>
-              </div>
-              <div class="mb-3">
-                <label for="cad-senha" class="form-label">Senha</label>
-                <div class="rs-senha">
-                  <input type="password" class="form-control" id="cad-senha" name="senha" autocomplete="new-password" required minlength="6" aria-describedby="forca-texto">
-                  <button type="button" aria-label="Mostrar senha"><i class="bi bi-eye"></i></button>
+              <!-- A grade agrupa campos relacionados; no celular, as colunas ficam uma abaixo da outra. -->
+              <div class="row g-3">
+                <div class="col-12">
+                  <label for="cad-nome" class="form-label">Nome completo</label>
+                  <input type="text" class="form-control" id="cad-nome" name="nome" autocomplete="name" required maxlength="120">
+                  <div class="invalid-feedback"></div>
                 </div>
-                <div class="invalid-feedback"></div>
-                <div class="rs-forca"><div id="forca-barra"></div></div>
-                <div class="form-text" id="forca-texto">Use pelo menos 6 caracteres.</div>
+                <div class="col-sm-6">
+                  <label for="cad-email" class="form-label">E-mail</label>
+                  <input type="email" class="form-control" id="cad-email" name="email" autocomplete="email" required maxlength="160">
+                  <div class="invalid-feedback"></div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="cad-telefone" class="form-label">Telefone <span class="text-secondary fw-normal">(opcional)</span></label>
+                  <input type="tel" class="form-control" id="cad-telefone" name="telefone" autocomplete="tel" placeholder="(34) 99999-9999" data-mascara="telefone">
+                  <div class="invalid-feedback"></div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="cad-senha" class="form-label">Senha</label>
+                  <div class="rs-senha">
+                    <input type="password" class="form-control" id="cad-senha" name="senha" autocomplete="new-password" required minlength="6" aria-describedby="forca-texto">
+                    <button type="button" aria-label="Mostrar senha"><i class="bi bi-eye"></i></button>
+                  </div>
+                  <div class="invalid-feedback"></div>
+                  <div class="rs-forca"><div id="forca-barra"></div></div>
+                  <div class="form-text" id="forca-texto">Use pelo menos 6 caracteres.</div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="cad-senha2" class="form-label">Confirme a senha</label>
+                  <input type="password" class="form-control" id="cad-senha2" name="senha2" autocomplete="new-password" required>
+                  <div class="invalid-feedback"></div>
+                </div>
               </div>
-              <div class="mb-4">
-                <label for="cad-senha2" class="form-label">Confirme a senha</label>
-                <input type="password" class="form-control" id="cad-senha2" name="senha2" autocomplete="new-password" required>
-                <div class="invalid-feedback"></div>
-              </div>
-              <div class="alert alert-danger small py-2" id="erro-cadastro" role="alert" hidden></div>
-              <button type="submit" class="btn btn-rs w-100 btn-lg">Cadastrar</button>
+              <div class="alert alert-danger small py-2 mt-3" id="erro-cadastro" role="alert" hidden></div>
+              <button type="submit" class="btn btn-rs w-100 btn-lg mt-3">Cadastrar</button>
             </form>
           </div>
         </div>

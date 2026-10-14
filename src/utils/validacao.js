@@ -26,6 +26,7 @@ function telefoneValido(tel) {
 
 // Gera o slug (identificador de URL) a partir de um nome.
 function gerarSlug(nome) {
+  // A normalização separa os acentos antes de removê-los; espaços e símbolos viram hífens na URL.
   return String(nome)
     .normalize('NFD').replace(/[̀-ͯ]/g, '')
     .toLowerCase()
@@ -43,6 +44,7 @@ function promocaoAtiva(p) {
 // Converte uma linha da tabela produtos no formato enviado ao navegador,
 // já com o preço final e os selos calculados.
 function formatarProduto(p) {
+  // Este contrato usa os nomes esperados pelas páginas, sem expor diretamente todas as colunas do banco.
   const emPromocao = promocaoAtiva(p);
   const trintaDias = 30 * 24 * 60 * 60 * 1000;
   const selos = [];
@@ -62,13 +64,13 @@ function formatarProduto(p) {
     ano: p.ano,
     preco: Number(p.preco),
     precoFinal: emPromocao ? Number(p.preco_promocional) : Number(p.preco),
+    // O preço original para comparação só aparece quando existe uma promoção vigente.
     precoOriginal: emPromocao ? Number(p.preco) : null,
     promocaoFim: emPromocao ? p.promocao_fim : null,
     estoque: p.estoque,
     temTamanhos: !!p.tem_tamanhos,
     imagem: p.imagem,
     galeria: [p.imagem, ...(p.galeria ? p.galeria.split(',').filter(Boolean) : [])],
-    audio: p.audio_preview,
     destaque: !!p.destaque,
     selos,
     mediaNotas: p.media_notas !== undefined && p.media_notas !== null ? Number(p.media_notas) : null,

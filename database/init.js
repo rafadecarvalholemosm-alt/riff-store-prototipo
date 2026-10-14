@@ -19,6 +19,7 @@ const databaseErrorMessage = require('../src/banco/erros');
 const DB_NAME = process.env.DB_NAME || 'riff_store';
 
 async function main() {
+  // Identificadores de banco não são valores de uma consulta parametrizada; aceitamos só letras, números e _.
   if (!/^[A-Za-z0-9_]+$/.test(DB_NAME)) throw new Error('DB_NAME inválido');
 
   // Usa o arquivo SQL incluído no projeto; apenas o nome do banco vem do .env.

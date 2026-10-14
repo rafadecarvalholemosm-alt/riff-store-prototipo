@@ -14,5 +14,6 @@
  * usarServidor: false  -> sempre usa os dados no navegador.
  */
 window.RS_CONFIG = {
+  // O modo automático permite abrir os mesmos HTML no Express, no Live Server ou no GitHub Pages.
   usarServidor: 'auto'
 };

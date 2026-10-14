@@ -23,6 +23,7 @@ $(function () {
 
   // A posição do status define quais etapas visuais do pedido aparecem concluídas.
   function linhaDoTempo(status) {
+    // Os códigos recebidos da API são traduzidos em nomes legíveis, mantendo a ordem de acompanhamento.
     const atual = ETAPAS.findIndex(([s]) => s === status);
     return `<div class="rs-linha-tempo" aria-label="Situação: ${NOME_STATUS[status]}">${ETAPAS.map(([, nome], i) => `<div class="${i <= atual ? 'ok' : ''}">${nome}</div>`).join('')}</div>`;
   }
@@ -73,6 +74,7 @@ $(function () {
   }
 
   $('#form-dados').on('submit', function (e) {
+    // PUT atualiza os dados da conta autenticada; o usuário não escolhe o ID de outra conta neste formulário.
     e.preventDefault();
     const $f = $(this);
     limparErros($f);

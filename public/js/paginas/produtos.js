@@ -106,6 +106,7 @@ $(function () {
   // ------------------------------------------------------------------ Carregamento
   // Exibe carregamento, solicita a página filtrada e atualiza os cards quando a resposta chega.
   function carregar() {
+    // Cada busca recebe um número: uma resposta atrasada não pode substituir o resultado mais recente.
     const id = ++requisicaoAtual;
     const $grade = $('#grade-produtos').attr('aria-busy', 'true');
     $grade.html(Array.from({ length: 6 }, () => '<div class="col"><div class="rs-esqueleto" style="aspect-ratio:3/4.6"></div></div>').join(''));
@@ -138,6 +139,7 @@ $(function () {
 
   // Os links trocam o estado da vitrine; o evento de clique evita navegar para outro documento.
   function paginacao(atual, total) {
+    // Apenas os controles necessários são gerados; uma única página não precisa de navegação numerada.
     if (total <= 1) { $('#paginacao').empty(); return; }
     let html = `<li class="page-item ${atual === 1 ? 'disabled' : ''}"><a class="page-link" href="#" data-pagina="${atual - 1}" aria-label="Página anterior"><i class="bi bi-chevron-left"></i></a></li>`;
     for (let i = 1; i <= total; i++) {

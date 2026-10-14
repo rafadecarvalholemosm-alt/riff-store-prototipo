@@ -9,6 +9,7 @@ $(function () {
 
   // Converte os itens persistidos em linhas da tabela, incluindo o estado de carrinho vazio.
   function desenhar() {
+    // Alterar uma quantidade atualiza o armazenamento e reconstrói a tabela a partir do estado salvo.
     const itens = carrinho.itens();
     const qtd = carrinho.quantidade();
     $('#carrinho-vazio').prop('hidden', itens.length > 0);
@@ -131,6 +132,7 @@ $(function () {
 
   // Atualiza preços e estoque com os dados atuais do servidor (a promoção pode ter acabado)
   function sincronizar() {
+    // Os valores locais são uma prévia: a API é consultada de novo para refletir estoque e promoções atuais.
     const itens = carrinho.itens();
     if (!itens.length) return;
     api('GET', '/api/produtos', { ids: [...new Set(itens.map(i => i.id))].join(','), limite: 48 }).then(r => {

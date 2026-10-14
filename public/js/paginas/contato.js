@@ -22,6 +22,7 @@ $(function () {
 
   // Abre a pergunta indicada no endereço (ex.: contato.html#faq-tamanhos)
   if (/^#faq-/.test(location.hash)) {
+    // Links como "Tabela de medidas" chegam com esse fragmento; abrir o item expõe a resposta antes de rolar.
     const $item = $(location.hash);
     if ($item.length) {
       bootstrap.Collapse.getOrCreateInstance($item.find('.accordion-collapse')[0]).show();
@@ -57,6 +58,7 @@ $(function () {
     if (Object.keys(erros).length) return mostrarErros($f, erros);
 
     const $btn = $f.find('[type="submit"]').prop('disabled', true);
+    // O botão fica desabilitado até a Promise terminar, evitando envios repetidos durante a mesma solicitação.
     api('POST', '/api/mensagens', dados)
       .then(r => {
         aviso(r.mensagem, 'sucesso', { duracao: 6000 });

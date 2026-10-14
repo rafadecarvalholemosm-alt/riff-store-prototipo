@@ -7,6 +7,7 @@
 
 // Exige um usuário logado (cliente ou administrador).
 function exigirLogin(req, res, next) {
+  // A identidade vem da sessão criada pelo servidor, e não de um ID enviado no corpo da requisição.
   if (!req.session.usuario) {
     return res.status(401).json({ erro: 'Faça login para continuar.' });
   }
@@ -15,6 +16,7 @@ function exigirLogin(req, res, next) {
 
 // Exige um usuário com perfil de administrador.
 function exigirAdmin(req, res, next) {
+  // return encerra a resposta de erro; somente o perfil autorizado chega ao next().
   if (!req.session.usuario) {
     return res.status(401).json({ erro: 'Faça login para continuar.' });
   }

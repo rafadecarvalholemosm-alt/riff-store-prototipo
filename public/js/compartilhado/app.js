@@ -48,6 +48,7 @@
   // (js/demo/api-local.js); com servidor, por AJAX (jQuery) para o Express.
   // Devolve uma Promise com o JSON da resposta.
   function api(metodo, url, dados) {
+    // A detecção é compartilhada por uma Promise: as páginas aguardam a escolha do modo sem repeti-la.
     return modoServidor.then(servidor => {
       if (!servidor && window.RS_API_LOCAL) return window.RS_API_LOCAL(metodo, url, dados);
       return requisicaoServidor(metodo, url, dados);
@@ -276,6 +277,7 @@
 
   // Guarda os produtos exibidos para a compra rápida pelos cards
   const produtosNaTela = new Map();
+  // A compra rápida usa os objetos já carregados; o ID no botão localiza o produto neste mapa.
   function registrarProdutos(lista) { lista.forEach(p => produtosNaTela.set(String(p.id), p)); }
 
   $(document).on('click', '[data-adicionar]', function (e) {
@@ -336,6 +338,7 @@
 
   // ------------------------------------------------------------------ Validação de formulários
   function mostrarErros($form, campos) {
+    // Os nomes recebidos em campos correspondem ao atributo name de cada input, inclusive senha2 no cadastro.
     $form.find('.is-invalid').removeClass('is-invalid');
     Object.entries(campos || {}).forEach(([nome, msg]) => {
       const $campo = $form.find(`[name="${nome}"]`);

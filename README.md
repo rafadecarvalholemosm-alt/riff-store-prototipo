@@ -8,6 +8,8 @@ Loja virtual fictícia desenvolvida para **Programação para Web I** — FACOM/
 
 O projeto tem 31 produtos de exemplo e permite navegar pelo catálogo, usar filtros, montar um carrinho e simular uma compra. Inclui cadastro, login, avaliações, contato e painel administrativo. Pagamentos e envio de e-mail são simulados.
 
+O login e o cadastro compartilham uma tela com apresentação da loja e formulários organizados para desktop e celular. A página de contato reúne as perguntas frequentes sobre a demonstração, pedidos, frete, pagamentos, tamanhos e cuidados com os discos.
+
 ## Organização do projeto
 
 ```text
@@ -24,8 +26,7 @@ riff-store/
 │   │   └── demo/                 # Funcionamento sem servidor Express/MySQL
 │   │       ├── dados.js          # Dados iniciais de demonstração
 │   │       └── api-local.js      # Operações e persistência no localStorage
-│   ├── img/                      # Fotos, logos, ícones e créditos das imagens
-│   ├── audio/                    # Prévias de áudio prontas
+│   ├── img/                      # Fotos, logos e ícones da interface
 │   └── vendor/                   # Bibliotecas e fontes locais, com suas licenças
 ├── src/                          # Código executado pelo servidor
 │   ├── banco/                    # Conexão, mensagens de erro e compatibilidade
@@ -41,7 +42,7 @@ riff-store/
 └── package.json                  # Comandos e dependências do servidor
 ```
 
-As imagens, os áudios, as fontes e as bibliotecas do navegador já estão incluídos. A execução do projeto utiliza esses arquivos prontos, sem etapas de geração de mídia ou de dados.
+As imagens, as fontes e as bibliotecas do navegador já estão incluídas. A execução do projeto utiliza esses arquivos prontos, sem etapas de geração de mídia ou de dados.
 
 ## Por onde começar a ler o código
 
@@ -52,6 +53,8 @@ As imagens, os áudios, as fontes e as bibliotecas do navegador já estão inclu
 5. **Banco:** [riff_store.sql](database/riff_store.sql) apresenta as tabelas, os relacionamentos e os dados de exemplo.
 
 No modo com servidor, o fluxo é **HTML → controlador da página → RS.api() → rota Express → MySQL → resposta JSON → atualização da página**. No modo estático, `RS.api()` chama [api-local.js](public/js/demo/api-local.js), que executa as operações no navegador.
+
+Os comentários em português explicam as responsabilidades dos módulos e as decisões principais: tratamento dos eventos, validação, requisições assíncronas, uso da sessão, consultas parametrizadas e transações de pedidos. As bibliotecas de `public/vendor/` são dependências prontas; o código da loja está em `public/js/` e `src/`.
 
 ## Tecnologias
 
@@ -146,7 +149,7 @@ Os HTML ficam em `public/`; os controladores abaixo ficam em `public/js/paginas/
 | --- | --- | --- |
 | Início | `index.html` | `home.js` |
 | Catálogo | `produtos.html` | `produtos.js` |
-| Detalhes do produto | `produto.html` | `produto.js` |
+| Detalhes, galeria, tamanhos e faixas do produto | `produto.html` | `produto.js` |
 | Carrinho | `carrinho.html` | `carrinho.js` |
 | Finalização do pedido | `checkout.html` | `checkout.js` |
 | Login e cadastro | `login.html` | `login.js` |
@@ -163,7 +166,7 @@ O menu de bandas e o link de promoções abrem o catálogo com filtros na URL. O
 
 - **Modo MySQL:** altere [database/riff_store.sql](database/riff_store.sql) para definir os dados de uma nova instalação. Para editar registros existentes, utilize o painel administrativo.
 - **Modo estático:** altere [dados.js](public/js/demo/dados.js). Para carregar as alterações em um navegador que já possui dados, restaure a demonstração pelo painel.
-- **Mídia:** adicione arquivos em `public/img/` ou `public/audio/` e ajuste os caminhos nos dados correspondentes.
+- **Imagens:** adicione arquivos em `public/img/` e ajuste os caminhos nos dados correspondentes.
 
 O SQL e os dados da demonstração estática são arquivos independentes. Se alterar os exemplos dos dois modos, atualize ambos. Alterações no painel afetam apenas o modo e o ambiente em uso.
 
@@ -200,9 +203,3 @@ O SQL e os dados da demonstração estática são arquivos independentes. Se alt
 O workflow [pages.yml](.github/workflows/pages.yml) publica a pasta `public/` quando há um push na `main`. No repositório, a origem do GitHub Pages deve estar configurada como **GitHub Actions**.
 
 Essa publicação hospeda a demonstração estática. A versão com Express e MySQL utiliza um servidor próprio.
-
-## Créditos
-
-Bootstrap, Bootstrap Icons e jQuery (MIT); fontes Bebas Neue, Pirata One e Inter (SIL Open Font License); fotos do Unsplash; fotos de base e logos do Wikimedia Commons; capas de álbuns da Wikipedia. As fotos dos produtos incluem montagens dessas imagens. Os créditos específicos estão em [public/img/fotos/CREDITOS.txt](public/img/fotos/CREDITOS.txt) e as licenças das bibliotecas estão em `public/vendor/`.
-
-Logotipo e prévias de áudio criados pelo grupo para a demonstração acadêmica. Marcas e capas pertencem aos seus respectivos titulares; o site não realiza vendas reais.
